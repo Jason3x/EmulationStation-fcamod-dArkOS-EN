@@ -3472,3 +3472,21 @@ msgstr "主題頂部與底部列"
 
 msgid "THEME FORCE UPPERCASE"
 msgstr "主題強制大寫"
+
+msgid "SHOW WIFI ICON"
+msgstr "顯示Wi-Fi圖示"
+
+msgid "SHOW BLUETOOTH ICON"
+msgstr "顯示藍牙圖示"
+
+msgid "WI-FI MANAGER"
+msgstr "Wi-Fi管理員"
+
+msgid "BLUETOOTH MANAGER"
+msgstr "藍牙管理員"
+
+msgid "WI-FI MANAGER NOT FOUND"
+msgstr "找不到Wi-Fi管理員"
+
+msgid "BLUETOOTH MANAGER NOT FOUND"
+msgstr "找不到藍牙管理員"

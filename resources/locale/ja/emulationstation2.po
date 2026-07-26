@@ -1315,3 +1315,24 @@ msgstr "編集"
 #:
 msgid "CHANGE"
 msgstr "変更"
+
+msgid "SHOW WIFI ICON"
+msgstr "Wi-Fiアイコンを表示"
+
+msgid "SHOW BLUETOOTH ICON"
+msgstr "Bluetoothアイコンを表示"
+
+msgid "NETWORK SETTINGS"
+msgstr "ネットワーク設定"
+
+msgid "WI-FI MANAGER"
+msgstr "Wi-Fi管理"
+
+msgid "BLUETOOTH MANAGER"
+msgstr "Bluetooth管理"
+
+msgid "WI-FI MANAGER NOT FOUND"
+msgstr "Wi-Fi管理が見つかりません"
+
+msgid "BLUETOOTH MANAGER NOT FOUND"
+msgstr "Bluetooth管理が見つかりません"

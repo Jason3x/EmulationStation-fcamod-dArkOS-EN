@@ -50,6 +50,8 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 		// addEntry(_("CONFIGURE INPUT"), true, [this] { openConfigInput(); }, "iconControllers");
 	}
 
+	addEntry(_("NETWORK SETTINGS"), true, [this] { openNetworkSettings(); }, "iconNetwork");
+
 	addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
 	if (isFullUI)
@@ -286,6 +288,27 @@ void GuiMenu::openScraperSettings()
 			openScraperSettings();
 		}
 	});
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::openNetworkSettings()
+{
+	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS"));
+
+	s->addEntry(_("WI-FI MANAGER"), false, [this] {
+		if (access("/opt/system/wifi-manager.sh", F_OK) == 0)
+			system("/opt/system/wifi-manager.sh &");
+		else
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/opt/system/wifi-manager.sh"), _("OK")));
+	}, "iconWifi");
+
+	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
+		if (access("/opt/system/bt-manager.sh", F_OK) == 0)
+			system("/opt/system/bt-manager.sh &");
+		else
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/opt/system/bt-manager.sh"), _("OK")));
+	}, "iconBluetooth");
 
 	mWindow->pushGui(s);
 }

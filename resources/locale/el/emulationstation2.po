@@ -1952,3 +1952,21 @@ msgstr "Μην ρυθμίσετε"
 #:
 msgid "QUICK SEARCH"
 msgstr "ΓΡΗΓΟΡΗ ΑΝΑΖΗΤΗΣΗ"
+
+msgid "SHOW WIFI ICON"
+msgstr "ΕΜΦΆΝΙΣΗ ΕΙΚΟΝΙΔΊΟΥ WI-FI"
+
+msgid "SHOW BLUETOOTH ICON"
+msgstr "ΕΜΦΆΝΙΣΗ ΕΙΚΟΝΙΔΊΟΥ BLUETOOTH"
+
+msgid "WI-FI MANAGER"
+msgstr "ΔΙΑΧΕΙΡΙΣΤΉΣ WI-FI"
+
+msgid "BLUETOOTH MANAGER"
+msgstr "ΔΙΑΧΕΙΡΙΣΤΉΣ BLUETOOTH"
+
+msgid "WI-FI MANAGER NOT FOUND"
+msgstr "Ο ΔΙΑΧΕΙΡΙΣΤΉΣ WI-FI ΔΕΝ ΒΡΈΘΗΚΕ"
+
+msgid "BLUETOOTH MANAGER NOT FOUND"
+msgstr "Ο ΔΙΑΧΕΙΡΙΣΤΉΣ BLUETOOTH ΔΕΝ ΒΡΈΘΗΚΕ"

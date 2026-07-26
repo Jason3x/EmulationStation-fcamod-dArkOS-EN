@@ -2153,3 +2153,21 @@ msgstr "Núcleo proporcionado"
 
 msgid "Do not set"
 msgstr "Não definir"
+
+msgid "SHOW WIFI ICON"
+msgstr "MOSTRAR ÍCONE WI-FI"
+
+msgid "SHOW BLUETOOTH ICON"
+msgstr "MOSTRAR ÍCONE BLUETOOTH"
+
+msgid "WI-FI MANAGER"
+msgstr "GERENCIADOR WI-FI"
+
+msgid "BLUETOOTH MANAGER"
+msgstr "GERENCIADOR BLUETOOTH"
+
+msgid "WI-FI MANAGER NOT FOUND"
+msgstr "GERENCIADOR WI-FI NÃO ENCONTRADO"
+
+msgid "BLUETOOTH MANAGER NOT FOUND"
+msgstr "GERENCIADOR BLUETOOTH NÃO ENCONTRADO"

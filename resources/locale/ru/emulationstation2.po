@@ -3487,8 +3487,20 @@ msgstr "ТЕМА ВЕРХНЯЯ И НИЖНЯЯ ПАНЕЛЬ"
 msgid "THEME FORCE UPPERCASE"
 msgstr "ТЕМА ВЕРХНИЙ РЕГИСТР НАПИСАНИЯ"
 
+msgid "SHOW WIFI ICON"
+msgstr "ПОКАЗАТЬ ЗНАЧОК WI-FI"
 
+msgid "SHOW BLUETOOTH ICON"
+msgstr "ПОКАЗАТЬ ЗНАЧОК BLUETOOTH"
 
+msgid "WI-FI MANAGER"
+msgstr "МЕНЕДЖЕР WI-FI"
 
+msgid "BLUETOOTH MANAGER"
+msgstr "МЕНЕДЖЕР BLUETOOTH"
 
+msgid "WI-FI MANAGER NOT FOUND"
+msgstr "МЕНЕДЖЕР WI-FI НЕ НАЙДЕН"
 
+msgid "BLUETOOTH MANAGER NOT FOUND"
+msgstr "МЕНЕДЖЕР BLUETOOTH НЕ НАЙДЕН"

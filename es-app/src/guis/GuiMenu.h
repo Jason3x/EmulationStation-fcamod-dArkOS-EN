@@ -32,6 +32,7 @@ private:
 	void openQuitMenu();
 	void openScraperSettings();
 	void openScreensaverOptions();
+	void openNetworkSettings();
 	void openSoundSettings();
 	void openUISettings();
 

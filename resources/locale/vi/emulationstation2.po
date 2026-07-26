@@ -1548,3 +1548,21 @@ msgstr "Không thiết lập"
 
 msgid "QUICK SEARCH"
 msgstr "TÌM NHANH"
+
+msgid "SHOW WIFI ICON"
+msgstr "HIỂN THỊ BIỂU TƯỢNG WI-FI"
+
+msgid "SHOW BLUETOOTH ICON"
+msgstr "HIỂN THỊ BIỂU TƯỢNG BLUETOOTH"
+
+msgid "WI-FI MANAGER"
+msgstr "QUẢN LÝ WI-FI"
+
+msgid "BLUETOOTH MANAGER"
+msgstr "QUẢN LÝ BLUETOOTH"
+
+msgid "WI-FI MANAGER NOT FOUND"
+msgstr "KHÔNG TÌM THẤY QUẢN LÝ WI-FI"
+
+msgid "BLUETOOTH MANAGER NOT FOUND"
+msgstr "KHÔNG TÌM THẤY QUẢN LÝ BLUETOOTH"

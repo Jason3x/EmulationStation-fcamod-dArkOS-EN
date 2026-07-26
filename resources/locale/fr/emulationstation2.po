@@ -1438,3 +1438,24 @@ msgstr "erreur"
 #: don't work
 msgid "Please restart Emulationstation for your changes to take effect"
 msgstr "veuillez redémarrer EmulationStation pour que vos modifications prennent effet"
+
+msgid "SHOW WIFI ICON"
+msgstr "AFFICHER L'ICÔNE WI-FI"
+
+msgid "SHOW BLUETOOTH ICON"
+msgstr "AFFICHER L'ICÔNE BLUETOOTH"
+
+msgid "NETWORK SETTINGS"
+msgstr "PARAMÈTRES RÉSEAU"
+
+msgid "WI-FI MANAGER"
+msgstr "GESTIONNAIRE WI-FI"
+
+msgid "BLUETOOTH MANAGER"
+msgstr "GESTIONNAIRE BLUETOOTH"
+
+msgid "WI-FI MANAGER NOT FOUND"
+msgstr "GESTIONNAIRE WI-FI INTROUVABLE"
+
+msgid "BLUETOOTH MANAGER NOT FOUND"
+msgstr "GESTIONNAIRE BLUETOOTH INTROUVABLE"
