@@ -1,0 +1,118 @@
+name: Build EmulationStation (RK3326 aarch64)
+
+on:
+  push:
+    branches: [ "351v", "feature/**" ]
+  pull_request:
+    branches: [ "351v" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo dpkg --add-architecture arm64
+          sudo sed -i 's/^deb /deb [arch=amd64] /' /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          sudo apt-get update -qq
+          sudo apt-get install -y \
+            gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
+            cmake make pkg-config gettext \
+            libfreeimage-dev:arm64 libvlc-dev:arm64 libvlccore-dev:arm64 \
+            rapidjson-dev libcurl4-openssl-dev:arm64 \
+            libfreetype-dev:arm64 libsdl2-dev:arm64 libsdl2-mixer-dev:arm64 \
+            libasound2-dev:arm64 libgles-dev:arm64 libgles2-mesa-dev:arm64 \
+            libx11-dev:arm64
+
+      - name: Install libgo2 headers
+        run: |
+          sudo mkdir -p /usr/include/go2
+          sudo curl -sL https://raw.githubusercontent.com/christianhaitian/libgo2/master/src/audio.h -o /usr/include/go2/audio.h
+          sudo curl -sL https://raw.githubusercontent.com/christianhaitian/libgo2/master/src/display.h -o /usr/include/go2/display.h
+          sudo curl -sL https://raw.githubusercontent.com/christianhaitian/libgo2/master/src/input.h -o /usr/include/go2/input.h
+
+      - name: Configure (cross-compile aarch64)
+        env:
+          SS_DEV_LOGIN: ${{ secrets.SS_DEV_LOGIN }}
+          SS_SOFTNAME: ${{ secrets.SS_SOFTNAME }}
+        run: |
+          cmake . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_STANDARD=17 \
+            -DCMAKE_SYSTEM_NAME=Linux \
+            -DCMAKE_SYSTEM_PROCESSOR=aarch64 \
+            -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc \
+            -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ \
+            -DCMAKE_CXX_FLAGS="-O3 -march=armv8-a+crc -mtune=cortex-a35 -ffast-math" \
+            -DCMAKE_FIND_ROOT_PATH="/usr/lib/aarch64-linux-gnu;/usr/include/aarch64-linux-gnu" \
+            -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+            -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+            -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+            -DFREETYPE_INCLUDE_DIRS=/usr/include/freetype2 \
+            -DFREETYPE_LIBRARY=/usr/lib/aarch64-linux-gnu/libfreetype.so \
+            -DX11_X11_INCLUDE_PATH=/usr/include/aarch64-linux-gnu \
+            -DX11_X11_LIB=/usr/lib/aarch64-linux-gnu/libX11.so \
+            -DFreeImage_INCLUDE_DIR=/usr/include \
+            -DFreeImage_LIBRARY_REL=/usr/lib/aarch64-linux-gnu/libfreeimage.so \
+            -DSDL2_INCLUDE_DIR=/usr/include/SDL2 \
+            -DSDL2_LIBRARY=/usr/lib/aarch64-linux-gnu/libSDL2.so \
+            -DSDLMIXER_INCLUDE_DIR=/usr/include/SDL2 \
+            -DSDLMIXER_LIBRARY=/usr/lib/aarch64-linux-gnu/libSDL2_mixer.so \
+            -DVLC_INCLUDE_DIR=/usr/include/vlc \
+            -DVLC_LIBRARY=/usr/lib/aarch64-linux-gnu/libvlc.so \
+            -DALSA_INCLUDE_DIR=/usr/include/aarch64-linux-gnu \
+            -DALSA_LIBRARY=/usr/lib/aarch64-linux-gnu/libasound.so \
+            -DRAPIDJSON_INCLUDE_DIRS=/usr/include \
+            -DOPENGLES_INCLUDE_DIR=/usr/include/GLES2 \
+            -DENABLE_PULSE=OFF \
+            -DGLES=ON \
+            -DGL=OFF \
+            -DSCREENSCRAPER_DEV_LOGIN="${SS_DEV_LOGIN}" \
+            -DSCREENSCRAPER_SOFTNAME="${SS_SOFTNAME}" \
+            -Wno-dev
+
+      - name: Build
+        env:
+          SS_DEV_LOGIN: ${{ secrets.SS_DEV_LOGIN }}
+          SS_SOFTNAME: ${{ secrets.SS_SOFTNAME }}
+        run: make -j$(nproc)
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: emulationstation-aarch64
+          path: emulationstation
+          retention-days: 30
+
+      - name: Upload resources
+        uses: actions/upload-artifact@v4
+        with:
+          name: emulationstation-resources
+          path: resources/
+          retention-days: 30
+
+      - name: Package all-in-one zip for roms/tools
+        run: |
+          mkdir -p roms-tools/resources roms-tools/scripts
+          cp emulationstation roms-tools/
+          cp resources/bluetooth*.svg resources/network*.svg roms-tools/resources/
+          cp scripts/es-status-daemon.sh scripts/es-status-daemon.service scripts/install-status-daemon.sh roms-tools/scripts/
+          cp scripts/install-es.sh roms-tools/
+          zip -r emulationstation-roms-tools.zip roms-tools/
+
+      - name: Upload all-in-one zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: emulationstation-roms-tools
+          path: emulationstation-roms-tools.zip
+          retention-days: 30
