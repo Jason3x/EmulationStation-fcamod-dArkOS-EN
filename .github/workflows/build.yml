@@ -16,6 +16,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+          fetch-depth: 0
+
+      - name: Sync with upstream christianhaitian/351v
+        run: |
+          git remote add upstream https://github.com/christianhaitian/EmulationStation-fcamod.git || true
+          git fetch upstream 351v
+          git merge upstream/351v --no-edit --allow-unrelated-histories || true
+          git submodule update --init --recursive
 
       - name: Install dependencies
         run: |
