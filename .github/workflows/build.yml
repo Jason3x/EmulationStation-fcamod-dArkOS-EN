@@ -40,6 +40,7 @@ jobs:
           wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-bifrost-g31-rxp0-wayland-gbm_1.7-2+deb10_arm64.deb -O /tmp/libmali.deb
           wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-dev_1.7-1+deb10_arm64.deb -O /tmp/libmali-dev.deb
           sudo dpkg -i /tmp/libmali.deb /tmp/libmali-dev.deb
+          sudo apt-get install -y libsdl2-dev:arm64 libsdl2-mixer-dev:arm64 2>/dev/null || true
 
       - name: Install Mali RK libs
         run: |
