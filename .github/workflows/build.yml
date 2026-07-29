@@ -36,7 +36,7 @@ jobs:
 
       - name: Install Mali RK libs
         run: |
-          sudo apt-get remove -y libgles-dev:arm64 libgles2-mesa-dev:arm64 libgles-dev libgles2-mesa-dev libegl-dev:arm64 libgl-dev:arm64 2>/dev/null || true
+          sudo apt-get remove -y libgles-dev:arm64 libgles2-mesa-dev:arm64 libgles-dev libgles2-mesa-dev libegl-dev:arm64 libgl-dev:arm64 libwayland-dev:arm64 2>/dev/null || true
           wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-bifrost-g31-rxp0-wayland-gbm_1.7-2+deb10_arm64.deb -O /tmp/libmali.deb
           wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-dev_1.7-1+deb10_arm64.deb -O /tmp/libmali-dev.deb
           sudo dpkg -i /tmp/libmali.deb /tmp/libmali-dev.deb
