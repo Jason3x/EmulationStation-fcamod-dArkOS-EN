@@ -299,14 +299,14 @@ void GuiMenu::openNetworkSettings()
 
 	s->addEntry(_("WI-FI MANAGER"), false, [this] {
 		if (access("/opt/system/wifi-manager.sh", F_OK) == 0)
-			system("/opt/system/wifi-manager.sh &");
+			GuiTools(mWindow).launchTool("/opt/system/wifi-manager.sh");
 		else
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/opt/system/wifi-manager.sh"), _("OK")));
 	}, "iconWifi");
 
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
 		if (access("/opt/system/bt-manager.sh", F_OK) == 0)
-			system("/opt/system/bt-manager.sh &");
+			GuiTools(mWindow).launchTool("/opt/system/bt-manager.sh");
 		else
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/opt/system/bt-manager.sh"), _("OK")));
 	}, "iconBluetooth");
