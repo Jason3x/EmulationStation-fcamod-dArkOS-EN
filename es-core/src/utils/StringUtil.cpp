@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <cstring>
 #include "utils/han.h"
+#include <cstdint>
 
 #if defined(_WIN32)
 #include <Windows.h>

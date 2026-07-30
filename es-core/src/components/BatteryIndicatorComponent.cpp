@@ -19,7 +19,7 @@ void BatteryIndicatorComponent::init()
 	if (Renderer::isSmallScreen())
 	{
 		setPosition(Renderer::getScreenWidth() * 0.010, Renderer::getScreenHeight() * 0);
-		setSize(Renderer::getScreenWidth() * 0.065, Renderer::getScreenHeight() * 0.065);
+		setSize(Renderer::getScreenWidth() * 0.320, Renderer::getScreenHeight() * 0.065);
 	}
 	else
 	{
@@ -50,10 +50,22 @@ void BatteryIndicatorComponent::init()
 	if (ResourceManager::getInstance()->fileExists(":/battery/empty.svg"))
 		mEmpty = ResourceManager::getInstance()->getResourcePath(":/battery/empty.svg");
 
-	if (ResourceManager::getInstance()->fileExists(":/network.svg"))
+	if (ResourceManager::getInstance()->fileExists(":/network.svg") && Settings::getInstance()->getBool("networkIcon"))
 	{
 		mView |= ActivityView::NETWORK;
 		mNetworkImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/network.svg"), false, true);
+		mNetworkActiveImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/network_active.svg"), false, true);
+		mNetworkOffImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/network_off.svg"), false, true);
+		mNetworkShareImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/network_share.svg"), false, true);
+		mNetworkServiceImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/network_service.svg"), false, true);
+	}
+
+	if (Settings::getInstance()->getBool("bluetoothIcon") && ResourceManager::getInstance()->fileExists(":/bluetooth.svg"))
+	{
+		mView |= ActivityView::BLUETOOTH;
+		mBluetoothImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/bluetooth.svg"), false, true);
+		mBluetoothActiveImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/bluetooth_active.svg"), false, true);
+		mBluetoothOffImage = TextureResource::get(ResourceManager::getInstance()->getResourcePath(":/bluetooth_off.svg"), false, true);
 	}
 
 	updateBatteryInfo();
