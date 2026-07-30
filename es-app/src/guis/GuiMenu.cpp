@@ -299,6 +299,7 @@ void GuiMenu::openNetworkSettings()
 
 	s->addEntry(_("WI-FI MANAGER"), false, [this] {
 		if (access("/opt/system/wifi-manager.sh", F_OK) == 0)
+		{
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
 			mWindow->deinit(true);
@@ -308,12 +309,14 @@ void GuiMenu::openNetworkSettings()
 			mWindow->init(true);
 			VolumeControl::getInstance()->init();
 			AudioManager::getInstance()->init();
+		}
 		else
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/opt/system/wifi-manager.sh"), _("OK")));
 	}, "iconWifi");
 
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
 		if (access("/opt/system/bt-manager.sh", F_OK) == 0)
+		{
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
 			mWindow->deinit(true);
@@ -323,6 +326,7 @@ void GuiMenu::openNetworkSettings()
 			mWindow->init(true);
 			VolumeControl::getInstance()->init();
 			AudioManager::getInstance()->init();
+		}
 		else
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/opt/system/bt-manager.sh"), _("OK")));
 	}, "iconBluetooth");
