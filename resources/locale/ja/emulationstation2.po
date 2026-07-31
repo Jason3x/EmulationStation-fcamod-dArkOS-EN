@@ -1336,3 +1336,9 @@ msgstr "Wi-Fi管理が見つかりません"
 
 msgid "BLUETOOTH MANAGER NOT FOUND"
 msgstr "Bluetooth管理が見つかりません"
+
+msgid "SSH SHARING (START/STOP)"
+msgstr "SSH共有 (開始/停止)"
+
+msgid "SSH ON BOOT (ENABLE/DISABLE)"
+msgstr "起動時SSH (有効/無効)"

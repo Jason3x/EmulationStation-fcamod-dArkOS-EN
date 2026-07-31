@@ -1566,3 +1566,9 @@ msgstr "KHÔNG TÌM THẤY QUẢN LÝ WI-FI"
 
 msgid "BLUETOOTH MANAGER NOT FOUND"
 msgstr "KHÔNG TÌM THẤY QUẢN LÝ BLUETOOTH"
+
+msgid "SSH SHARING (START/STOP)"
+msgstr "CHIA SẺ SSH (BẮT ĐẦU/DỪNG)"
+
+msgid "SSH ON BOOT (ENABLE/DISABLE)"
+msgstr "SSH KHI KHỞI ĐỘNG (BẬT/TẮT)"

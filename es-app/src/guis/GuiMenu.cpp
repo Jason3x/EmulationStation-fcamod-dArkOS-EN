@@ -331,6 +331,39 @@ void GuiMenu::openNetworkSettings()
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/opt/system/bt-manager.sh"), _("OK")));
 	}, "iconBluetooth");
 
+
+	// --- Toggle SSH partage de connexion (start/stop immédiat) ---
+	auto sshShare = std::make_shared<SwitchComponent>(mWindow);
+	{
+		FILE* f = popen("systemctl is-active ssh 2>/dev/null", "r");
+		char buf[16] = {0};
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		sshShare->setState(std::string(buf).find("active") != std::string::npos);
+	}
+	s->addWithLabel(_("SSH SHARING (START/STOP)"), sshShare);
+	s->addSaveFunc([sshShare] {
+		if (sshShare->getState())
+			runSystemCommand("sudo systemctl start ssh", "", nullptr);
+		else
+			runSystemCommand("sudo systemctl stop ssh", "", nullptr);
+	});
+
+	// --- Toggle SSH permanent (enable/disable au démarrage) ---
+	auto sshBoot = std::make_shared<SwitchComponent>(mWindow);
+	{
+		FILE* f = popen("systemctl is-enabled ssh 2>/dev/null", "r");
+		char buf[16] = {0};
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		sshBoot->setState(std::string(buf).find("enabled") != std::string::npos);
+	}
+	s->addWithLabel(_("SSH ON BOOT (ENABLE/DISABLE)"), sshBoot);
+	s->addSaveFunc([sshBoot] {
+		if (sshBoot->getState())
+			runSystemCommand("sudo systemctl enable ssh", "", nullptr);
+		else
+			runSystemCommand("sudo systemctl disable ssh", "", nullptr);
+	});
+
 	mWindow->pushGui(s);
 }
 

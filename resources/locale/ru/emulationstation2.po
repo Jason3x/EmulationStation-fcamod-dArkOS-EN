@@ -3504,3 +3504,9 @@ msgstr "МЕНЕДЖЕР WI-FI НЕ НАЙДЕН"
 
 msgid "BLUETOOTH MANAGER NOT FOUND"
 msgstr "МЕНЕДЖЕР BLUETOOTH НЕ НАЙДЕН"
+
+msgid "SSH SHARING (START/STOP)"
+msgstr "ОБЩИЙ ДОСТУП SSH (ЗАПУСК/ОСТАНОВКА)"
+
+msgid "SSH ON BOOT (ENABLE/DISABLE)"
+msgstr "SSH ПРИ ЗАГРУЗКЕ (ВКЛЮЧИТЬ/ВЫКЛЮЧИТЬ)"

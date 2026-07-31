@@ -3490,3 +3490,9 @@ msgstr "找不到Wi-Fi管理員"
 
 msgid "BLUETOOTH MANAGER NOT FOUND"
 msgstr "找不到藍牙管理員"
+
+msgid "SSH SHARING (START/STOP)"
+msgstr "SSH分享 (啟動/停止)"
+
+msgid "SSH ON BOOT (ENABLE/DISABLE)"
+msgstr "開機SSH (啟用/停用)"

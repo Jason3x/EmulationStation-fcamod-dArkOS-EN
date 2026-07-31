@@ -1710,3 +1710,9 @@ msgstr "Wi-Fi 관리자를 찾을 수 없음"
 
 msgid "BLUETOOTH MANAGER NOT FOUND"
 msgstr "블루투스 관리자를 찾을 수 없음"
+
+msgid "SSH SHARING (START/STOP)"
+msgstr "SSH 공유 (시작/중지)"
+
+msgid "SSH ON BOOT (ENABLE/DISABLE)"
+msgstr "부팅 시 SSH (활성화/비활성화)"

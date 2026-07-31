@@ -1970,3 +1970,9 @@ msgstr "Ο ΔΙΑΧΕΙΡΙΣΤΉΣ WI-FI ΔΕΝ ΒΡΈΘΗΚΕ"
 
 msgid "BLUETOOTH MANAGER NOT FOUND"
 msgstr "Ο ΔΙΑΧΕΙΡΙΣΤΉΣ BLUETOOTH ΔΕΝ ΒΡΈΘΗΚΕ"
+
+msgid "SSH SHARING (START/STOP)"
+msgstr "ΚΟΙΝΟΠΟΊΗΣΗ SSH (ΕΚΚΊΝΗΣΗ/ΔΙΑΚΟΠΉ)"
+
+msgid "SSH ON BOOT (ENABLE/DISABLE)"
+msgstr "SSH ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ (ΕΝΕΡΓΟΠΟΊΗΣΗ/ΑΠΕΝΕΡΓΟΠΟΊΗΣΗ)"
