@@ -1722,3 +1722,15 @@ msgstr "삼바 공유 (시작/중지)"
 
 msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
 msgstr "부팅 시 삼바 (활성화/비활성화)"
+
+msgid "SAMBA SHARING"
+msgstr "삼바 공유"
+
+msgid "SAMBA ON BOOT"
+msgstr "부팅 시 삼바"
+
+msgid "SSH SHARING"
+msgstr "SSH 공유"
+
+msgid "SSH ON BOOT"
+msgstr "부팅 시 SSH"

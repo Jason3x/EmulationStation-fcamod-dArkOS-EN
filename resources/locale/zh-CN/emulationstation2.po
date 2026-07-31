@@ -3498,3 +3498,15 @@ msgstr "Samba共享 (启动/停止)"
 
 msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
 msgstr "开机Samba (启用/禁用)"
+
+msgid "SAMBA SHARING"
+msgstr "Samba共享"
+
+msgid "SAMBA ON BOOT"
+msgstr "开机Samba"
+
+msgid "SSH SHARING"
+msgstr "SSH共享"
+
+msgid "SSH ON BOOT"
+msgstr "开机SSH"

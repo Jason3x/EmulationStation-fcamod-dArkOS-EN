@@ -3262,3 +3262,15 @@ msgstr "SAMBA VID START (AKTIVERA/INAKTIVERA)"
 
 msgid "HOSTNAME"
 msgstr "VÄRDNAMN"
+
+msgid "SAMBA SHARING"
+msgstr "SAMBA-DELNING"
+
+msgid "SAMBA ON BOOT"
+msgstr "SAMBA VID START"
+
+msgid "SSH SHARING"
+msgstr "SSH-DELNING"
+
+msgid "SSH ON BOOT"
+msgstr "SSH VID START"

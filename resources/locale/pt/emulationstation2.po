@@ -1506,3 +1506,15 @@ msgstr "SAMBA NO ARRANQUE (ATIVAR/DESATIVAR)"
 
 msgid "HOSTNAME"
 msgstr "NOME DO HOST"
+
+msgid "SAMBA SHARING"
+msgstr "PARTILHA SAMBA"
+
+msgid "SAMBA ON BOOT"
+msgstr "SAMBA NO ARRANQUE"
+
+msgid "SSH SHARING"
+msgstr "PARTILHA SSH"
+
+msgid "SSH ON BOOT"
+msgstr "SSH NO ARRANQUE"

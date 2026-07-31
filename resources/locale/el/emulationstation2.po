@@ -1982,3 +1982,15 @@ msgstr "ΚΟΙΝΟΠΟΊΗΣΗ SAMBA (ΕΚΚΊΝΗΣΗ/ΔΙΑΚΟΠΉ)"
 
 msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
 msgstr "SAMBA ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ (ΕΝΕΡΓΟΠΟΊΗΣΗ/ΑΠΕΝΕΡΓΟΠΟΊΗΣΗ)"
+
+msgid "SAMBA SHARING"
+msgstr "ΚΟΙΝΟΠΟΊΗΣΗ SAMBA"
+
+msgid "SAMBA ON BOOT"
+msgstr "SAMBA ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ"
+
+msgid "SSH SHARING"
+msgstr "ΚΟΙΝΟΠΟΊΗΣΗ SSH"
+
+msgid "SSH ON BOOT"
+msgstr "SSH ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ"

@@ -1578,3 +1578,15 @@ msgstr "CHIA SẺ SAMBA (BẮT ĐẦU/DỪNG)"
 
 msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
 msgstr "SAMBA KHI KHỞI ĐỘNG (BẬT/TẮT)"
+
+msgid "SAMBA SHARING"
+msgstr "CHIA SẺ SAMBA"
+
+msgid "SAMBA ON BOOT"
+msgstr "SAMBA KHI KHỞI ĐỘNG"
+
+msgid "SSH SHARING"
+msgstr "CHIA SẺ SSH"
+
+msgid "SSH ON BOOT"
+msgstr "SSH KHI KHỞI ĐỘNG"

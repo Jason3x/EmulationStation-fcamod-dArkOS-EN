@@ -297,6 +297,29 @@ void GuiMenu::openNetworkSettings()
 {
 	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS"));
 
+	// --- Hostname ---
+	{
+		char buf[64] = {0};
+		FILE* f = popen("hostname 2>/dev/null", "r");
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string hn(buf);
+		if (!hn.empty() && hn.back() == '\n') hn.pop_back();
+		if (hn.empty()) hn = "N/A";
+		s->addEntry(_("HOSTNAME") + ": " + hn, false, nullptr);
+	}
+
+	// --- IP Address ---
+	{
+		char buf[64] = {0};
+		FILE* f = popen("ip -4 addr show wlan0 2>/dev/null | grep -oP '(?<=inet )[\.0-9]+'", "r");
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string ip(buf);
+		if (!ip.empty() && ip.back() == '\n') ip.pop_back();
+		if (ip.empty()) ip = "N/A";
+		s->addEntry(_("IP ADDRESS") + ": " + ip, false, nullptr);
+	}
+
+	// --- WiFi Manager ---
 	s->addEntry(_("WI-FI MANAGER"), false, [this] {
 		if (access("/opt/system/wifi-manager.sh", F_OK) == 0)
 		{
@@ -314,6 +337,7 @@ void GuiMenu::openNetworkSettings()
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/opt/system/wifi-manager.sh"), _("OK")));
 	}, "iconWifi");
 
+	// --- Bluetooth Manager ---
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
 		if (access("/opt/system/bt-manager.sh", F_OK) == 0)
 		{
@@ -331,97 +355,74 @@ void GuiMenu::openNetworkSettings()
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/opt/system/bt-manager.sh"), _("OK")));
 	}, "iconBluetooth");
 
-
-	// --- Affichage hostname ---
-	{
-		FILE* f = popen("hostname 2>/dev/null", "r");
-		char buf[64] = {0};
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		std::string hn = std::string(buf);
-		if (!hn.empty() && hn.back() == '\n') hn.pop_back();
-		if (hn.empty()) hn = "N/A";
-		s->addEntry(_("HOSTNAME") + ": " + hn, false, nullptr);
-	}
-
-	// --- Affichage IP courante ---
-	{
-		FILE* f = popen("ip -4 addr show wlan0 2>/dev/null | grep -oP '(?<=inet )[\.0-9]+'", "r");
-		char buf[64] = {0};
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		std::string ip = std::string(buf);
-		if (!ip.empty() && ip.back() == '\n') ip.pop_back();
-		if (ip.empty()) ip = "N/A";
-		s->addEntry(_("IP ADDRESS") + ": " + ip, false, nullptr);
-	}
-
-	// --- Toggle Samba (start/stop immédiat) ---
+	// --- Samba toggle (action immediate au clic) ---
 	auto sambaShare = std::make_shared<SwitchComponent>(mWindow);
 	{
-		FILE* f = popen("systemctl is-active smbd 2>/dev/null", "r");
 		char buf[16] = {0};
+		FILE* f = popen("systemctl is-active smbd 2>/dev/null", "r");
 		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
 		sambaShare->setState(std::string(buf).find("active") != std::string::npos);
 	}
-	s->addWithLabel(_("SAMBA SHARING (START/STOP)"), sambaShare);
-	s->addSaveFunc([sambaShare] {
+	s->addWithLabel(_("SAMBA SHARING"), sambaShare);
+	sambaShare->setOnChangedCallback([sambaShare] {
 		if (sambaShare->getState()) {
-			runSystemCommand("sudo systemctl start smbd", "", nullptr);
-			runSystemCommand("sudo systemctl start nmbd", "", nullptr);
+			runSystemCommand("sudo systemctl start smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl start nmbd 2>/dev/null", "", nullptr);
 		} else {
-			runSystemCommand("sudo systemctl stop smbd", "", nullptr);
-			runSystemCommand("sudo systemctl stop nmbd", "", nullptr);
+			runSystemCommand("sudo systemctl stop smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl stop nmbd 2>/dev/null", "", nullptr);
 		}
 	});
 
-	// --- Toggle Samba permanent (enable/disable au démarrage) ---
+	// --- Samba boot ---
 	auto sambaBoot = std::make_shared<SwitchComponent>(mWindow);
 	{
-		FILE* f = popen("systemctl is-enabled smbd 2>/dev/null", "r");
 		char buf[16] = {0};
+		FILE* f = popen("systemctl is-enabled smbd 2>/dev/null", "r");
 		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
 		sambaBoot->setState(std::string(buf).find("enabled") != std::string::npos);
 	}
-	s->addWithLabel(_("SAMBA ON BOOT (ENABLE/DISABLE)"), sambaBoot);
-	s->addSaveFunc([sambaBoot] {
+	s->addWithLabel(_("SAMBA ON BOOT"), sambaBoot);
+	sambaBoot->setOnChangedCallback([sambaBoot] {
 		if (sambaBoot->getState()) {
-			runSystemCommand("sudo systemctl enable smbd", "", nullptr);
-			runSystemCommand("sudo systemctl enable nmbd", "", nullptr);
+			runSystemCommand("sudo systemctl enable smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl enable nmbd 2>/dev/null", "", nullptr);
 		} else {
-			runSystemCommand("sudo systemctl disable smbd", "", nullptr);
-			runSystemCommand("sudo systemctl disable nmbd", "", nullptr);
+			runSystemCommand("sudo systemctl disable smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl disable nmbd 2>/dev/null", "", nullptr);
 		}
 	});
 
-	// --- Toggle SSH partage de connexion (start/stop immédiat) ---
+	// --- SSH toggle (action immediate au clic) ---
 	auto sshShare = std::make_shared<SwitchComponent>(mWindow);
 	{
-		FILE* f = popen("systemctl is-active ssh 2>/dev/null", "r");
 		char buf[16] = {0};
+		FILE* f = popen("systemctl is-active ssh 2>/dev/null", "r");
 		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
 		sshShare->setState(std::string(buf).find("active") != std::string::npos);
 	}
-	s->addWithLabel(_("SSH SHARING (START/STOP)"), sshShare);
-	s->addSaveFunc([sshShare] {
+	s->addWithLabel(_("SSH SHARING"), sshShare);
+	sshShare->setOnChangedCallback([sshShare] {
 		if (sshShare->getState())
-			runSystemCommand("sudo systemctl start ssh", "", nullptr);
+			runSystemCommand("sudo systemctl start ssh 2>/dev/null", "", nullptr);
 		else
-			runSystemCommand("sudo systemctl stop ssh", "", nullptr);
+			runSystemCommand("sudo systemctl stop ssh 2>/dev/null", "", nullptr);
 	});
 
-	// --- Toggle SSH permanent (enable/disable au démarrage) ---
+	// --- SSH boot ---
 	auto sshBoot = std::make_shared<SwitchComponent>(mWindow);
 	{
-		FILE* f = popen("systemctl is-enabled ssh 2>/dev/null", "r");
 		char buf[16] = {0};
+		FILE* f = popen("systemctl is-enabled ssh 2>/dev/null", "r");
 		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
 		sshBoot->setState(std::string(buf).find("enabled") != std::string::npos);
 	}
-	s->addWithLabel(_("SSH ON BOOT (ENABLE/DISABLE)"), sshBoot);
-	s->addSaveFunc([sshBoot] {
+	s->addWithLabel(_("SSH ON BOOT"), sshBoot);
+	sshBoot->setOnChangedCallback([sshBoot] {
 		if (sshBoot->getState())
-			runSystemCommand("sudo systemctl enable ssh", "", nullptr);
+			runSystemCommand("sudo systemctl enable ssh 2>/dev/null", "", nullptr);
 		else
-			runSystemCommand("sudo systemctl disable ssh", "", nullptr);
+			runSystemCommand("sudo systemctl disable ssh 2>/dev/null", "", nullptr);
 	});
 
 	mWindow->pushGui(s);

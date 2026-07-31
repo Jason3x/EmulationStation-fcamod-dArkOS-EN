@@ -1354,3 +1354,15 @@ msgstr "起動時Samba (有効/無効)"
 
 msgid "HOSTNAME"
 msgstr "ホスト名"
+
+msgid "SAMBA SHARING"
+msgstr "Samba共有"
+
+msgid "SAMBA ON BOOT"
+msgstr "起動時Samba"
+
+msgid "SSH SHARING"
+msgstr "SSH共有"
+
+msgid "SSH ON BOOT"
+msgstr "起動時SSH"
