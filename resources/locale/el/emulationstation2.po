@@ -1976,3 +1976,9 @@ msgstr "ΚΟΙΝΟΠΟΊΗΣΗ SSH (ΕΚΚΊΝΗΣΗ/ΔΙΑΚΟΠΉ)"
 
 msgid "SSH ON BOOT (ENABLE/DISABLE)"
 msgstr "SSH ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ (ΕΝΕΡΓΟΠΟΊΗΣΗ/ΑΠΕΝΕΡΓΟΠΟΊΗΣΗ)"
+
+msgid "SAMBA SHARING (START/STOP)"
+msgstr "ΚΟΙΝΟΠΟΊΗΣΗ SAMBA (ΕΚΚΊΝΗΣΗ/ΔΙΑΚΟΠΉ)"
+
+msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
+msgstr "SAMBA ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ (ΕΝΕΡΓΟΠΟΊΗΣΗ/ΑΠΕΝΕΡΓΟΠΟΊΗΣΗ)"

@@ -3510,3 +3510,9 @@ msgstr "ОБЩИЙ ДОСТУП SSH (ЗАПУСК/ОСТАНОВКА)"
 
 msgid "SSH ON BOOT (ENABLE/DISABLE)"
 msgstr "SSH ПРИ ЗАГРУЗКЕ (ВКЛЮЧИТЬ/ВЫКЛЮЧИТЬ)"
+
+msgid "SAMBA SHARING (START/STOP)"
+msgstr "ОБЩИЙ ДОСТУП SAMBA (ЗАПУСК/ОСТАНОВКА)"
+
+msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
+msgstr "SAMBA ПРИ ЗАГРУЗКЕ (ВКЛЮЧИТЬ/ВЫКЛЮЧИТЬ)"

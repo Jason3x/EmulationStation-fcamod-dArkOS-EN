@@ -332,6 +332,55 @@ void GuiMenu::openNetworkSettings()
 	}, "iconBluetooth");
 
 
+	// --- Affichage IP courante ---
+	{
+		FILE* f = popen("ip -4 addr show wlan0 2>/dev/null | grep -oP '(?<=inet )[\.0-9]+'", "r");
+		char buf[64] = {0};
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string ip = std::string(buf);
+		if (!ip.empty() && ip.back() == '\n') ip.pop_back();
+		if (ip.empty()) ip = "N/A";
+		s->addEntry(_("IP ADDRESS") + ": " + ip, false, nullptr);
+	}
+
+	// --- Toggle Samba (start/stop immédiat) ---
+	auto sambaShare = std::make_shared<SwitchComponent>(mWindow);
+	{
+		FILE* f = popen("systemctl is-active smbd 2>/dev/null", "r");
+		char buf[16] = {0};
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		sambaShare->setState(std::string(buf).find("active") != std::string::npos);
+	}
+	s->addWithLabel(_("SAMBA SHARING (START/STOP)"), sambaShare);
+	s->addSaveFunc([sambaShare] {
+		if (sambaShare->getState()) {
+			runSystemCommand("sudo systemctl start smbd", "", nullptr);
+			runSystemCommand("sudo systemctl start nmbd", "", nullptr);
+		} else {
+			runSystemCommand("sudo systemctl stop smbd", "", nullptr);
+			runSystemCommand("sudo systemctl stop nmbd", "", nullptr);
+		}
+	});
+
+	// --- Toggle Samba permanent (enable/disable au démarrage) ---
+	auto sambaBoot = std::make_shared<SwitchComponent>(mWindow);
+	{
+		FILE* f = popen("systemctl is-enabled smbd 2>/dev/null", "r");
+		char buf[16] = {0};
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		sambaBoot->setState(std::string(buf).find("enabled") != std::string::npos);
+	}
+	s->addWithLabel(_("SAMBA ON BOOT (ENABLE/DISABLE)"), sambaBoot);
+	s->addSaveFunc([sambaBoot] {
+		if (sambaBoot->getState()) {
+			runSystemCommand("sudo systemctl enable smbd", "", nullptr);
+			runSystemCommand("sudo systemctl enable nmbd", "", nullptr);
+		} else {
+			runSystemCommand("sudo systemctl disable smbd", "", nullptr);
+			runSystemCommand("sudo systemctl disable nmbd", "", nullptr);
+		}
+	});
+
 	// --- Toggle SSH partage de connexion (start/stop immédiat) ---
 	auto sshShare = std::make_shared<SwitchComponent>(mWindow);
 	{

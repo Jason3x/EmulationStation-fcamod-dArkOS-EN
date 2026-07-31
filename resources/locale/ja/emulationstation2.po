@@ -1342,3 +1342,12 @@ msgstr "SSH共有 (開始/停止)"
 
 msgid "SSH ON BOOT (ENABLE/DISABLE)"
 msgstr "起動時SSH (有効/無効)"
+
+msgid "IP ADDRESS"
+msgstr "IPアドレス"
+
+msgid "SAMBA SHARING (START/STOP)"
+msgstr "Samba共有 (開始/停止)"
+
+msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
+msgstr "起動時Samba (有効/無効)"

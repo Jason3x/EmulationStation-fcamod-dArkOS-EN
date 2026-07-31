@@ -3718,3 +3718,9 @@ msgstr "СПІЛЬНИЙ ДОСТУП SSH (ЗАПУСК/ЗУПИНКА)"
 
 msgid "SSH ON BOOT (ENABLE/DISABLE)"
 msgstr "SSH ПРИ ЗАВАНТАЖЕННІ (УВІМКНУТИ/ВИМКНУТИ)"
+
+msgid "SAMBA SHARING (START/STOP)"
+msgstr "СПІЛЬНИЙ ДОСТУП SAMBA (ЗАПУСК/ЗУПИНКА)"
+
+msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
+msgstr "SAMBA ПРИ ЗАВАНТАЖЕННІ (УВІМКНУТИ/ВИМКНУТИ)"
