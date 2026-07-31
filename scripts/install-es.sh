@@ -102,6 +102,14 @@ install_svgs() {
     done
 }
 
+# --- Installation des locales ---
+install_locales() {
+    if [ -d "$TOOLS_DIR/resources/locale" ]; then
+        mkdir -p "$ES_RES/locale"
+        cp -r "$TOOLS_DIR/resources/locale/." "$ES_RES/locale/"
+    fi
+}
+
 # --- Suppression des SVG ---
 remove_svgs() {
     local svgs="bluetooth.svg bluetooth_active.svg bluetooth_off.svg network.svg network_active.svg network_off.svg network_share.svg network_service.svg"
@@ -186,6 +194,7 @@ Install_dArkOS_EN() {
 
         smooth_progress "Installing SVG icons..." 0.05 41 65
         install_svgs
+        install_locales
 
         smooth_progress "Applying optimizations..." 0.05 66 90
         apply_optimizations

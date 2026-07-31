@@ -127,7 +127,8 @@ jobs:
         run: |
           mkdir -p roms-tools/resources roms-tools/scripts
           cp emulationstation roms-tools/
-          cp resources/bluetooth*.svg resources/network*.svg roms-tools/resources/
+          cp -r resources/. roms-tools/resources/
+          # Les locales sont incluses via resources/locale/
           cp scripts/es-status-daemon.sh scripts/es-status-daemon.service scripts/install-status-daemon.sh roms-tools/scripts/
           cp scripts/install-es.sh roms-tools/
           zip -r emulationstation-roms-tools.zip roms-tools/
