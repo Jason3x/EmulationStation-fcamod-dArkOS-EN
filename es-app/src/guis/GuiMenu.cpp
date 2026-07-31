@@ -332,6 +332,17 @@ void GuiMenu::openNetworkSettings()
 	}, "iconBluetooth");
 
 
+	// --- Affichage hostname ---
+	{
+		FILE* f = popen("hostname 2>/dev/null", "r");
+		char buf[64] = {0};
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string hn = std::string(buf);
+		if (!hn.empty() && hn.back() == '\n') hn.pop_back();
+		if (hn.empty()) hn = "N/A";
+		s->addEntry(_("HOSTNAME") + ": " + hn, false, nullptr);
+	}
+
 	// --- Affichage IP courante ---
 	{
 		FILE* f = popen("ip -4 addr show wlan0 2>/dev/null | grep -oP '(?<=inet )[\.0-9]+'", "r");

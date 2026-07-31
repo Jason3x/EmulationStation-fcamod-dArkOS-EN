@@ -1351,3 +1351,6 @@ msgstr "Samba共有 (開始/停止)"
 
 msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
 msgstr "起動時Samba (有効/無効)"
+
+msgid "HOSTNAME"
+msgstr "ホスト名"
