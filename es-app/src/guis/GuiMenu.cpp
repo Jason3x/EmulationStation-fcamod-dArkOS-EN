@@ -363,11 +363,11 @@ void GuiMenu::openNetworkSettings()
 		Settings::getInstance()->setBool("SambaEnabled", sambaShare->getState());
 		Settings::getInstance()->saveFile();
 		if (sambaShare->getState()) {
-			runSystemCommand("sudo systemctl start smbd 2>/dev/null", "", nullptr);
-			runSystemCommand("sudo systemctl start nmbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl start smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl start nmbd 2>/dev/null", "", nullptr);
 		} else {
-			runSystemCommand("sudo systemctl stop smbd 2>/dev/null", "", nullptr);
-			runSystemCommand("sudo systemctl stop nmbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl stop smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl stop nmbd 2>/dev/null", "", nullptr);
 		}
 	});
 
@@ -379,11 +379,11 @@ void GuiMenu::openNetworkSettings()
 		Settings::getInstance()->setBool("SambaOnBoot", sambaBoot->getState());
 		Settings::getInstance()->saveFile();
 		if (sambaBoot->getState()) {
-			runSystemCommand("sudo systemctl enable smbd 2>/dev/null", "", nullptr);
-			runSystemCommand("sudo systemctl enable nmbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl enable smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl enable nmbd 2>/dev/null", "", nullptr);
 		} else {
-			runSystemCommand("sudo systemctl disable smbd 2>/dev/null", "", nullptr);
-			runSystemCommand("sudo systemctl disable nmbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl disable smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl disable nmbd 2>/dev/null", "", nullptr);
 		}
 	});
 
@@ -395,9 +395,9 @@ void GuiMenu::openNetworkSettings()
 		Settings::getInstance()->setBool("SshEnabled", sshShare->getState());
 		Settings::getInstance()->saveFile();
 		if (sshShare->getState())
-			runSystemCommand("sudo systemctl start ssh 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl start ssh 2>/dev/null", "", nullptr);
 		else
-			runSystemCommand("sudo systemctl stop ssh 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl stop ssh 2>/dev/null", "", nullptr);
 	});
 
 	// --- SSH boot ---
@@ -408,9 +408,9 @@ void GuiMenu::openNetworkSettings()
 		Settings::getInstance()->setBool("SshOnBoot", sshBoot->getState());
 		Settings::getInstance()->saveFile();
 		if (sshBoot->getState())
-			runSystemCommand("sudo systemctl enable ssh 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl enable ssh 2>/dev/null", "", nullptr);
 		else
-			runSystemCommand("sudo systemctl disable ssh 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl disable ssh 2>/dev/null", "", nullptr);
 	});
 
 	mWindow->pushGui(s);
@@ -2185,7 +2185,7 @@ void GuiMenu::openOtherSettings()
 	s->addSaveFunc([this, Brmode] { Settings::getInstance()->setString("BrMode", Brmode->getSelected()); 
                 if (Brmode->changed()) {
 		    runSystemCommand("echo " + Settings::getInstance()->getString("BrMode") + " > /home/ark/.config/.BRMODE", "", nullptr);
-                    runSystemCommand("sudo systemctl restart batteryplus", "", nullptr);
+                    runSystemCommand("sudo -n systemctl restart batteryplus", "", nullptr);
                 }
         });
 
