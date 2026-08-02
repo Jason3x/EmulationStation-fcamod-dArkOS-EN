@@ -297,26 +297,31 @@ void GuiMenu::openNetworkSettings()
 {
 	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS"));
 
-	// --- Hostname ---
+	// --- Hostname (affiché seulement si SSH ou Samba actif) ---
 	{
-		char buf[64] = {0};
-		FILE* f = popen("hostname 2>/dev/null", "r");
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		std::string hn(buf);
-		if (!hn.empty() && hn.back() == '\n') hn.pop_back();
-		if (hn.empty()) hn = "N/A";
-		s->addEntry(_("HOSTNAME") + ": " + hn, false, nullptr);
+		bool sshActive  = Settings::getInstance()->getBool("SshEnabled");
+		bool sambaActive = Settings::getInstance()->getBool("SambaEnabled");
+		if (sshActive || sambaActive)
+		{
+			char buf[64] = {0};
+			FILE* f = popen("hostname 2>/dev/null", "r");
+			if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+			std::string hn(buf);
+			if (!hn.empty() && hn.back() == '\n') hn.pop_back();
+			if (!hn.empty())
+				s->addEntry(_("HOSTNAME") + ": " + hn, false, nullptr);
+		}
 	}
 
-	// --- IP Address ---
+	// --- IP Address (affichée seulement si WiFi connecté) ---
 	{
 		char buf[64] = {0};
 		FILE* f = popen("ip -4 addr show wlan0 2>/dev/null | grep -oP '(?<=inet )[\.0-9]+'", "r");
 		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
 		std::string ip(buf);
 		if (!ip.empty() && ip.back() == '\n') ip.pop_back();
-		if (ip.empty()) ip = "N/A";
-		s->addEntry(_("IP ADDRESS") + ": " + ip, false, nullptr);
+		if (!ip.empty())
+			s->addEntry(_("IP ADDRESS") + ": " + ip, false, nullptr);
 	}
 
 	// --- WiFi Manager ---
