@@ -258,6 +258,10 @@ void Settings::setDefaults()
 	
 	mBoolMap["networkIcon"] = true;
 	mBoolMap["bluetoothIcon"] = true;
+	mBoolMap["SshEnabled"] = true;
+	mBoolMap["SshOnBoot"] = true;
+	mBoolMap["SambaEnabled"] = false;
+	mBoolMap["SambaOnBoot"] = false;
 	mBoolMap["DrawClock"] = true;
 
 	mBoolMap["UseOSK"] = true;

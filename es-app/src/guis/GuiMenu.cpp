@@ -357,93 +357,61 @@ void GuiMenu::openNetworkSettings()
 
 	// --- Samba toggle (action immediate au clic) ---
 	auto sambaShare = std::make_shared<SwitchComponent>(mWindow);
-	{
-		char buf[16] = {0};
-		FILE* f = popen("systemctl is-active smbd 2>/dev/null", "r");
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		sambaShare->setState(std::string(buf).find("active") != std::string::npos);
-	}
+	sambaShare->setState(Settings::getInstance()->getBool("SambaEnabled"));
 	s->addWithLabel(_("SAMBA SHARING"), sambaShare);
-	{
-		bool initSamba = sambaShare->getState();
-		sambaShare->setOnChangedCallback([sambaShare, initSamba]() mutable {
-			if (sambaShare->getState() == initSamba) return;
-			initSamba = sambaShare->getState();
-			if (sambaShare->getState()) {
-				runSystemCommand("sudo systemctl start smbd 2>/dev/null", "", nullptr);
-				runSystemCommand("sudo systemctl start nmbd 2>/dev/null", "", nullptr);
-			} else {
-				runSystemCommand("sudo systemctl stop smbd 2>/dev/null", "", nullptr);
-				runSystemCommand("sudo systemctl stop nmbd 2>/dev/null", "", nullptr);
-			}
-		});
-	}
+	sambaShare->setOnChangedCallback([sambaShare] {
+		Settings::getInstance()->setBool("SambaEnabled", sambaShare->getState());
+		Settings::getInstance()->saveFile();
+		if (sambaShare->getState()) {
+			runSystemCommand("sudo systemctl start smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl start nmbd 2>/dev/null", "", nullptr);
+		} else {
+			runSystemCommand("sudo systemctl stop smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl stop nmbd 2>/dev/null", "", nullptr);
+		}
+	});
 
 	// --- Samba boot ---
 	auto sambaBoot = std::make_shared<SwitchComponent>(mWindow);
-	{
-		char buf[16] = {0};
-		FILE* f = popen("systemctl is-enabled smbd 2>/dev/null", "r");
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		sambaBoot->setState(std::string(buf).find("enabled") != std::string::npos);
-	}
+	sambaBoot->setState(Settings::getInstance()->getBool("SambaOnBoot"));
 	s->addWithLabel(_("SAMBA ON BOOT"), sambaBoot);
-	{
-		bool initSambaBoot = sambaBoot->getState();
-		sambaBoot->setOnChangedCallback([sambaBoot, initSambaBoot]() mutable {
-			if (sambaBoot->getState() == initSambaBoot) return;
-			initSambaBoot = sambaBoot->getState();
-			if (sambaBoot->getState()) {
-				runSystemCommand("sudo systemctl enable smbd 2>/dev/null", "", nullptr);
-				runSystemCommand("sudo systemctl enable nmbd 2>/dev/null", "", nullptr);
-			} else {
-				runSystemCommand("sudo systemctl disable smbd 2>/dev/null", "", nullptr);
-				runSystemCommand("sudo systemctl disable nmbd 2>/dev/null", "", nullptr);
-			}
-		});
-	}
+	sambaBoot->setOnChangedCallback([sambaBoot] {
+		Settings::getInstance()->setBool("SambaOnBoot", sambaBoot->getState());
+		Settings::getInstance()->saveFile();
+		if (sambaBoot->getState()) {
+			runSystemCommand("sudo systemctl enable smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl enable nmbd 2>/dev/null", "", nullptr);
+		} else {
+			runSystemCommand("sudo systemctl disable smbd 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo systemctl disable nmbd 2>/dev/null", "", nullptr);
+		}
+	});
 
 	// --- SSH toggle (action immediate au clic) ---
 	auto sshShare = std::make_shared<SwitchComponent>(mWindow);
-	{
-		char buf[16] = {0};
-		FILE* f = popen("systemctl is-active ssh 2>/dev/null", "r");
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		sshShare->setState(std::string(buf).find("active") != std::string::npos);
-	}
+	sshShare->setState(Settings::getInstance()->getBool("SshEnabled"));
 	s->addWithLabel(_("SSH SHARING"), sshShare);
-	{
-		bool initSsh = sshShare->getState();
-		sshShare->setOnChangedCallback([sshShare, initSsh]() mutable {
-			if (sshShare->getState() == initSsh) return;
-			initSsh = sshShare->getState();
-			if (sshShare->getState())
-				runSystemCommand("sudo systemctl start ssh 2>/dev/null", "", nullptr);
-			else
-				runSystemCommand("sudo systemctl stop ssh 2>/dev/null", "", nullptr);
-		});
-	}
+	sshShare->setOnChangedCallback([sshShare] {
+		Settings::getInstance()->setBool("SshEnabled", sshShare->getState());
+		Settings::getInstance()->saveFile();
+		if (sshShare->getState())
+			runSystemCommand("sudo systemctl start ssh 2>/dev/null", "", nullptr);
+		else
+			runSystemCommand("sudo systemctl stop ssh 2>/dev/null", "", nullptr);
+	});
 
 	// --- SSH boot ---
 	auto sshBoot = std::make_shared<SwitchComponent>(mWindow);
-	{
-		char buf[16] = {0};
-		FILE* f = popen("systemctl is-enabled ssh 2>/dev/null", "r");
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		sshBoot->setState(std::string(buf).find("enabled") != std::string::npos);
-	}
+	sshBoot->setState(Settings::getInstance()->getBool("SshOnBoot"));
 	s->addWithLabel(_("SSH ON BOOT"), sshBoot);
-	{
-		bool initSshBoot = sshBoot->getState();
-		sshBoot->setOnChangedCallback([sshBoot, initSshBoot]() mutable {
-			if (sshBoot->getState() == initSshBoot) return;
-			initSshBoot = sshBoot->getState();
-			if (sshBoot->getState())
-				runSystemCommand("sudo systemctl enable ssh 2>/dev/null", "", nullptr);
-			else
-				runSystemCommand("sudo systemctl disable ssh 2>/dev/null", "", nullptr);
-		});
-	}
+	sshBoot->setOnChangedCallback([sshBoot] {
+		Settings::getInstance()->setBool("SshOnBoot", sshBoot->getState());
+		Settings::getInstance()->saveFile();
+		if (sshBoot->getState())
+			runSystemCommand("sudo systemctl enable ssh 2>/dev/null", "", nullptr);
+		else
+			runSystemCommand("sudo systemctl disable ssh 2>/dev/null", "", nullptr);
+	});
 
 	mWindow->pushGui(s);
 }
