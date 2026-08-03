@@ -326,7 +326,7 @@ void GuiMenu::openNetworkSettings()
 
 	// --- WiFi Manager ---
 	s->addEntry(_("WI-FI MANAGER"), false, [this] {
-		if (access("/opt/system/wifi-manager.sh", F_OK) == 0)
+		if (access("/opt/system/Wi-Fi Manager.sh", F_OK) == 0)
 		{
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
@@ -344,7 +344,7 @@ void GuiMenu::openNetworkSettings()
 
 	// --- Bluetooth Manager ---
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
-		if (access("/opt/system/bt-manager.sh", F_OK) == 0)
+		if (access("/opt/system/BT Manager.sh", F_OK) == 0)
 		{
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
