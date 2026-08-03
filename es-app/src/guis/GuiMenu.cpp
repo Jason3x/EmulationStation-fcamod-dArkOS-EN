@@ -331,9 +331,7 @@ void GuiMenu::openNetworkSettings()
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
 			mWindow->deinit(true);
-			system("sudo chmod 666 /dev/tty1");
 			system("/bin/bash \"/opt/system/Wi-Fi Manager.sh\" 2>&1 > /dev/tty1");
-			system("setterm -clear all > /dev/tty1");
 			mWindow->init(true);
 			VolumeControl::getInstance()->init();
 			AudioManager::getInstance()->init();
@@ -349,9 +347,7 @@ void GuiMenu::openNetworkSettings()
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
 			mWindow->deinit(true);
-			system("sudo chmod 666 /dev/tty1");
 			system("/bin/bash \"/opt/system/BT Manager.sh\" 2>&1 > /dev/tty1");
-			system("setterm -clear all > /dev/tty1");
 			mWindow->init(true);
 			VolumeControl::getInstance()->init();
 			AudioManager::getInstance()->init();
