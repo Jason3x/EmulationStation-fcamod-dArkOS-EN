@@ -110,6 +110,45 @@ install_locales() {
     fi
 }
 
+# --- Installation BatteryPlus ---
+install_batteryplus() {
+    if [ -f "$TOOLS_DIR/batteryplus" ]; then
+        sudo install -m 755 "$TOOLS_DIR/batteryplus" /usr/bin/batteryplus
+
+        # Service systemd
+        sudo tee /etc/systemd/system/batteryplus.service > /dev/null << 'SVCEOF'
+[Unit]
+Description=BatteryPlus Battery Daemon
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/batteryplus
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+SVCEOF
+
+        # Config par défaut
+        sudo mkdir -p /etc/batteryplus /userdata/system/configs/batteryplus
+        if [ ! -f /etc/batteryplus/batteryplus.conf ]; then
+            sudo tee /etc/batteryplus/batteryplus.conf > /dev/null << 'CONFEOF'
+[Config]
+mode=voltage
+data_dir=/userdata/system/configs/batteryplus
+V_EMPTY_CHG=3400
+V_EMPTY_DIS=3250
+CONFEOF
+        fi
+
+        sudo systemctl daemon-reload
+        sudo systemctl enable batteryplus.service
+        sudo systemctl restart batteryplus.service
+    fi
+}
+
 # --- Suppression des SVG ---
 remove_svgs() {
     local svgs="bluetooth.svg bluetooth_active.svg bluetooth_off.svg network.svg network_active.svg network_off.svg network_share.svg network_service.svg"
@@ -196,7 +235,10 @@ Install_dArkOS_EN() {
         install_svgs
         install_locales
 
-        smooth_progress "Applying optimizations..." 0.05 66 90
+        smooth_progress "Installing BatteryPlus..." 0.05 56 75
+        install_batteryplus
+
+        smooth_progress "Applying optimizations..." 0.05 76 90
         apply_optimizations
 
         smooth_progress "Finalizing..." 0.03 91 100

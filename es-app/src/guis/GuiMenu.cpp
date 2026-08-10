@@ -52,6 +52,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 	}
 
 	addEntry(_("NETWORK SETTINGS"), true, [this] { openNetworkSettings(); }, "iconNetwork");
+	addEntry(_("BATTERY SETTINGS"), true, [this] { openBatterySettings(); }, "iconBattery");
 
 	addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
@@ -412,6 +413,82 @@ void GuiMenu::openNetworkSettings()
 			runSystemCommand("sudo -n systemctl enable ssh 2>/dev/null", "", nullptr);
 		else
 			runSystemCommand("sudo -n systemctl disable ssh 2>/dev/null", "", nullptr);
+	});
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::openBatterySettings()
+{
+	auto s = new GuiSettings(mWindow, _("BATTERY SETTINGS"));
+
+	// --- Statut BatteryPlus ---
+	{
+		char buf[32] = {0};
+		FILE* f = popen("systemctl is-active batteryplus 2>/dev/null", "r");
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string status(buf);
+		if (!status.empty() && status.back() == '\n') status.pop_back();
+		std::string statusLabel = (status == "active") ? _("ACTIVE") : _("INACTIVE");
+		s->addEntry(_("BATTERYPLUS STATUS") + ": " + statusLabel, false, nullptr);
+	}
+
+	// --- Statut calibration ---
+	{
+		bool calibrated = (access("/userdata/system/configs/batteryplus/batteryplus-calibrated", F_OK) == 0);
+		std::string calLabel = calibrated ? _("CALIBRATED") : _("NOT CALIBRATED");
+		s->addEntry(_("CALIBRATION") + ": " + calLabel, false, nullptr);
+	}
+
+	// --- Pourcentage actuel ---
+	{
+		char buf[16] = {0};
+		FILE* f = popen("cat /tmp/battery.percent 2>/dev/null", "r");
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string pct(buf);
+		if (!pct.empty() && pct.back() == '\n') pct.pop_back();
+		if (pct.empty()) pct = "N/A";
+		s->addEntry(_("BATTERY LEVEL") + ": " + pct + "%", false, nullptr);
+	}
+
+	// --- Toggle BatteryPlus ---
+	auto batteryPlusEnabled = std::make_shared<SwitchComponent>(mWindow);
+	batteryPlusEnabled->setState(Settings::getInstance()->getBool("BatteryPlusEnabled"));
+	s->addWithLabel(_("BATTERYPLUS DAEMON"), batteryPlusEnabled);
+	batteryPlusEnabled->setOnChangedCallback([batteryPlusEnabled] {
+		Settings::getInstance()->setBool("BatteryPlusEnabled", batteryPlusEnabled->getState());
+		Settings::getInstance()->saveFile();
+		if (batteryPlusEnabled->getState()) {
+			runSystemCommand("sudo -n systemctl start batteryplus 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl enable batteryplus 2>/dev/null", "", nullptr);
+		} else {
+			runSystemCommand("sudo -n systemctl stop batteryplus 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n systemctl disable batteryplus 2>/dev/null", "", nullptr);
+		}
+	});
+
+	// --- Mode voltage/pmic ---
+	auto batteryMode = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BATTERYPLUS MODE"), false);
+	batteryMode->add(_("VOLTAGE"), "voltage", Settings::getInstance()->getString("BatteryPlusMode") == "voltage");
+	batteryMode->add(_("PMIC"), "pmic", Settings::getInstance()->getString("BatteryPlusMode") == "pmic");
+	s->addWithLabel(_("BATTERYPLUS MODE"), batteryMode);
+	s->addSaveFunc([batteryMode] {
+		if (Settings::getInstance()->setString("BatteryPlusMode", batteryMode->getSelected())) {
+			std::string cmd = "sudo -n sed -i 's/^mode=.*/mode=" + batteryMode->getSelected() + "/' /etc/batteryplus/batteryplus.conf 2>/dev/null";
+			runSystemCommand(cmd, "", nullptr);
+			runSystemCommand("sudo -n systemctl restart batteryplus 2>/dev/null", "", nullptr);
+		}
+	});
+
+	// --- Reset calibration ---
+	s->addEntry(_("RESET CALIBRATION"), false, [this] {
+		mWindow->pushGui(new GuiMsgBox(mWindow,
+			_("RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."),
+			_("YES"), [] {
+				runSystemCommand("sudo -n rm -f /userdata/system/configs/batteryplus/batteryplus-calibrated /userdata/system/configs/batteryplus/batteryplus-voltage.map 2>/dev/null", "", nullptr);
+				runSystemCommand("sudo -n systemctl restart batteryplus 2>/dev/null", "", nullptr);
+			},
+			_("NO"), nullptr));
 	});
 
 	mWindow->pushGui(s);

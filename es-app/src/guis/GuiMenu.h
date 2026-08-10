@@ -33,6 +33,7 @@ private:
 	void openScraperSettings();
 	void openScreensaverOptions();
 	void openNetworkSettings();
+	void openBatterySettings();
 	void openSoundSettings();
 	void openUISettings();
 

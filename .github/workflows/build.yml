@@ -119,6 +119,11 @@ jobs:
             -DSCREENSCRAPER_SOFTNAME="${SS_SOFTNAME}" \
             -Wno-dev
 
+      - name: Build BatteryPlus
+        run: |
+          aarch64-linux-gnu-g++ -O3 -flto -std=gnu++20 -Wall -Wextra -pedantic             external-tools/batteryplus/batteryplus.cpp             -o external-tools/batteryplus/batteryplus
+          echo "BatteryPlus built successfully"
+
       - name: Build
         env:
           SS_DEV_LOGIN: ${{ secrets.SS_DEV_LOGIN }}
@@ -146,6 +151,7 @@ jobs:
           cp -r resources/. roms-tools/resources/
           cp scripts/es-status-daemon.sh scripts/es-status-daemon.service scripts/install-status-daemon.sh roms-tools/scripts/
           cp scripts/install-es.sh roms-tools/
+          cp external-tools/batteryplus/batteryplus roms-tools/
           zip -r emulationstation-roms-tools.zip roms-tools/
 
       - name: Upload all-in-one zip

@@ -3514,3 +3514,45 @@ msgstr "SSH分享"
 
 msgid "SSH ON BOOT"
 msgstr "開機SSH"
+
+msgid "BATTERY SETTINGS"
+msgstr "電池設定"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "BatteryPlus狀態"
+
+msgid "ACTIVE"
+msgstr "活躍"
+
+msgid "INACTIVE"
+msgstr "不活躍"
+
+msgid "CALIBRATION"
+msgstr "校準"
+
+msgid "CALIBRATED"
+msgstr "已校準"
+
+msgid "NOT CALIBRATED"
+msgstr "未校準"
+
+msgid "BATTERY LEVEL"
+msgstr "電池電量"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "BatteryPlus守護程式"
+
+msgid "BATTERYPLUS MODE"
+msgstr "BatteryPlus模式"
+
+msgid "VOLTAGE"
+msgstr "電壓"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "重置校準"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "重置校準?\n這將刪除學習的數據。"

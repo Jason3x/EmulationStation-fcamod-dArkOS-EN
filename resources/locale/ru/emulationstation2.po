@@ -3528,3 +3528,45 @@ msgstr "ОБЩИЙ ДОСТУП SSH"
 
 msgid "SSH ON BOOT"
 msgstr "SSH ПРИ ЗАГРУЗКЕ"
+
+msgid "BATTERY SETTINGS"
+msgstr "НАСТРОЙКИ БАТАРЕИ"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "СТАТУС BATTERYPLUS"
+
+msgid "ACTIVE"
+msgstr "АКТИВЕН"
+
+msgid "INACTIVE"
+msgstr "НЕАКТИВЕН"
+
+msgid "CALIBRATION"
+msgstr "КАЛИБРОВКА"
+
+msgid "CALIBRATED"
+msgstr "ОТКАЛИБРОВАН"
+
+msgid "NOT CALIBRATED"
+msgstr "НЕ ОТКАЛИБРОВАН"
+
+msgid "BATTERY LEVEL"
+msgstr "УРОВЕНЬ БАТАРЕИ"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "ДЕМОН BATTERYPLUS"
+
+msgid "BATTERYPLUS MODE"
+msgstr "РЕЖИМ BATTERYPLUS"
+
+msgid "VOLTAGE"
+msgstr "НАПРЯЖЕНИЕ"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "СБРОСИТЬ КАЛИБРОВКУ"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "СБРОСИТЬ КАЛИБРОВКУ?\nЭто удалит изученные данные."

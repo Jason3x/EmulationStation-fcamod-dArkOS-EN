@@ -150,6 +150,7 @@ void Settings::setDefaults()
 #endif
 	mStringMap["GameTransitionStyle"] = "fade";
 	mStringMap["TransitionStyle"] = "auto";
+	mStringMap["BatteryPlusMode"] = "voltage";
 	mStringMap["Language"] = "en";	
 	mStringMap["ThemeSet"] = "";
 	mStringMap["ScreenSaverBehavior"] = "dim";	
@@ -259,6 +260,7 @@ void Settings::setDefaults()
 	mBoolMap["networkIcon"] = true;
 	mBoolMap["bluetoothIcon"] = true;
 	mBoolMap["SshEnabled"] = true;
+	mBoolMap["BatteryPlusEnabled"] = false;
 	mBoolMap["SshOnBoot"] = true;
 	mBoolMap["SambaEnabled"] = false;
 	mBoolMap["SambaOnBoot"] = false;

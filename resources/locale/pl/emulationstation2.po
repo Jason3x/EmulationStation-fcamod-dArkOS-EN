@@ -2936,3 +2936,45 @@ msgstr "UDOSTĘPNIANIE SSH"
 
 msgid "SSH ON BOOT"
 msgstr "SSH PRZY STARCIE"
+
+msgid "BATTERY SETTINGS"
+msgstr "USTAWIENIA BATERII"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "STATUS BATTERYPLUS"
+
+msgid "ACTIVE"
+msgstr "AKTYWNY"
+
+msgid "INACTIVE"
+msgstr "NIEAKTYWNY"
+
+msgid "CALIBRATION"
+msgstr "KALIBRACJA"
+
+msgid "CALIBRATED"
+msgstr "SKALIBROWANY"
+
+msgid "NOT CALIBRATED"
+msgstr "NIE SKALIBROWANY"
+
+msgid "BATTERY LEVEL"
+msgstr "POZIOM BATERII"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "DEMON BATTERYPLUS"
+
+msgid "BATTERYPLUS MODE"
+msgstr "TRYB BATTERYPLUS"
+
+msgid "VOLTAGE"
+msgstr "NAPIĘCIE"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "RESETUJ KALIBRACJĘ"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "RESETOWAĆ KALIBRACJĘ?\nSpowoduje to usunięcie nauczonych danych."

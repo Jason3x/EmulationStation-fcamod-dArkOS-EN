@@ -3274,3 +3274,45 @@ msgstr "SSH-DELNING"
 
 msgid "SSH ON BOOT"
 msgstr "SSH VID START"
+
+msgid "BATTERY SETTINGS"
+msgstr "BATTERIINSTÄLLNINGAR"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "BATTERYPLUS-STATUS"
+
+msgid "ACTIVE"
+msgstr "AKTIV"
+
+msgid "INACTIVE"
+msgstr "INAKTIV"
+
+msgid "CALIBRATION"
+msgstr "KALIBRERING"
+
+msgid "CALIBRATED"
+msgstr "KALIBRERAD"
+
+msgid "NOT CALIBRATED"
+msgstr "EJ KALIBRERAD"
+
+msgid "BATTERY LEVEL"
+msgstr "BATTERINIVÅ"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "BATTERYPLUS-DAEMON"
+
+msgid "BATTERYPLUS MODE"
+msgstr "BATTERYPLUS-LÄGE"
+
+msgid "VOLTAGE"
+msgstr "SPÄNNING"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "ÅTERSTÄLL KALIBRERING"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "ÅTERSTÄLL KALIBRERING?\nDetta tar bort inlärda data."

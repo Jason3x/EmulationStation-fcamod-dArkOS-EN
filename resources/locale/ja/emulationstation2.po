@@ -1366,3 +1366,45 @@ msgstr "SSH共有"
 
 msgid "SSH ON BOOT"
 msgstr "起動時SSH"
+
+msgid "BATTERY SETTINGS"
+msgstr "バッテリー設定"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "BatteryPlusステータス"
+
+msgid "ACTIVE"
+msgstr "アクティブ"
+
+msgid "INACTIVE"
+msgstr "非アクティブ"
+
+msgid "CALIBRATION"
+msgstr "キャリブレーション"
+
+msgid "CALIBRATED"
+msgstr "キャリブレーション済み"
+
+msgid "NOT CALIBRATED"
+msgstr "未キャリブレーション"
+
+msgid "BATTERY LEVEL"
+msgstr "バッテリーレベル"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "BatteryPlusデーモン"
+
+msgid "BATTERYPLUS MODE"
+msgstr "BatteryPlusモード"
+
+msgid "VOLTAGE"
+msgstr "電圧"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "キャリブレーションリセット"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "キャリブレーションをリセットしますか?\n学習データが削除されます。"

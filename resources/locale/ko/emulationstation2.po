@@ -1734,3 +1734,45 @@ msgstr "SSH 공유"
 
 msgid "SSH ON BOOT"
 msgstr "부팅 시 SSH"
+
+msgid "BATTERY SETTINGS"
+msgstr "배터리 설정"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "BatteryPlus 상태"
+
+msgid "ACTIVE"
+msgstr "활성"
+
+msgid "INACTIVE"
+msgstr "비활성"
+
+msgid "CALIBRATION"
+msgstr "보정"
+
+msgid "CALIBRATED"
+msgstr "보정됨"
+
+msgid "NOT CALIBRATED"
+msgstr "보정 안 됨"
+
+msgid "BATTERY LEVEL"
+msgstr "배터리 수준"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "BatteryPlus 데몬"
+
+msgid "BATTERYPLUS MODE"
+msgstr "BatteryPlus 모드"
+
+msgid "VOLTAGE"
+msgstr "전압"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "보정 초기화"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "보정을 초기화하시겠습니까?\n학습된 데이터가 삭제됩니다."

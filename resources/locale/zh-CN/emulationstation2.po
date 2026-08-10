@@ -3510,3 +3510,45 @@ msgstr "SSH共享"
 
 msgid "SSH ON BOOT"
 msgstr "开机SSH"
+
+msgid "BATTERY SETTINGS"
+msgstr "电池设置"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "BatteryPlus状态"
+
+msgid "ACTIVE"
+msgstr "活跃"
+
+msgid "INACTIVE"
+msgstr "不活跃"
+
+msgid "CALIBRATION"
+msgstr "校准"
+
+msgid "CALIBRATED"
+msgstr "已校准"
+
+msgid "NOT CALIBRATED"
+msgstr "未校准"
+
+msgid "BATTERY LEVEL"
+msgstr "电池电量"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "BatteryPlus守护进程"
+
+msgid "BATTERYPLUS MODE"
+msgstr "BatteryPlus模式"
+
+msgid "VOLTAGE"
+msgstr "电压"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "重置校准"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "重置校准?\n这将删除学习的数据。"

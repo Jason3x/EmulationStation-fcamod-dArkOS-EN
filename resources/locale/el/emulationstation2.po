@@ -1994,3 +1994,45 @@ msgstr "ΚΟΙΝΟΠΟΊΗΣΗ SSH"
 
 msgid "SSH ON BOOT"
 msgstr "SSH ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ"
+
+msgid "BATTERY SETTINGS"
+msgstr "ΡΥΘΜΊΣΕΙΣ ΜΠΑΤΑΡΊΑΣ"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "ΚΑΤΆΣΤΑΣΗ BATTERYPLUS"
+
+msgid "ACTIVE"
+msgstr "ΕΝΕΡΓΌ"
+
+msgid "INACTIVE"
+msgstr "ΑΝΕΝΕΡΓΌ"
+
+msgid "CALIBRATION"
+msgstr "ΒΑΘΜΟΝΌΜΗΣΗ"
+
+msgid "CALIBRATED"
+msgstr "ΒΑΘΜΟΝΟΜΗΜΈΝΟ"
+
+msgid "NOT CALIBRATED"
+msgstr "ΜΗ ΒΑΘΜΟΝΟΜΗΜΈΝΟ"
+
+msgid "BATTERY LEVEL"
+msgstr "ΕΠΊΠΕΔΟ ΜΠΑΤΑΡΊΑΣ"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "ΔΑΊΜΟΝΑΣ BATTERYPLUS"
+
+msgid "BATTERYPLUS MODE"
+msgstr "ΛΕΙΤΟΥΡΓΊΑ BATTERYPLUS"
+
+msgid "VOLTAGE"
+msgstr "ΤΆΣΗ"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "ΕΠΑΝΑΦΟΡΆ ΒΑΘΜΟΝΌΜΗΣΗΣ"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "ΕΠΑΝΑΦΟΡΆ ΒΑΘΜΟΝΌΜΗΣΗΣ?\nΑυτό θα διαγράψει τα μαθημένα δεδομένα."

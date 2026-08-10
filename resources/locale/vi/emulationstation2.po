@@ -1590,3 +1590,45 @@ msgstr "CHIA SẺ SSH"
 
 msgid "SSH ON BOOT"
 msgstr "SSH KHI KHỞI ĐỘNG"
+
+msgid "BATTERY SETTINGS"
+msgstr "CÀI ĐẶT PIN"
+
+msgid "BATTERYPLUS STATUS"
+msgstr "TRẠNG THÁI BATTERYPLUS"
+
+msgid "ACTIVE"
+msgstr "HOẠT ĐỘNG"
+
+msgid "INACTIVE"
+msgstr "KHÔNG HOẠT ĐỘNG"
+
+msgid "CALIBRATION"
+msgstr "HIỆU CHỈNH"
+
+msgid "CALIBRATED"
+msgstr "ĐÃ HIỆU CHỈNH"
+
+msgid "NOT CALIBRATED"
+msgstr "CHƯA HIỆU CHỈNH"
+
+msgid "BATTERY LEVEL"
+msgstr "MỨC PIN"
+
+msgid "BATTERYPLUS DAEMON"
+msgstr "DAEMON BATTERYPLUS"
+
+msgid "BATTERYPLUS MODE"
+msgstr "CHẾ ĐỘ BATTERYPLUS"
+
+msgid "VOLTAGE"
+msgstr "ĐIỆN ÁP"
+
+msgid "PMIC"
+msgstr "PMIC"
+
+msgid "RESET CALIBRATION"
+msgstr "ĐẶT LẠI HIỆU CHỈNH"
+
+msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
+msgstr "ĐẶT LẠI HIỆU CHỈNH?\nĐiều này sẽ xóa dữ liệu đã học."
