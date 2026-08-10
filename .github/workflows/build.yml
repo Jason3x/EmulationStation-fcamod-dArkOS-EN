@@ -18,12 +18,24 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Show checked-out commit
+        run: |
+          echo "Branch/ref: ${{ github.ref }}"
+          git log -1 --oneline
+          git status
+
+      - name: Init submodules (always)
+        run: git submodule update --init --recursive
+
+      # Ne synchronise avec l'amont QUE sur la branche 351v.
+      # Sur toute branche feature/**, cette étape est sautée : aucune modif locale
+      # (icônes WiFi/BT, menu réseau, traductions, etc.) n'est jamais écrasée.
       - name: Sync with upstream christianhaitian/351v
+        if: github.ref == 'refs/heads/351v'
         run: |
           git remote add upstream https://github.com/christianhaitian/EmulationStation-fcamod.git || true
           git fetch upstream 351v
           git merge upstream/351v --no-edit --allow-unrelated-histories || true
-          git submodule update --init --recursive
 
       - name: Install dependencies
         run: |
@@ -42,19 +54,23 @@ jobs:
             libasound2-dev:arm64 libgles-dev:arm64 libgles2-mesa-dev:arm64 \
             libx11-dev:arm64
 
+      # Fusion des deux étapes Mali dupliquées du workflow d'origine.
+      # On retire d'abord les libs GLES/GL/EGL/Wayland génériques pour éviter
+      # les conflits de symboles avec les libs Mali propriétaires RK.
       - name: Install Mali RK libs
         run: |
-          sudo apt-get remove -y libgles-dev:arm64 libgles2-mesa-dev:arm64 libgles-dev libgles2-mesa-dev libegl-dev:arm64 libgl-dev:arm64 libwayland-dev:arm64 libwayland-egl1:arm64 2>/dev/null || true
-          wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-bifrost-g31-rxp0-wayland-gbm_1.7-2+deb10_arm64.deb -O /tmp/libmali.deb
-          wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-dev_1.7-1+deb10_arm64.deb -O /tmp/libmali-dev.deb
-          sudo dpkg -i /tmp/libmali.deb /tmp/libmali-dev.deb
-          sudo apt-get install -y libsdl2-dev:arm64 libsdl2-mixer-dev:arm64 2>/dev/null || true
+          sudo apt-get remove -y \
+            libgles-dev:arm64 libgles2-mesa-dev:arm64 \
+            libgles-dev libgles2-mesa-dev \
+            libegl-dev:arm64 libgl-dev:arm64 \
+            libwayland-dev:arm64 libwayland-egl1:arm64 2>/dev/null || true
 
-      - name: Install Mali RK libs
-        run: |
           wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-bifrost-g31-rxp0-wayland-gbm_1.7-2+deb10_arm64.deb -O /tmp/libmali.deb
           wget -q https://github.com/christianhaitian/EmulationStation-fcamod/raw/351v/libmali-rk-dev_1.7-1+deb10_arm64.deb -O /tmp/libmali-dev.deb
-          sudo dpkg -i --force-all /tmp/libmali.deb /tmp/libmali-dev.deb || true
+          sudo dpkg -i --force-all /tmp/libmali.deb /tmp/libmali-dev.deb
+
+          # Réinstalle SDL2 au cas où le remove ci-dessus aurait cassé une dépendance
+          sudo apt-get install -y libsdl2-dev:arm64 libsdl2-mixer-dev:arm64 2>/dev/null || true
 
       - name: Install libgo2 headers
         run: |
@@ -128,7 +144,6 @@ jobs:
           mkdir -p roms-tools/resources roms-tools/scripts
           cp emulationstation roms-tools/
           cp -r resources/. roms-tools/resources/
-          # Les locales sont incluses via resources/locale/
           cp scripts/es-status-daemon.sh scripts/es-status-daemon.service scripts/install-status-daemon.sh roms-tools/scripts/
           cp scripts/install-es.sh roms-tools/
           zip -r emulationstation-roms-tools.zip roms-tools/
