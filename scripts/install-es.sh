@@ -93,13 +93,9 @@ backup_es_if_needed() {
 
 # --- Installation des SVG ---
 install_svgs() {
-    mkdir -p "$ES_RESOURCES_PATH"
-    local svgs="bluetooth.svg bluetooth_active.svg bluetooth_off.svg network.svg network_active.svg network_off.svg network_share.svg network_service.svg"
-    for svg in $svgs; do
-        if [ -f "$ES_RESOURCES_DIR/$svg" ]; then
-            cp "$ES_RESOURCES_DIR/$svg" "$ES_RESOURCES_PATH/$svg"
-        fi
-    done
+    if [ -d "$ES_RESOURCES_DIR" ]; then
+        cp -r "$ES_RESOURCES_DIR/." "$ES_RESOURCES_PATH/"
+    fi
 }
 
 # --- Installation des locales ---
