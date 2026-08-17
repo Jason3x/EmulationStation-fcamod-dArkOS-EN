@@ -3778,3 +3778,18 @@ msgstr "СКИНУТИ КАЛІБРУВАННЯ"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "СКИНУТИ КАЛІБРУВАННЯ?\nЦе видалить вивчені дані."
+
+msgid "BATTERY ICON"
+msgstr "ЗНАЧОК БАТАРЕЇ"
+
+msgid "POWER PULSE"
+msgstr "POWER PULSE"
+
+msgid "SEGMENTED"
+msgstr "СЕГМЕНТОВАНИЙ"
+
+msgid "HEARTS"
+msgstr "СЕРЦЯ"
+
+msgid "STOCK"
+msgstr "ОРИГІНАЛ"

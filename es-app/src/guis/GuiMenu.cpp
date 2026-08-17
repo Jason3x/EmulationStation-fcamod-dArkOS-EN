@@ -1487,6 +1487,27 @@ void GuiMenu::openUISettings()
 
 	auto wifiIcon = std::make_shared<SwitchComponent>(mWindow);
 	wifiIcon->setState(Settings::getInstance()->getBool("networkIcon"));
+	// --- Battery Icon Pack ---
+	auto batteryIconPack = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BATTERY ICON"), false);
+	std::string currentPack = Settings::getInstance()->getString("BatteryIconPack");
+	if (currentPack.empty()) currentPack = "default";
+	batteryIconPack->add(_("DEFAULT"),          "default",          currentPack == "default");
+	batteryIconPack->add(_("POWER PULSE"),      "Power-Pulse-Icons", currentPack == "Power-Pulse-Icons");
+	batteryIconPack->add(_("SEGMENTED"),        "segmented-battery", currentPack == "segmented-battery");
+	batteryIconPack->add(_("HEARTS"),           "hearts-battery",   currentPack == "hearts-battery");
+	batteryIconPack->add(_("STOCK"),            "stock",            currentPack == "stock");
+	s->addWithLabel(_("BATTERY ICON"), batteryIconPack);
+	s->addSaveFunc([batteryIconPack] {
+		std::string pack = batteryIconPack->getSelected();
+		if (Settings::getInstance()->setString("BatteryIconPack", pack)) {
+			// Copier les SVG du pack sélectionné vers resources/battery/
+			std::string src = "/usr/bin/emulationstation/resources/battery-packs/" + pack;
+			std::string cmd = "cp -f " + src + "/*.svg /usr/bin/emulationstation/resources/battery/ 2>/dev/null";
+			system(cmd.c_str());
+			Settings::getInstance()->saveFile();
+		}
+	});
+
 	s->addWithLabel(_("SHOW WIFI ICON"), wifiIcon);
 	s->addSaveFunc([s, wifiIcon]
 	{

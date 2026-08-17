@@ -2883,3 +2883,15 @@ msgstr "REIMPOSTA CALIBRAZIONE"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "REIMPOSTA CALIBRAZIONE?\nQuesto eliminerà i dati appresi."
+
+msgid "BATTERY ICON"
+msgstr "ICONA BATTERIA"
+
+msgid "POWER PULSE"
+msgstr "POWER PULSE"
+
+msgid "SEGMENTED"
+msgstr "SEGMENTATO"
+
+msgid "HEARTS"
+msgstr "CUORI"

@@ -3556,3 +3556,18 @@ msgstr "重置校準"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "重置校準?\n這將刪除學習的數據。"
+
+msgid "BATTERY ICON"
+msgstr "電池圖示"
+
+msgid "POWER PULSE"
+msgstr "能量脈衝"
+
+msgid "SEGMENTED"
+msgstr "分段式"
+
+msgid "HEARTS"
+msgstr "愛心"
+
+msgid "STOCK"
+msgstr "原版"

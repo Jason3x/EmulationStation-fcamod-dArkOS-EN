@@ -1776,3 +1776,15 @@ msgstr "보정 초기화"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "보정을 초기화하시겠습니까?\n학습된 데이터가 삭제됩니다."
+
+msgid "BATTERY ICON"
+msgstr "배터리 아이콘"
+
+msgid "POWER PULSE"
+msgstr "파워 펄스"
+
+msgid "SEGMENTED"
+msgstr "분할형"
+
+msgid "HEARTS"
+msgstr "하트"

@@ -2036,3 +2036,21 @@ msgstr "ΕΠΑΝΑΦΟΡΆ ΒΑΘΜΟΝΌΜΗΣΗΣ"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "ΕΠΑΝΑΦΟΡΆ ΒΑΘΜΟΝΌΜΗΣΗΣ?\nΑυτό θα διαγράψει τα μαθημένα δεδομένα."
+
+msgid "BATTERY ICON"
+msgstr "ΕΙΚΟΝΊΔΙΟ ΜΠΑΤΑΡΊΑΣ"
+
+msgid "DEFAULT"
+msgstr "ΠΡΟΕΠΙΛΟΓΉ"
+
+msgid "POWER PULSE"
+msgstr "POWER PULSE"
+
+msgid "SEGMENTED"
+msgstr "ΤΜΗΜΑΤΙΚΌ"
+
+msgid "HEARTS"
+msgstr "ΚΑΡΔΙΈΣ"
+
+msgid "STOCK"
+msgstr "ΑΡΧΙΚΌ"

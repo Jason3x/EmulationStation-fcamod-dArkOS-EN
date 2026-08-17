@@ -151,6 +151,7 @@ void Settings::setDefaults()
 	mStringMap["GameTransitionStyle"] = "fade";
 	mStringMap["TransitionStyle"] = "auto";
 	mStringMap["BatteryPlusMode"] = "voltage";
+	mStringMap["BatteryIconPack"] = "default";
 	mStringMap["Language"] = "en";	
 	mStringMap["ThemeSet"] = "";
 	mStringMap["ScreenSaverBehavior"] = "dim";	

@@ -2336,3 +2336,21 @@ msgstr "KALIBRIERUNG ZURÜCKSETZEN"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "KALIBRIERUNG ZURÜCKSETZEN?\nDies löscht gelernte Spannungsanker."
+
+msgid "BATTERY ICON"
+msgstr "AKKUSYMBOL"
+
+msgid "DEFAULT"
+msgstr "STANDARD"
+
+msgid "POWER PULSE"
+msgstr "POWER PULSE"
+
+msgid "SEGMENTED"
+msgstr "SEGMENTIERT"
+
+msgid "HEARTS"
+msgstr "HERZEN"
+
+msgid "STOCK"
+msgstr "ORIGINAL"

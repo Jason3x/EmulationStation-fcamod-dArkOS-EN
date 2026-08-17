@@ -1408,3 +1408,18 @@ msgstr "キャリブレーションリセット"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "キャリブレーションをリセットしますか?\n学習データが削除されます。"
+
+msgid "BATTERY ICON"
+msgstr "バッテリーアイコン"
+
+msgid "POWER PULSE"
+msgstr "パワーパルス"
+
+msgid "SEGMENTED"
+msgstr "セグメント"
+
+msgid "HEARTS"
+msgstr "ハート"
+
+msgid "STOCK"
+msgstr "オリジナル"

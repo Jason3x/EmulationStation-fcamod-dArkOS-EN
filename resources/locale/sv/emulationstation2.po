@@ -3316,3 +3316,18 @@ msgstr "ÅTERSTÄLL KALIBRERING"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "ÅTERSTÄLL KALIBRERING?\nDetta tar bort inlärda data."
+
+msgid "BATTERY ICON"
+msgstr "BATTERIIKON"
+
+msgid "POWER PULSE"
+msgstr "POWER PULSE"
+
+msgid "SEGMENTED"
+msgstr "SEGMENTERAD"
+
+msgid "HEARTS"
+msgstr "HJÄRTAN"
+
+msgid "STOCK"
+msgstr "ORIGINAL"

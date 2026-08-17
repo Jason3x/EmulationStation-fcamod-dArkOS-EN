@@ -1632,3 +1632,21 @@ msgstr "ĐẶT LẠI HIỆU CHỈNH"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "ĐẶT LẠI HIỆU CHỈNH?\nĐiều này sẽ xóa dữ liệu đã học."
+
+msgid "BATTERY ICON"
+msgstr "BIỂU TƯỢNG PIN"
+
+msgid "DEFAULT"
+msgstr "MẶC ĐỊNH"
+
+msgid "POWER PULSE"
+msgstr "POWER PULSE"
+
+msgid "SEGMENTED"
+msgstr "PHÂN ĐOẠN"
+
+msgid "HEARTS"
+msgstr "TRÁI TIM"
+
+msgid "STOCK"
+msgstr "GỐC"

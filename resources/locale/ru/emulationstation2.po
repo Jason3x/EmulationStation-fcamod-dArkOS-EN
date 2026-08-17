@@ -3570,3 +3570,18 @@ msgstr "СБРОСИТЬ КАЛИБРОВКУ"
 
 msgid "RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."
 msgstr "СБРОСИТЬ КАЛИБРОВКУ?\nЭто удалит изученные данные."
+
+msgid "BATTERY ICON"
+msgstr "ЗНАЧОК БАТАРЕИ"
+
+msgid "POWER PULSE"
+msgstr "POWER PULSE"
+
+msgid "SEGMENTED"
+msgstr "СЕГМЕНТИРОВАННЫЙ"
+
+msgid "HEARTS"
+msgstr "СЕРДЦА"
+
+msgid "STOCK"
+msgstr "ОРИГИНАЛ"
