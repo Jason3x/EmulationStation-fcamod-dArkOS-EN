@@ -39,12 +39,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update -qq
           sudo dpkg --add-architecture arm64
           sudo sed -i 's/^deb /deb [arch=amd64] /' /etc/apt/sources.list
+          sudo sed -i 's/^deb \[arch=amd64\] http:\/\/archive.ubuntu.com/deb [arch=amd64] http:\/\/archive.ubuntu.com/' /etc/apt/sources.list
           echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
           echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports jammy-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update -qq
+          sudo apt-get install -y --fix-broken || true
           sudo apt-get install -y \
             gcc-aarch64-linux-gnu g++-aarch64-linux-gnu \
             cmake make pkg-config gettext \
