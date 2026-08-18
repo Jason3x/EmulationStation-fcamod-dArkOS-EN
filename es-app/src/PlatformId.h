@@ -53,6 +53,7 @@ namespace PlatformIds
 		NINTENDO_SWITCH,
 		NINTENDO_GAME_AND_WATCH,
 		PC,
+		PC_WINDOWS,
 		PC_88,
 		PC_98,
 		PICO8,
