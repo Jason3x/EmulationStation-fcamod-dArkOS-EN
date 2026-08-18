@@ -70,7 +70,7 @@ const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
 	{ NINTENDO_SWITCH, 225 },
 	{ NINTENDO_VIRTUAL_BOY, 11 },
 	{ NINTENDO_GAME_AND_WATCH, 52 },
-	{ PC, 135 },
+	{ PC, 138 },
 	{ PC_88, 221},
 	{ PC_98, 208},
 	{ SCUMMVM, 123},
