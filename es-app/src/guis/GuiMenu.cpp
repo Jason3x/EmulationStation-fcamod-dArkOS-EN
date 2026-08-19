@@ -327,34 +327,34 @@ void GuiMenu::openNetworkSettings()
 
 	// --- WiFi Manager ---
 	s->addEntry(_("WI-FI MANAGER"), false, [this] {
-		if (access("/opt/system/Wi-Fi Manager.sh", F_OK) == 0)
+		if (access("/usr/local/bin/Wi-Fi Manager.sh", F_OK) == 0)
 		{
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
 			mWindow->deinit(true);
-			system("/bin/bash \"/opt/system/Wi-Fi Manager.sh\" 2>&1 > /dev/tty1");
+			system("/bin/bash \"/usr/local/bin/Wi-Fi Manager.sh\" 2>&1 > /dev/tty1");
 			mWindow->init(true);
 			VolumeControl::getInstance()->init();
 			AudioManager::getInstance()->init();
 		}
 		else
-			mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/opt/system/Wi-Fi Manager.sh"), _("OK")));
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/usr/local/bin/Wi-Fi Manager.sh"), _("OK")));
 	}, "iconWifi");
 
 	// --- Bluetooth Manager ---
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
-		if (access("/opt/system/BT Manager.sh", F_OK) == 0)
+		if (access("/usr/local/bin/BT Manager.sh", F_OK) == 0)
 		{
 			AudioManager::getInstance()->deinit();
 			VolumeControl::getInstance()->deinit();
 			mWindow->deinit(true);
-			system("/bin/bash \"/opt/system/BT Manager.sh\" 2>&1 > /dev/tty1");
+			system("/bin/bash \"/usr/local/bin/BT Manager.sh\" 2>&1 > /dev/tty1");
 			mWindow->init(true);
 			VolumeControl::getInstance()->init();
 			AudioManager::getInstance()->init();
 		}
 		else
-			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/opt/system/BT Manager.sh"), _("OK")));
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"), _("OK")));
 	}, "iconBluetooth");
 
 	// --- Samba toggle (action immediate au clic) ---
