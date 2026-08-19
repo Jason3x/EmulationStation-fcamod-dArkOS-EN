@@ -30,13 +30,6 @@ jobs:
       # Ne synchronise avec l'amont QUE sur la branche 351v.
       # Sur toute branche feature/**, cette étape est sautée : aucune modif locale
       # (icônes WiFi/BT, menu réseau, traductions, etc.) n'est jamais écrasée.
-      - name: Sync with upstream christianhaitian/351v
-        if: github.ref == 'refs/heads/351v'
-        run: |
-          git remote add upstream https://github.com/christianhaitian/EmulationStation-fcamod.git || true
-          git fetch upstream 351v
-          git merge upstream/351v --no-edit --allow-unrelated-histories || true
-
       - name: Install dependencies
         run: |
           sudo dpkg --add-architecture arm64
