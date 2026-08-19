@@ -453,7 +453,7 @@ void GuiMenu::openBatterySettings()
 	// --- Toggle BatteryPlus ---
 	auto batteryPlusEnabled = std::make_shared<SwitchComponent>(mWindow);
 	batteryPlusEnabled->setState(Settings::getInstance()->getBool("BatteryPlusEnabled"));
-	s->addWithLabel(_("BATTERYPLUS DAEMON"), batteryPlusEnabled);
+	s->addWithLabel(_("BATTERYPLUS ENABLED"), batteryPlusEnabled);
 	batteryPlusEnabled->setOnChangedCallback([batteryPlusEnabled] {
 		Settings::getInstance()->setBool("BatteryPlusEnabled", batteryPlusEnabled->getState());
 		Settings::getInstance()->saveFile();
