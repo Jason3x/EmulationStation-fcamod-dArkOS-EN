@@ -52,7 +52,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 	}
 
 	addEntry(_("NETWORK SETTINGS"), true, [this] { openNetworkSettings(); }, "iconNetwork");
-	addEntry(_("BATTERY SETTINGS"), true, [this] { openBatterySettings(); }, "iconBattery");
+	// addEntry(_("BATTERY SETTINGS"), true, [this] { openBatterySettings(); }, "iconBattery");
 
 	addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
