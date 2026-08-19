@@ -52,7 +52,6 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 	}
 
 	addEntry(_("NETWORK SETTINGS"), true, [this] { openNetworkSettings(); }, "iconNetwork");
-	// addEntry(_("BATTERY SETTINGS"), true, [this] { openBatterySettings(); }, "iconBattery");
 
 	addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
@@ -441,15 +440,15 @@ void GuiMenu::openBatterySettings()
 	}
 
 	// --- Pourcentage actuel ---
-	{
-		char buf[16] = {0};
-		FILE* f = popen("cat /tmp/battery.percent 2>/dev/null", "r");
-		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		std::string pct(buf);
-		if (!pct.empty() && pct.back() == '\n') pct.pop_back();
-		if (pct.empty()) pct = "N/A";
-		s->addEntry(_("BATTERY LEVEL") + ": " + pct + "%", false, nullptr);
-	}
+	// {
+		// char buf[16] = {0};
+		// FILE* f = popen("cat /tmp/battery.percent 2>/dev/null", "r");
+		// if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		// std::string pct(buf);
+		// if (!pct.empty() && pct.back() == '\n') pct.pop_back();
+		// if (pct.empty()) pct = "N/A";
+		// s->addEntry(_("BATTERY LEVEL") + ": " + pct + "%", false, nullptr);
+	// }
 
 	// --- Toggle BatteryPlus ---
 	auto batteryPlusEnabled = std::make_shared<SwitchComponent>(mWindow);
@@ -2266,28 +2265,8 @@ void GuiMenu::openOtherSettings()
 		}
 	});
 
-        // Battery Reading Mode
-	auto Brmode = std::make_shared< OptionListComponent<std::string> >(mWindow, _("Battery Reading Mode"), false);
-        std::vector<std::string> bBrmode;
-        bBrmode.push_back("Voltage");
-        bBrmode.push_back("PMIC");
-        bBrmode.push_back("Native");
-
-        auto getBrmode = Settings::getInstance()->getString("BrMode");
-        if (getBrmode.empty())
-                getBrmode = "Voltage";
-
-        for (auto it = bBrmode.cbegin(); it != bBrmode.cend(); it++)
-                Brmode->add(_(it->c_str()), *it, getBrmode == *it);
-
-        s->addWithLabel(_("Battery Reading Mode"), Brmode);
-	s->addSaveFunc([this, Brmode] { Settings::getInstance()->setString("BrMode", Brmode->getSelected()); 
-                if (Brmode->changed()) {
-		    runSystemCommand("echo " + Settings::getInstance()->getString("BrMode") + " > /home/ark/.config/.BRMODE", "", nullptr);
-                    runSystemCommand("sudo -n systemctl restart batteryplus", "", nullptr);
-                }
-        });
-
+        // Battery Settings
+	s->addEntry(_("BATTERY SETTINGS"), true, [this] { openBatterySettings(); }, "iconBattery");
 
 #ifndef _RPI_
 	// full exit
