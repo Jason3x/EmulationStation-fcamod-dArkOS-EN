@@ -419,7 +419,7 @@ void GuiMenu::openNetworkSettings()
 
 void GuiMenu::openBatterySettings()
 {
-	auto s = new GuiSettings(mWindow, _("BATTERY SETTINGS"));
+	auto s = new GuiSettings(mWindow, _("BATTERYPLUS SETTINGS"));
 
 	// --- Statut BatteryPlus ---
 	{
