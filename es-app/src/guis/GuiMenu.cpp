@@ -24,6 +24,7 @@
 #include <cctype>
 #include <vector>
 #include <thread>
+#include <mutex>
 #include "utils/StringUtil.h"
 #include "AudioManager.h"
 #include "resources/TextureData.h"
@@ -111,18 +112,21 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 // Helper Functions (borrowed from ArkOS4Clone)
 // ============================================================================
 
+static std::mutex g_execCommandMutex;
 static std::string executeCommand(const std::string& cmd)
 {
-    FILE* pipe = popen(cmd.c_str(), "r");
-    if (!pipe) return "";
-    
-    char buffer[256];
-    std::string result;
-    while (fgets(buffer, sizeof(buffer), pipe)) {
-        result += buffer;
-    }
-    pclose(pipe);
-    return Utils::String::trim(result);
+	std::lock_guard<std::mutex> lock(g_execCommandMutex);
+
+	FILE* pipe = popen(cmd.c_str(), "r");
+	if (!pipe) return "";
+
+	char buffer[256];
+	std::string result;
+	while (fgets(buffer, sizeof(buffer), pipe)) {
+		result += buffer;
+	}
+	pclose(pipe);
+	return Utils::String::trim(result);
 }
 
 // Get active WiFi interface (wlan0, p2p0, etc.)
