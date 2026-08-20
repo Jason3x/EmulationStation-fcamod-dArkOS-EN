@@ -395,6 +395,13 @@ static bool isRemoteServicesEnabled()
 	std::string smbActive = executeCommand("timeout 3 systemctl is-active --quiet smbd 2>/dev/null && echo 1 || echo 0");
 	std::string sshActive = executeCommand("timeout 3 systemctl is-active --quiet ssh.service 2>/dev/null && echo 1 || echo 0");
 	std::string fbActive = executeCommand("pgrep -f filebrowser >/dev/null 2>/dev/null && echo 1 || echo 0");
+
+	FILE* dbg = fopen("/tmp/remote_status_debug.log", "a");
+	if (dbg) {
+		fprintf(dbg, "smb=[%s] ssh=[%s] fb=[%s]\n", smbActive.c_str(), sshActive.c_str(), fbActive.c_str());
+		fclose(dbg);
+	}
+
 	return (smbActive == "1" || sshActive == "1" || fbActive == "1");
 }
 
