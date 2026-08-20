@@ -718,7 +718,21 @@ void GuiMenu::deleteConnections()
 			mWindow->pushGui(new GuiMsgBox(mWindow,
 				_("DELETE CONNECTION") + "?\n" + connName,
 				_("YES"), [this, connName] {
-					executeCommand("sudo rm -f \"/etc/NetworkManager/system-connections/" + connName + ".nmconnection\"");
+					std::string curSsid = getCurrentWifiSSID();
+
+					// if deleting the currently connected network, disconnect first
+					if (connName == curSsid) {
+						executeCommand("/usr/local/bin/stop_connection_monitor 2>/dev/null || true");
+						executeCommand("nmcli con down \"" + connName + "\" >/dev/null 2>&1 || true");
+						toggleRemoteServices(false);
+					}
+
+					executeCommand("nmcli connection delete \"" + connName + "\" >/dev/null 2>&1 || true");
+					executeCommand("rm -f \"/etc/NetworkManager/system-connections/" + connName + ".nmconnection\"");
+
+					std::string newSsid = getCurrentWifiSSID();
+					if (mWifiStatusText) mWifiStatusText->setText(newSsid.empty() ? _("NOT CONNECTED") : newSsid);
+
 					mWindow->pushGui(new GuiMsgBox(mWindow, _("DELETED"), _("OK")));
 				},
 				_("NO"), nullptr));
