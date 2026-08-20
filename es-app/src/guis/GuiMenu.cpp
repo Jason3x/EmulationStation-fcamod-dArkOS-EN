@@ -499,6 +499,235 @@ static void toggleRemoteServicesAutoStart(bool enable)
 	}
 }
 
+void GuiMenu::scanWifi()
+{
+	auto busy = new GuiComponent(mWindow);
+	auto busyComp = new BusyComponent(mWindow);
+	busy->addChild(busyComp);
+	busyComp->setText(_("SCANNING WIFI NETWORKS"));
+	busy->setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+	mWindow->pushGui(busy);
+
+	mWifiNetworks.clear();
+
+	system("sudo nmcli device wifi rescan 2>/dev/null");
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+
+	std::string clist = executeCommand("sudo nmcli -t -f IN-USE,SSID,SIGNAL dev wifi 2>/dev/null");
+
+	std::istringstream stream(clist);
+	std::string line;
+	while (std::getline(stream, line)) {
+		if (line.empty()) continue;
+
+		size_t pos1 = line.find(':');
+		if (pos1 == std::string::npos) continue;
+
+		size_t pos2 = line.find(':', pos1 + 1);
+
+		std::string ssid;
+		int signal = 0;
+
+		if (pos2 != std::string::npos) {
+			ssid = line.substr(pos1 + 1, pos2 - pos1 - 1);
+			signal = atoi(line.substr(pos2 + 1).c_str());
+		} else {
+			ssid = line.substr(pos1 + 1);
+		}
+
+		if (ssid.empty() || ssid == "--" || ssid == "\\x00") continue;
+
+		mWifiNetworks.push_back(std::make_pair(ssid, signal));
+	}
+
+	mWindow->removeGui(busy);
+	delete busy;
+
+	if (mWifiNetworks.empty()) {
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("NO WIFI NETWORKS FOUND"), _("OK")));
+		return;
+	}
+
+	auto s = new GuiSettings(mWindow, _("SELECT WIFI NETWORK"));
+
+	std::sort(mWifiNetworks.begin(), mWifiNetworks.end(),
+		[](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
+			return a.second > b.second;
+		});
+
+	std::map<std::string, int> uniqueNetworks;
+	for (auto& net : mWifiNetworks) {
+		if (uniqueNetworks.find(net.first) == uniqueNetworks.end() || uniqueNetworks[net.first] < net.second) {
+			uniqueNetworks[net.first] = net.second;
+		}
+	}
+
+	for (auto& net : uniqueNetworks) {
+		if (net.first.empty()) continue;
+
+		std::string entryName = net.first + " (" + std::to_string(net.second) + "%)";
+		std::string ssid = net.first;
+		s->addEntry(entryName, true, [this, ssid] {
+			showWifiPasswordInput(ssid);
+		}, "");
+	}
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::showWifiPasswordInput(const std::string& ssid)
+{
+	mWindow->pushGui(new GuiTextEditPopupKeyboard(mWindow,
+		_("PASSWORD FOR") + " " + ssid,
+		"",
+		[this, ssid](const std::string& password) {
+			connectWifi(ssid, password);
+		},
+		false, _("CONNECT")));
+}
+
+void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
+{
+	auto busy = new GuiComponent(mWindow);
+	auto busyComp = new BusyComponent(mWindow);
+	busy->addChild(busyComp);
+	busyComp->setText(_("CONNECTING TO") + " " + ssid + "...");
+	busy->setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+	mWindow->pushGui(busy);
+
+	executeCommand("nmcli con delete \"" + ssid + "\" 2>/dev/null");
+
+	std::string result;
+	if (password.empty())
+		result = executeCommand("nmcli device wifi connect \"" + ssid + "\" 2>&1");
+	else
+		result = executeCommand("nmcli device wifi connect \"" + ssid + "\" password \"" + password + "\" 2>&1");
+
+	std::this_thread::sleep_for(std::chrono::seconds(3));
+
+	mWindow->removeGui(busy);
+	delete busy;
+
+	std::string connectedSSID = getCurrentWifiSSID();
+	bool connected = (connectedSSID == ssid);
+
+	if (connected) {
+		if (mWifiStatusText) mWifiStatusText->setText(connectedSSID);
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + ssid, _("OK")));
+	} else {
+		executeCommand("sudo rm -f \"/etc/NetworkManager/system-connections/" + ssid + ".nmconnection\" 2>/dev/null");
+		if (mWifiStatusText) mWifiStatusText->setText(connectedSSID.empty() ? _("NOT CONNECTED") : connectedSSID);
+
+		std::string errorMsg = _("CONNECTION FAILED");
+		if (result.find("Secrets were required") != std::string::npos)
+			errorMsg += "\n" + _("INVALID PASSWORD");
+		else if (result.find("not found") != std::string::npos || result.find("No network") != std::string::npos)
+			errorMsg += "\n" + _("NETWORK NOT FOUND");
+		else if (!result.empty())
+			errorMsg += "\n" + result;
+		mWindow->pushGui(new GuiMsgBox(mWindow, errorMsg, _("OK")));
+	}
+}
+
+void GuiMenu::activateExistingConnection()
+{
+	std::string conns = executeCommand("ls -1 /etc/NetworkManager/system-connections/ 2>/dev/null | sed 's/\\.nmconnection$//'");
+
+	if (conns.empty()) {
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("NO SAVED CONNECTIONS"), _("OK")));
+		return;
+	}
+
+	std::string curSsid = getCurrentWifiSSID();
+
+	auto s = new GuiSettings(mWindow, _("SELECT CONNECTION"));
+
+	std::istringstream stream(conns);
+	std::string conn;
+	while (std::getline(stream, conn)) {
+		if (conn.empty()) continue;
+
+		std::string connName = conn;
+		std::string displayName = connName;
+		if (connName == curSsid)
+			displayName = connName + " [" + _("CONNECTED") + "]";
+
+		s->addEntry(displayName, true, [this, connName] {
+			activateConnection(connName);
+		}, "");
+	}
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::activateConnection(const std::string& connName)
+{
+	auto busy = new GuiComponent(mWindow);
+	auto busyComp = new BusyComponent(mWindow);
+	busy->addChild(busyComp);
+	busyComp->setText(_("CONNECTING..."));
+	busy->setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
+	mWindow->pushGui(busy);
+
+	std::string curSsid = getCurrentWifiSSID();
+	if (!curSsid.empty() && curSsid != connName) {
+		executeCommand("nmcli con down \"" + curSsid + "\" 2>/dev/null");
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+	}
+
+	std::string result = executeCommand("nmcli con up \"" + connName + "\" 2>&1");
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+
+	mWindow->removeGui(busy);
+	delete busy;
+
+	std::string newSsid = getCurrentWifiSSID();
+	if (newSsid == connName) {
+		if (mWifiStatusText) mWifiStatusText->setText(newSsid);
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + connName, _("OK")));
+	} else {
+		if (mWifiStatusText) mWifiStatusText->setText(newSsid.empty() ? _("NOT CONNECTED") : newSsid);
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTION FAILED") + "\n" + result, _("OK")));
+	}
+}
+
+void GuiMenu::deleteConnections()
+{
+	std::string conns = executeCommand("ls -1 /etc/NetworkManager/system-connections/ 2>/dev/null | sed 's/\\.nmconnection$//'");
+
+	if (conns.empty()) {
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("NO SAVED CONNECTIONS"), _("OK")));
+		return;
+	}
+
+	std::string curSsid = getCurrentWifiSSID();
+
+	auto s = new GuiSettings(mWindow, _("DELETE CONNECTION"));
+
+	std::istringstream stream(conns);
+	std::string conn;
+	while (std::getline(stream, conn)) {
+		if (conn.empty()) continue;
+
+		std::string connName = conn;
+		std::string displayName = connName;
+		if (connName == curSsid)
+			displayName = connName + " [" + _("CONNECTED") + "]";
+
+		s->addEntry(displayName, true, [this, connName] {
+			mWindow->pushGui(new GuiMsgBox(mWindow,
+				_("DELETE CONNECTION") + "?\n" + connName,
+				_("YES"), [this, connName] {
+					executeCommand("sudo rm -f \"/etc/NetworkManager/system-connections/" + connName + ".nmconnection\"");
+					mWindow->pushGui(new GuiMsgBox(mWindow, _("DELETED"), _("OK")));
+				},
+				_("NO"), nullptr));
+		}, "");
+	}
+
+	mWindow->pushGui(s);
+}
+
 void GuiMenu::openNetworkSettings()
 {
 	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS"));
@@ -544,6 +773,19 @@ void GuiMenu::openNetworkSettings()
 			s->addWithLabel(_("IP ADDRESS"), ipText);
 		}
 	}
+
+	// --- WiFi Network Actions ---
+	s->addEntry(_("SCAN WIFI NETWORKS"), true, [this] {
+		scanWifi();
+	}, "");
+
+	s->addEntry(_("ACTIVATE EXISTING CONNECTION"), true, [this] {
+		activateExistingConnection();
+	}, "");
+
+	s->addEntry(_("DELETE EXISTING CONNECTIONS"), true, [this] {
+		deleteConnections();
+	}, "");
 
     // --- Remote Services toggle (SSH, Samba, FileBrowser, NTP) ---
     bool remoteEnabled = isRemoteServicesEnabled();
