@@ -404,6 +404,11 @@ static bool isRemoteServicesEnabled()
 	return (isOne(smbActive) || isOne(sshActive) || isOne(fbActive));
 }
 
+static bool isSambaRootAccessEnabled()
+{
+	return access("/home/ark/.smb_root_access", F_OK) == 0;
+}
+
 static void toggleRemoteServices(bool enable)
 {
 	if (enable) {
