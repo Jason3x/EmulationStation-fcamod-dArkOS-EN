@@ -3,6 +3,7 @@
 #ifndef ES_APP_GUIS_GUI_MENU_H
 #define ES_APP_GUIS_GUI_MENU_H
 
+#include "components/BusyComponent.h"
 #include "components/MenuComponent.h"
 #include "components/OptionListComponent.h"
 #include "GuiComponent.h"
@@ -32,6 +33,12 @@ private:
 	void openQuitMenu();
 	void openScraperSettings();
 	void openScreensaverOptions();
+	void scanWifi();
+	void showWifiPasswordInput(const std::string& ssid);
+	void connectWifi(const std::string& ssid, const std::string& password);
+	void activateExistingConnection();
+	void activateConnection(const std::string& connName);
+	void deleteConnections();
 	void openNetworkSettings();
 	void openBatterySettings();
 	void openSoundSettings();
@@ -49,6 +56,7 @@ private:
 	MenuComponent mMenu;
 	TextComponent mVersion;
 	std::shared_ptr<TextComponent> mWifiStatusText;
+	std::vector<std::pair<std::string, int>> mWifiNetworks;
 };
 
 #endif // ES_APP_GUIS_GUI_MENU_H
