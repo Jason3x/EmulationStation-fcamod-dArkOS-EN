@@ -48,7 +48,7 @@ private:
 
 	MenuComponent mMenu;
 	TextComponent mVersion;
-
+	std::shared_ptr<TextComponent> mWifiStatusText;
 };
 
 #endif // ES_APP_GUIS_GUI_MENU_H

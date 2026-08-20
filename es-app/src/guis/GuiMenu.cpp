@@ -20,6 +20,11 @@
 #include "VolumeControl.h"
 #include <SDL_events.h>
 #include <algorithm>
+#include <sstream>
+#include <cctype>
+#include <vector>
+#include <thread>
+#include "utils/StringUtil.h"
 #include "AudioManager.h"
 #include "resources/TextureData.h"
 #include "animations/LambdaAnimation.h"
@@ -100,6 +105,97 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 			Vector2f((Renderer::getScreenWidth() - mSize.x()) / 2, (Renderer::getScreenHeight() - mSize.y()) / 2));
 	else
 		setPosition((Renderer::getScreenWidth() - mSize.x()) / 2, (Renderer::getScreenHeight() - mSize.y()) / 2);
+}
+
+// ============================================================================
+// Helper Functions (borrowed from ArkOS4Clone)
+// ============================================================================
+
+static std::string executeCommand(const std::string& cmd)
+{
+    FILE* pipe = popen(cmd.c_str(), "r");
+    if (!pipe) return "";
+    
+    char buffer[256];
+    std::string result;
+    while (fgets(buffer, sizeof(buffer), pipe)) {
+        result += buffer;
+    }
+    pclose(pipe);
+    return Utils::String::trim(result);
+}
+
+// Get active WiFi interface (wlan0, p2p0, etc.)
+static std::string getActiveWifiInterface()
+{
+    // Check for connected wifi devices via nmcli
+    std::string result = executeCommand("nmcli -t -f DEVICE,TYPE,STATE dev 2>/dev/null");
+    if (!result.empty()) {
+        std::istringstream stream(result);
+        std::string line;
+        while (std::getline(stream, line)) {
+            // Format: device:type:state
+            if (line.find(":wifi:") != std::string::npos && line.find(":connected") != std::string::npos) {
+                size_t colonPos = line.find(':');
+                if (colonPos != std::string::npos) {
+                    std::string iface = line.substr(0, colonPos);
+                    if (!iface.empty()) return iface;
+                }
+            }
+        }
+    }
+    
+    // Fallback: check operstate of common wifi interfaces
+    std::vector<std::string> wifiInterfaces = {"p2p0", "wlan0", "wlan1"};
+    for (const auto& iface : wifiInterfaces) {
+        std::string operstate = executeCommand("cat /sys/class/net/" + iface + "/operstate 2>/dev/null");
+        if (operstate == "up") return iface;
+    }
+    
+    return "wlan0"; // Default fallback
+}
+
+
+
+static std::string getCurrentWifiSSID()
+{
+    // Method 1: nmcli active connection - check all wifi interfaces
+    std::string result = executeCommand("nmcli -t -f NAME,DEVICE connection show --active 2>/dev/null");
+    if (!result.empty()) {
+        std::istringstream stream(result);
+        std::string line;
+        while (std::getline(stream, line)) {
+            // Check for wlan, p2p, or any wifi interface
+            if (line.find(":wlan") != std::string::npos || 
+                line.find(":p2p") != std::string::npos ||
+                line.find("wlan") != std::string::npos ||
+                line.find("p2p") != std::string::npos) {
+                size_t colonPos = line.find(':');
+                if (colonPos != std::string::npos) {
+                    std::string connName = line.substr(0, colonPos);
+                    if (!connName.empty() && connName != "lo") {
+                        return connName;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Method 2: iw dev - check active interface
+    std::string iface = getActiveWifiInterface();
+    std::string ssid = executeCommand("iw dev " + iface + " info 2>/dev/null | grep ssid");
+    if (!ssid.empty()) {
+        size_t pos = ssid.find("ssid ");
+        if (pos != std::string::npos) {
+            ssid = ssid.substr(pos + 5);
+            ssid.erase(std::remove_if(ssid.begin(), ssid.end(), ::isspace), ssid.end());
+            if (!ssid.empty() && ssid != "off/any") {
+                return ssid;
+            }
+        }
+    }
+    
+    return "";
 }
 
 void GuiMenu::openDisplaySettings()
@@ -293,9 +389,167 @@ void GuiMenu::openScraperSettings()
 	mWindow->pushGui(s);
 }
 
+// Remote services helpers
+static std::string executeCommand(const std::string& cmd)
+{
+	FILE* pipe = popen(cmd.c_str(), "r");
+	if (!pipe) return "";
+
+	char buffer[256];
+	std::string result;
+	while (fgets(buffer, sizeof(buffer), pipe)) {
+		result += buffer;
+	}
+	pclose(pipe);
+	return Utils::String::trim(result);
+}
+
+static std::string getActiveWifiInterface()
+{
+	std::string result = executeCommand("nmcli -t -f DEVICE,TYPE,STATE dev 2>/dev/null");
+	if (!result.empty()) {
+		std::istringstream stream(result);
+		std::string line;
+		while (std::getline(stream, line)) {
+			if (line.find(":wifi:") != std::string::npos && line.find(":connected") != std::string::npos) {
+				size_t colonPos = line.find(':');
+				if (colonPos != std::string::npos) {
+					std::string iface = line.substr(0, colonPos);
+					if (!iface.empty()) return iface;
+				}
+			}
+		}
+	}
+
+	std::vector<std::string> wifiInterfaces = {"p2p0", "wlan0", "wlan1"};
+	for (const auto& iface : wifiInterfaces) {
+		std::string operstate = executeCommand("cat /sys/class/net/" + iface + "/operstate 2>/dev/null");
+		if (operstate == "up") return iface;
+	}
+
+	return "wlan0";
+}
+
+static std::string getCurrentWifiSSID()
+{
+	std::string result = executeCommand("nmcli -t -f NAME,DEVICE connection show --active 2>/dev/null");
+	if (!result.empty()) {
+		std::istringstream stream(result);
+		std::string line;
+		while (std::getline(stream, line)) {
+			if (line.find(":wlan") != std::string::npos ||
+				line.find(":p2p") != std::string::npos ||
+				line.find("wlan") != std::string::npos ||
+				line.find("p2p") != std::string::npos) {
+				size_t colonPos = line.find(':');
+				if (colonPos != std::string::npos) {
+					std::string connName = line.substr(0, colonPos);
+					if (!connName.empty() && connName != "lo") {
+						return connName;
+					}
+				}
+			}
+		}
+	}
+
+	std::string iface = getActiveWifiInterface();
+	std::string ssid = executeCommand("iw dev " + iface + " info 2>/dev/null | grep ssid");
+	if (!ssid.empty()) {
+		size_t pos = ssid.find("ssid ");
+		if (pos != std::string::npos) {
+			ssid = ssid.substr(pos + 5);
+			ssid.erase(std::remove_if(ssid.begin(), ssid.end(), ::isspace), ssid.end());
+			if (!ssid.empty() && ssid != "off/any") {
+				return ssid;
+			}
+		}
+	}
+
+	return "";
+}
+
+static bool isRemoteServicesEnabled()
+{
+	std::string result = executeCommand("pgrep -x sshd 2>/dev/null");
+	return !result.empty();
+}
+
+static void toggleRemoteServices(bool enable)
+{
+	if (enable) {
+		std::string gateway = executeCommand("ip route | awk '/default/ { print $3; exit }' 2>/dev/null");
+		if (Utils::String::trim(gateway).empty()) {
+			return;
+		}
+
+		executeCommand("sudo systemctl enable NetworkManager-wait-online 2>/dev/null");
+		executeCommand("sudo systemctl start NetworkManager-wait-online 2>/dev/null");
+		executeCommand("sudo timedatectl set-ntp 1 2>/dev/null");
+		executeCommand("sudo systemctl start smbd 2>/dev/null");
+		executeCommand("sudo systemctl start nmbd 2>/dev/null");
+		executeCommand("sudo systemctl start ssh.service 2>/dev/null");
+		executeCommand("sudo pkill -f filebrowser 2>/dev/null || true");
+		executeCommand("sudo filebrowser -a 0.0.0.0 -p 80 -d /home/ark/.config/filebrowser.db -r / >/dev/null 2>&1 &");
+	} else {
+		executeCommand("sudo systemctl disable NetworkManager-wait-online 2>/dev/null");
+		executeCommand("sudo systemctl stop NetworkManager-wait-online 2>/dev/null");
+		executeCommand("sudo timedatectl set-ntp 0 2>/dev/null");
+		executeCommand("sudo systemctl stop smbd 2>/dev/null");
+		executeCommand("sudo systemctl stop nmbd 2>/dev/null");
+		executeCommand("sudo systemctl stop ssh.service 2>/dev/null");
+		executeCommand("sudo pkill -f filebrowser 2>/dev/null || true");
+	}
+}
+
+static bool isRemoteServicesAutoStart()
+{
+	std::string result = executeCommand("systemctl is-enabled remote-autostart.service 2>/dev/null");
+	result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+	return result.find("enabled") != std::string::npos;
+}
+
+static void toggleRemoteServicesAutoStart(bool enable)
+{
+	const std::string unitPath = "/etc/systemd/system/remote-autostart.service";
+
+	// Create the unit file if it doesn't exist yet (matches WM's Toggle_Autostart)
+	std::string exists = executeCommand("[ -f " + unitPath + " ] && echo yes || echo no");
+	if (exists != "yes") {
+		std::string createCmd =
+			"sudo bash -c 'cat > " + unitPath + " << \"EOF\"\n"
+			"[Unit]\n"
+			"Description=Remote Services Autostart\n"
+			"After=network.target emulationstation.service\n"
+			"[Service]\n"
+			"Type=oneshot\n"
+			"RemainAfterExit=yes\n"
+			"ExecStart=/bin/bash -c \"timedatectl set-ntp 1 & systemctl start smbd & systemctl start nmbd & systemctl start ssh.service & filebrowser -a 0.0.0.0 -p 80 -d /home/ark/.config/filebrowser.db -r / &\"\n"
+			"[Install]\n"
+			"WantedBy=multi-user.target\n"
+			"EOF'";
+		executeCommand(createCmd);
+		executeCommand("sudo systemctl daemon-reload");
+	}
+
+	if (enable) {
+		executeCommand("sudo systemctl enable remote-autostart.service 2>/dev/null || true");
+	} else {
+		executeCommand("sudo systemctl disable remote-autostart.service 2>/dev/null || true");
+	}
+}
+
 void GuiMenu::openNetworkSettings()
 {
 	auto s = new GuiSettings(mWindow, _("NETWORK SETTINGS"));
+
+	// --- Current Network ---
+	std::string wifiStatus = getCurrentWifiSSID();
+    if (wifiStatus.empty()) {
+        wifiStatus = _("NOT CONNECTED");
+    }
+    mWifiStatusText = std::make_shared<TextComponent>(mWindow, wifiStatus, ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+    mWifiStatusText->setLineSpacing(1.0f);
+    s->addWithLabel(_("CURRENT NETWORK"), mWifiStatusText);
 
 	// --- Hostname (affiché seulement si SSH ou Samba actif) ---
 	{
@@ -323,6 +577,30 @@ void GuiMenu::openNetworkSettings()
 		if (!ip.empty())
 			s->addEntry(_("IP ADDRESS") + ": " + ip, false, nullptr);
 	}
+
+    // --- Remote Services toggle (SSH, Samba, FileBrowser, NTP) ---
+    bool remoteEnabled = isRemoteServicesEnabled();
+        auto remoteSwitch = std::make_shared<SwitchComponent>(mWindow);
+    remoteSwitch->setState(remoteEnabled);
+    remoteSwitch->setOnChangedCallback([remoteSwitch] {
+        bool enable = remoteSwitch->getState();
+        std::thread([enable] {
+            toggleRemoteServices(enable);
+        }).detach();
+    });
+    s->addWithLabel(_("REMOTE SERVICES"), remoteSwitch);
+
+    // --- Remote Services Auto-Start toggle ---
+    bool autoStartEnabled = isRemoteServicesAutoStart();
+        auto autoStartSwitch = std::make_shared<SwitchComponent>(mWindow);
+    autoStartSwitch->setState(autoStartEnabled);
+    autoStartSwitch->setOnChangedCallback([autoStartSwitch] {
+        bool enable = autoStartSwitch->getState();
+        std::thread([enable] {
+            toggleRemoteServicesAutoStart(enable);
+        }).detach();
+    });
+    s->addWithLabel(_("REMOTE SERVICES AUTO-START"), autoStartSwitch);
 
 	// --- WiFi Manager ---
 	s->addEntry(_("WI-FI MANAGER"), false, [this] {
