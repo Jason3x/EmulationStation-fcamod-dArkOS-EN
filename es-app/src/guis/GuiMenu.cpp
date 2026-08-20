@@ -485,7 +485,10 @@ void GuiMenu::openNetworkSettings()
 			std::string hn(buf);
 			if (!hn.empty() && hn.back() == '\n') hn.pop_back();
 			if (!hn.empty())
-				s->addEntry(_("HOSTNAME") + ": " + hn, false, nullptr);
+			{
+				auto hostnameText = std::make_shared<TextComponent>(mWindow, hn, ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+				s->addWithLabel(_("HOSTNAME"), hostnameText);
+			}
 		}
 	}
 
@@ -497,7 +500,10 @@ void GuiMenu::openNetworkSettings()
 		std::string ip(buf);
 		if (!ip.empty() && ip.back() == '\n') ip.pop_back();
 		if (!ip.empty())
-			s->addEntry(_("IP ADDRESS") + ": " + ip, false, nullptr);
+		{
+			auto ipText = std::make_shared<TextComponent>(mWindow, ip, ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+			s->addWithLabel(_("IP ADDRESS"), ipText);
+		}
 	}
 
     // --- Remote Services toggle (SSH, Samba, FileBrowser, NTP) ---
