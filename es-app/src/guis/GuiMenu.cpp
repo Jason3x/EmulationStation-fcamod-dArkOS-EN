@@ -718,15 +718,15 @@ void GuiMenu::openBatterySettings()
 	}
 
 	// --- Pourcentage actuel ---
-	// {
-		// char buf[16] = {0};
-		// FILE* f = popen("cat /tmp/battery.percent 2>/dev/null", "r");
-		// if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
-		// std::string pct(buf);
-		// if (!pct.empty() && pct.back() == '\n') pct.pop_back();
-		// if (pct.empty()) pct = "N/A";
-		// s->addEntry(_("BATTERY LEVEL") + ": " + pct + "%", false, nullptr);
-	// }
+	{
+		char buf[16] = {0};
+		FILE* f = popen("cat /tmp/battery.percent 2>/dev/null", "r");
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string pct(buf);
+		if (!pct.empty() && pct.back() == '\n') pct.pop_back();
+		if (pct.empty()) pct = "N/A";
+		s->addEntry(_("BATTERY LEVEL") + ": " + pct + "%", false, nullptr);
+	}
 
 	// --- Toggle BatteryPlus ---
 	auto batteryPlusEnabled = std::make_shared<SwitchComponent>(mWindow);
