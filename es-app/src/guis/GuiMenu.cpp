@@ -396,18 +396,12 @@ static bool isRemoteServicesEnabled()
 	std::string sshActive = executeCommand("timeout 3 systemctl is-active --quiet ssh.service 2>/dev/null && echo 1 || echo 0");
 	std::string fbActive = executeCommand("pgrep -f filebrowser >/dev/null 2>/dev/null && echo 1 || echo 0");
 
-	FILE* dbg = fopen("/tmp/remote_status_debug.log", "a");
-	if (dbg) {
-		fprintf(dbg, "smb=[%s] ssh=[%s] fb=[%s]\n", smbActive.c_str(), sshActive.c_str(), fbActive.c_str());
-		fclose(dbg);
-	}
+	auto isOne = [](std::string s) {
+		while (!s.empty() && (s.back() == '\n' || s.back() == '\r')) s.pop_back();
+		return s == "1";
+	};
 
-	return (smbActive == "1" || sshActive == "1" || fbActive == "1");
-}
-
-static bool isSambaRootAccessEnabled()
-{
-	return access("/home/ark/.smb_root_access", F_OK) == 0;
+	return (isOne(smbActive) || isOne(sshActive) || isOne(fbActive));
 }
 
 static void toggleRemoteServices(bool enable)
