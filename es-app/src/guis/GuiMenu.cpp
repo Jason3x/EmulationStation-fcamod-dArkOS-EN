@@ -398,7 +398,7 @@ static bool isRemoteServicesEnabled()
 {
 	std::string smbActive = executeCommand("timeout 3 systemctl is-active --quiet smbd 2>/dev/null && echo 1 || echo 0");
 	std::string sshActive = executeCommand("timeout 3 systemctl is-active --quiet ssh.service 2>/dev/null && echo 1 || echo 0");
-	std::string fbActive = executeCommand("pgrep -f filebrowser >/dev/null 2>/dev/null && echo 1 || echo 0");
+	std::string fbActive = executeCommand("pgrep -x filebrowser >/dev/null 2>/dev/null && echo 1 || echo 0");
 
 	auto isOne = [](std::string s) {
 		while (!s.empty() && (s.back() == '\n' || s.back() == '\r')) s.pop_back();
@@ -427,7 +427,7 @@ static void toggleRemoteServices(bool enable)
 		executeCommand("sudo systemctl start smbd 2>/dev/null");
 		executeCommand("sudo systemctl start nmbd 2>/dev/null");
 		executeCommand("sudo systemctl start ssh.service 2>/dev/null");
-		executeCommand("sudo pkill -f filebrowser 2>/dev/null || true");
+		executeCommand("sudo pkill -x filebrowser 2>/dev/null || true");
 		executeCommand("sudo filebrowser -a 0.0.0.0 -p 80 -d /home/ark/.config/filebrowser.db -r / >/dev/null 2>&1 &");
 	} else {
 		executeCommand("sudo systemctl disable NetworkManager-wait-online 2>/dev/null");
@@ -436,7 +436,7 @@ static void toggleRemoteServices(bool enable)
 		executeCommand("sudo systemctl stop smbd 2>/dev/null");
 		executeCommand("sudo systemctl stop nmbd 2>/dev/null");
 		executeCommand("sudo systemctl stop ssh.service 2>/dev/null");
-		executeCommand("sudo pkill -f filebrowser 2>/dev/null || true");
+		executeCommand("sudo pkill -x filebrowser 2>/dev/null || true");
 	}
 }
 
