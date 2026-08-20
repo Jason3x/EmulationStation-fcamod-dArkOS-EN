@@ -392,8 +392,15 @@ void GuiMenu::openScraperSettings()
 // Remote services helpers
 static bool isRemoteServicesEnabled()
 {
-	std::string result = executeCommand("pgrep -x sshd 2>/dev/null");
-	return !result.empty();
+	std::string smbActive = executeCommand("timeout 3 systemctl is-active --quiet smbd 2>/dev/null && echo 1 || echo 0");
+	std::string sshActive = executeCommand("timeout 3 systemctl is-active --quiet ssh.service 2>/dev/null && echo 1 || echo 0");
+	std::string fbActive = executeCommand("pgrep -f filebrowser >/dev/null 2>/dev/null && echo 1 || echo 0");
+	return (smbActive == "1" || sshActive == "1" || fbActive == "1");
+}
+
+static bool isSambaRootAccessEnabled()
+{
+	return access("/home/ark/.smb_root_access", F_OK) == 0;
 }
 
 static void toggleRemoteServices(bool enable)
@@ -420,6 +427,28 @@ static void toggleRemoteServices(bool enable)
 		executeCommand("sudo systemctl stop nmbd 2>/dev/null");
 		executeCommand("sudo systemctl stop ssh.service 2>/dev/null");
 		executeCommand("sudo pkill -f filebrowser 2>/dev/null || true");
+	}
+}
+
+static void toggleSambaRootAccess(bool enable)
+{
+	const std::string smb = "/etc/samba/smb.conf";
+	const std::string flag = "/home/ark/.smb_root_access";
+
+	bool remoteActive = isRemoteServicesEnabled();
+
+	if (enable) {
+		executeCommand("sudo cp " + smb + ".root " + smb);
+		executeCommand("touch " + flag);
+	} else {
+		executeCommand("sudo cp " + smb + ".default " + smb);
+		executeCommand("rm -f " + flag);
+	}
+
+	if (remoteActive) {
+		toggleRemoteServices(false);
+		sleep(2);
+		toggleRemoteServices(true);
 	}
 }
 
@@ -529,6 +558,17 @@ void GuiMenu::openNetworkSettings()
         }).detach();
     });
     s->addWithLabel(_("REMOTE SERVICES AUTO-START"), autoStartSwitch);
+
+	// --- Samba Root Access toggle ---
+	auto sambaRootSwitch = std::make_shared<SwitchComponent>(mWindow);
+	sambaRootSwitch->setState(isSambaRootAccessEnabled());
+	sambaRootSwitch->setOnChangedCallback([sambaRootSwitch] {
+		bool enable = sambaRootSwitch->getState();
+		std::thread([enable] {
+			toggleSambaRootAccess(enable);
+		}).detach();
+	});
+	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
 
 	// --- WiFi Manager ---
 	s->addEntry(_("WI-FI MANAGER"), false, [this] {
