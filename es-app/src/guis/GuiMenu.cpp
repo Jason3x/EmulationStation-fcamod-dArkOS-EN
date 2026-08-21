@@ -811,15 +811,14 @@ void GuiMenu::openNetworkSettings()
 
 	// WiFi enable/disable toggle
 	bool wifiInitialState = !isWifiRfkillBlocked();
-	bool wifiIconPriorState = Settings::getInstance()->getBool("networkIcon");
 	auto wifiSwitch = std::make_shared<SwitchComponent>(mWindow);
 	wifiSwitch->setState(wifiInitialState);
-	wifiSwitch->setOnChangedCallback([wifiSwitch, wifiIconPriorState] {
+	wifiSwitch->setOnChangedCallback([wifiSwitch] {
 		std::string cmd = wifiSwitch->getState()
 			? "/usr/local/bin/wifi_enable.sh"
 			: "/usr/local/bin/wifi_disable.sh";
 		system(cmd.c_str());
-		Settings::getInstance()->setBool("networkIcon", wifiSwitch->getState() ? wifiIconPriorState : false);
+		Settings::getInstance()->setBool("networkIcon", wifiSwitch->getState());
 	});
 	s->addWithLabel(_("WIFI ENABLED"), wifiSwitch);
 	s->addSaveFunc([s, wifiSwitch, wifiInitialState]
