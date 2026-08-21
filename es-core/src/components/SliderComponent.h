@@ -14,8 +14,7 @@ class SliderComponent : public GuiComponent
 {
 public:
 	//Minimum value (far left of the slider), maximum value (far right of the slider), increment size (how much just pressing L/R moves by), unit to display (optional).
-	SliderComponent(Window* window, float min, float max, float increment, const std::string& suffix = "");
-
+	SliderComponent(Window* window, float min, float max, float increment, const std::string& suffix = "", int precision = 0);
 	void setValue(float val);
 	float getValue();
 
@@ -37,6 +36,7 @@ private:
 	float mValue;
 	float mSingleIncrement;
 	float mMoveRate;
+	int mPrecision;
 	int mMoveAccumulator;
 
 	ImageComponent mKnob;

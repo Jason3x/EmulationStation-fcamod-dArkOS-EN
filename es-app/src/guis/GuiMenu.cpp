@@ -228,7 +228,7 @@ void GuiMenu::openDisplaySettings()
 
 	s->addWithLabel(_("BRIGHTNESS"), brightnessComponent);
 	
-	auto gammaComponent = std::make_shared<SliderComponent>(mWindow, 0.4f, 1.8f, 0.1f, "");
+	auto gammaComponent = std::make_shared<SliderComponent>(mWindow, 0.4f, 1.8f, 0.1f, "", 1);
 	gammaComponent->setValue(ApiSystem::getInstance()->getGamma());
 	gammaComponent->setOnValueChanged([](const float &newVal)
 	{
