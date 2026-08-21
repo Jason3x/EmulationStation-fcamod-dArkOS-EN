@@ -911,6 +911,18 @@ void GuiMenu::openNetworkSettings()
 	});
 	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
 
+	// --- WiFi Monitor Service toggle ---
+	bool wifiMonitorEnabled = executeCommand("systemctl is-enabled wifi_monitor.service 2>/dev/null").find("masked") == std::string::npos;
+	auto wifiMonitorSwitch = std::make_shared<SwitchComponent>(mWindow);
+	wifiMonitorSwitch->setState(wifiMonitorEnabled);
+	wifiMonitorSwitch->setOnChangedCallback([wifiMonitorSwitch] {
+		if (wifiMonitorSwitch->getState())
+			executeCommand("systemctl unmask wifi_monitor.service 2>/dev/null || true");
+		else
+			executeCommand("systemctl stop wifi_monitor.service 2>/dev/null; systemctl mask wifi_monitor.service 2>/dev/null || true");
+	});
+	s->addWithLabel(_("WIFI MONITOR SERVICE"), wifiMonitorSwitch);
+
 	// --- Bluetooth Manager ---
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
 		if (access("/usr/local/bin/BT Manager.sh", F_OK) == 0)
