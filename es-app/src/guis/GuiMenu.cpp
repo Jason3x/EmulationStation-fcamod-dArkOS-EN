@@ -132,12 +132,8 @@ static std::string executeCommand(const std::string& cmd)
 // Check current WiFi state: no interface = disabled, otherwise check rfkill
 static bool isWifiRfkillBlocked()
 {
-    std::string iface = executeCommand("ls /sys/class/net 2>/dev/null | grep '^wlan' | head -1");
-    if (iface.empty())
-        return true;
-
-    std::string result = executeCommand("/usr/sbin/rfkill list wlan 2>/dev/null | grep -i 'Soft blocked' | head -1");
-    return result.find("yes") != std::string::npos;
+    std::string result = executeCommand("cat /var/cache/wifi_manager_state 2>/dev/null");
+    return result == "OFF";
 }
 
 // Get active WiFi interface (wlan0, p2p0, etc.)
