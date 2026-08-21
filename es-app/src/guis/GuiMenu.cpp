@@ -962,6 +962,11 @@ void GuiMenu::openNetworkSettings()
 			// runSystemCommand("sudo -n systemctl disable ssh 2>/dev/null", "", nullptr);
 	// });
 
+	s->onFinalize([s, this] {
+		if (s->getVariable("reloadAll"))
+			ViewController::get()->reloadAll(mWindow);
+	});
+
 	mWindow->pushGui(s);
 }
 
@@ -2032,8 +2037,7 @@ void GuiMenu::openUISettings()
 	s->addSaveFunc(
 		[clock] { Settings::getInstance()->setBool("DrawClock", clock->getState()); });
 
-	auto wifiIcon = std::make_shared<SwitchComponent>(mWindow);
-	wifiIcon->setState(Settings::getInstance()->getBool("networkIcon"));
+
 	// --- Battery Icon Pack ---
 	auto batteryIconPack = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BATTERY ICON"), false);
 	std::string currentPack = Settings::getInstance()->getString("BatteryIconPack");
@@ -2054,7 +2058,9 @@ void GuiMenu::openUISettings()
 			Settings::getInstance()->saveFile();
 		}
 	});
-
+	
+	auto wifiIcon = std::make_shared<SwitchComponent>(mWindow);
+	wifiIcon->setState(Settings::getInstance()->getBool("networkIcon"));
 	s->addWithLabel(_("SHOW WIFI ICON"), wifiIcon);
 	s->addSaveFunc([s, wifiIcon]
 	{
