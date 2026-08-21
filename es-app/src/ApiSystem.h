@@ -43,6 +43,8 @@ public:
 	int	getBrightnessLevel();
 	bool	getBrighness(int& value);
 	void	setBrighness(int value);
+	float	getGamma();
+	void	setGamma(float value);
     BatteryInformation getBatteryInformation(bool summary = true);
 
 protected:

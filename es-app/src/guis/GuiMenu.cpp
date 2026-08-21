@@ -227,7 +227,15 @@ void GuiMenu::openDisplaySettings()
     });
 
 	s->addWithLabel(_("BRIGHTNESS"), brightnessComponent);
-
+	
+	auto gammaComponent = std::make_shared<SliderComponent>(mWindow, 0.4f, 1.8f, 0.1f, "");
+	gammaComponent->setValue(ApiSystem::getInstance()->getGamma());
+	gammaComponent->setOnValueChanged([](const float &newVal)
+	{
+		ApiSystem::getInstance()->setGamma(newVal);
+	});
+	s->addWithLabel(_("GAMMA"), gammaComponent);
+	
 		auto brightnessPopup = std::make_shared<SwitchComponent>(mWindow);
 		brightnessPopup->setState(Settings::getInstance()->getBool("BrightnessPopup"));
 		s->addWithLabel(_("SHOW OVERLAY WHEN BRIGHTNESS CHANGES"), brightnessPopup);

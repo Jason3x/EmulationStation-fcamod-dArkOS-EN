@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <unistd.h> 
 
 ApiSystem* ApiSystem::instance = nullptr;
@@ -559,6 +560,37 @@ void ApiSystem::setBrighness(int value)
 		LOG(LogError) << "ApiSystem::setBrighness failed";
 	
 	close(fd);
+#endif
+}
+
+float ApiSystem::getGamma()
+{
+#if !WIN32
+	std::ifstream conf("/etc/gamma-settings.conf");
+	std::string line;
+	while (std::getline(conf, line))
+	{
+		if (line.rfind("GAMMA=", 0) == 0)
+			return (float) atof(line.substr(6).c_str());
+	}
+#endif
+	return 1.0f;
+}
+
+void ApiSystem::setGamma(float value)
+{
+#if !WIN32
+	char cmd[64];
+	sprintf(cmd, "/usr/local/bin/gamma -s %.1f > /dev/null 2>&1", value);
+	runSystemCommand(cmd, "", nullptr);
+
+	std::ofstream conf("/etc/gamma-settings.conf");
+	conf << "GAMMA=" << std::fixed << std::setprecision(1) << value << "\n";
+	conf.close();
+
+	std::ofstream shm("/dev/shm/CURRENT_GAMMA");
+	shm << std::fixed << std::setprecision(1) << value;
+	shm.close();
 #endif
 }
 
