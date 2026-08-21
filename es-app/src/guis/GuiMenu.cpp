@@ -903,22 +903,6 @@ void GuiMenu::openNetworkSettings()
 	});
 	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
 
-	// --- WiFi Manager ---
-	//s->addEntry(_("WI-FI MANAGER"), false, [this] {
-	//	if (access("/usr/local/bin/Wi-Fi Manager.sh", F_OK) == 0)
-	//	{
-	//		AudioManager::getInstance()->deinit();
-	//		VolumeControl::getInstance()->deinit();
-	//		mWindow->deinit(true);
-	//		system("/bin/bash \"/usr/local/bin/Wi-Fi Manager.sh\" 2>&1 > /dev/tty1");
-	//		mWindow->init(true);
-	//		VolumeControl::getInstance()->init();
-	//		AudioManager::getInstance()->init();
-	//	}
-	//	else
-	//		mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/usr/local/bin/Wi-Fi Manager.sh"), //_("OK")));
-	//}, "iconWifi");
-
 	// --- Bluetooth Manager ---
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
 		if (access("/usr/local/bin/BT Manager.sh", F_OK) == 0)
@@ -934,64 +918,6 @@ void GuiMenu::openNetworkSettings()
 		else
 			mWindow->pushGui(new GuiMsgBox(mWindow, _("BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"), _("OK")));
 	}, "iconBluetooth");
-
-	// --- Samba toggle (action immediate au clic) ---
-	// auto sambaShare = std::make_shared<SwitchComponent>(mWindow);
-	// sambaShare->setState(Settings::getInstance()->getBool("SambaEnabled"));
-	// s->addWithLabel(_("SAMBA SHARING"), sambaShare);
-	// sambaShare->setOnChangedCallback([sambaShare] {
-		// Settings::getInstance()->setBool("SambaEnabled", sambaShare->getState());
-		// Settings::getInstance()->saveFile();
-		// if (sambaShare->getState()) {
-			// runSystemCommand("sudo -n systemctl start smbd 2>/dev/null", "", nullptr);
-			// runSystemCommand("sudo -n systemctl start nmbd 2>/dev/null", "", nullptr);
-		// } else {
-			// runSystemCommand("sudo -n systemctl stop smbd 2>/dev/null", "", nullptr);
-			// runSystemCommand("sudo -n systemctl stop nmbd 2>/dev/null", "", nullptr);
-		// }
-	// });
-
-	// --- Samba boot ---
-	// auto sambaBoot = std::make_shared<SwitchComponent>(mWindow);
-	// sambaBoot->setState(Settings::getInstance()->getBool("SambaOnBoot"));
-	// s->addWithLabel(_("SAMBA ON BOOT"), sambaBoot);
-	// sambaBoot->setOnChangedCallback([sambaBoot] {
-		// Settings::getInstance()->setBool("SambaOnBoot", sambaBoot->getState());
-		// Settings::getInstance()->saveFile();
-		// if (sambaBoot->getState()) {
-			// runSystemCommand("sudo -n systemctl enable smbd 2>/dev/null", "", nullptr);
-			// runSystemCommand("sudo -n systemctl enable nmbd 2>/dev/null", "", nullptr);
-		// } else {
-			// runSystemCommand("sudo -n systemctl disable smbd 2>/dev/null", "", nullptr);
-			// runSystemCommand("sudo -n systemctl disable nmbd 2>/dev/null", "", nullptr);
-		// }
-	// });
-
-	// --- SSH toggle (action immediate au clic) ---
-	// auto sshShare = std::make_shared<SwitchComponent>(mWindow);
-	// sshShare->setState(Settings::getInstance()->getBool("SshEnabled"));
-	// s->addWithLabel(_("SSH SHARING"), sshShare);
-	// sshShare->setOnChangedCallback([sshShare] {
-		// Settings::getInstance()->setBool("SshEnabled", sshShare->getState());
-		// Settings::getInstance()->saveFile();
-		// if (sshShare->getState())
-			// runSystemCommand("sudo -n systemctl start ssh 2>/dev/null", "", nullptr);
-		// else
-			// runSystemCommand("sudo -n systemctl stop ssh 2>/dev/null", "", nullptr);
-	// });
-
-	// --- SSH boot ---
-	// auto sshBoot = std::make_shared<SwitchComponent>(mWindow);
-	// sshBoot->setState(Settings::getInstance()->getBool("SshOnBoot"));
-	// s->addWithLabel(_("SSH ON BOOT"), sshBoot);
-	// sshBoot->setOnChangedCallback([sshBoot] {
-		// Settings::getInstance()->setBool("SshOnBoot", sshBoot->getState());
-		// Settings::getInstance()->saveFile();
-		// if (sshBoot->getState())
-			// runSystemCommand("sudo -n systemctl enable ssh 2>/dev/null", "", nullptr);
-		// else
-			// runSystemCommand("sudo -n systemctl disable ssh 2>/dev/null", "", nullptr);
-	// });
 
 	s->onFinalize([s, this] {
 		if (s->getVariable("reloadAll"))
@@ -2676,44 +2602,6 @@ void GuiMenu::openOtherSettings()
 	max_vram->setValue((float)(Settings::getInstance()->getInt("MaxVRAM")));
 	s->addWithLabel(_("VRAM LIMIT"), max_vram);
 	s->addSaveFunc([max_vram] { Settings::getInstance()->setInt("MaxVRAM", (int)Math::round(max_vram->getValue())); });
-
-
-	/*
-#if WIN32
-
-	// Enable updates
-	auto updates_enabled = std::make_shared<SwitchComponent>(mWindow);
-	updates_enabled->setState(Settings::getInstance()->getBool("updates.enabled"));
-	s->addWithLabel(_("AUTO UPDATES"), updates_enabled);
-	s->addSaveFunc([updates_enabled]
-	{
-		Settings::getInstance()->setBool("updates.enabled", updates_enabled->getState());
-	});
-
-	// Start update
-	s->addEntry(ApiSystem::state == UpdateState::State::UPDATE_READY ? _("APPLY UPDATE") : _("START UPDATE"), true, [this]
-	{
-		if (ApiSystem::checkUpdateVersion().empty())
-		{
-			mWindow->pushGui(new GuiMsgBox(mWindow, _("NO UPDATE AVAILABLE")));
-			return;
-		}
-
-		if (ApiSystem::state == UpdateState::State::UPDATE_READY)
-		{
-			if (quitES(QuitMode::QUIT))
-				LOG(LogWarning) << "Reboot terminated with non-zero result!";
-		}
-		else if (ApiSystem::state == UpdateState::State::UPDATER_RUNNING)
-			mWindow->pushGui(new GuiMsgBox(mWindow, _("UPDATE IS ALREADY RUNNING")));
-		else
-			ApiSystem::startUpdate(mWindow);
-	});
-#endif
-*/
-
-
-
 
 	// gamelists
 	auto save_gamelists = std::make_shared<SwitchComponent>(mWindow);
