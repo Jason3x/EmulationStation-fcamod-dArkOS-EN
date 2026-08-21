@@ -875,21 +875,42 @@ void GuiMenu::openNetworkSettings()
 	});
 	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
 
-	// --- WiFi Manager ---
-	s->addEntry(_("WI-FI MANAGER"), false, [this] {
-		if (access("/usr/local/bin/Wi-Fi Manager.sh", F_OK) == 0)
-		{
-			AudioManager::getInstance()->deinit();
-			VolumeControl::getInstance()->deinit();
-			mWindow->deinit(true);
-			system("/bin/bash \"/usr/local/bin/Wi-Fi Manager.sh\" 2>&1 > /dev/tty1");
-			mWindow->init(true);
-			VolumeControl::getInstance()->init();
-			AudioManager::getInstance()->init();
-		}
-		else
-			mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/usr/local/bin/Wi-Fi Manager.sh"), _("OK")));
+	// --- Network Info ---
+	s->addEntry(_("NETWORK INFO"), false, [this] {
+		std::string iface = getActiveWifiInterface();
+		std::string ssid = getCurrentWifiSSID();
+		std::string ip = executeCommand("ip -f inet addr show " + iface + " 2>/dev/null | sed -En 's/.*inet ([0-9.]+).*/\\1/p'");
+		std::string gateway = executeCommand("ip r 2>/dev/null | grep default | awk '{print $3}'");
+		std::string dns = executeCommand("nmcli dev show " + iface + " 2>/dev/null | grep DNS | awk '{print $2}' | head -1");
+
+		ip.erase(std::remove_if(ip.begin(), ip.end(), ::isspace), ip.end());
+		gateway.erase(std::remove_if(gateway.begin(), gateway.end(), ::isspace), gateway.end());
+		dns.erase(std::remove_if(dns.begin(), dns.end(), ::isspace), dns.end());
+
+		std::string info;
+		info += _("INTERFACE") + ": " + iface + "\n";
+		info += _("SSID") + ": " + (ssid.empty() ? _("NOT CONNECTED") : ssid) + "\n";
+		info += _("IP") + ": " + (ip.empty() ? "-" : ip) + "\n";
+		info += _("GATEWAY") + ": " + (gateway.empty() ? "-" : gateway) + "\n";
+		info += _("DNS") + ": " + (dns.empty() ? "-" : dns);
+		mWindow->pushGui(new GuiMsgBox(mWindow, info, _("OK")));
 	}, "iconWifi");
+
+	// --- WiFi Manager ---
+	//s->addEntry(_("WI-FI MANAGER"), false, [this] {
+	//	if (access("/usr/local/bin/Wi-Fi Manager.sh", F_OK) == 0)
+	//	{
+	//		AudioManager::getInstance()->deinit();
+	//		VolumeControl::getInstance()->deinit();
+	//		mWindow->deinit(true);
+	//		system("/bin/bash \"/usr/local/bin/Wi-Fi Manager.sh\" 2>&1 > /dev/tty1");
+	//		mWindow->init(true);
+	//		VolumeControl::getInstance()->init();
+	//		AudioManager::getInstance()->init();
+	//	}
+	//	else
+	//		mWindow->pushGui(new GuiMsgBox(mWindow, _("WI-FI MANAGER NOT FOUND\n/usr/local/bin/Wi-Fi Manager.sh"), //_("OK")));
+	//}, "iconWifi");
 
 	// --- Bluetooth Manager ---
 	s->addEntry(_("BLUETOOTH MANAGER"), false, [this] {
