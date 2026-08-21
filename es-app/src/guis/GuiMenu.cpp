@@ -133,7 +133,7 @@ static std::string executeCommand(const std::string& cmd)
 static bool isWifiRfkillBlocked()
 {
     std::string result = executeCommand("cat /var/cache/wifi_manager_state 2>/dev/null");
-    return result == "OFF";
+    return result.find("OFF") != std::string::npos;
 }
 
 // Get active WiFi interface (wlan0, p2p0, etc.)
