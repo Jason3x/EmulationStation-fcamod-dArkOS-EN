@@ -23,10 +23,6 @@ systemctl daemon-reload
 # cleanup
 rm -f /etc/samba/smb.conf.bak
 
-# set ES settings to match configuration
-grep -qF '<bool name="BatteryPlusEnabled"' /home/ark/.emulationstation/es_settings.cfg || \
-sed -i '2i<bool name="BatteryPlusEnabled" value="true" />' /home/ark/.emulationstation/es_settings.cfg
-
 # disable netbios name in samba
 sed -i 's/^   netbios name = /#   netbios name = /' /etc/samba/smb.conf
 
