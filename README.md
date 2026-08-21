@@ -22,6 +22,13 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
   - <img src="https://img.shields.io/badge/-Empty-red?style=flat-square"> → Critical (≤5%)
   - <img src="https://img.shields.io/badge/-Charging-cyan?style=flat-square"> → Charging
 
+- **Battery Icon Pack selector** in **START > UI SETTINGS > BATTERY ICON**:
+  - `Default` — colored icons (green/orange/red/cyan)
+  - `Power Pulse` — animated power-style icons
+  - `Segmented` — segmented bar style
+  - `Hearts` — heart-shaped icons
+  - `Stock` — original white icons from christianhaitian
+
 ### 📶 5-state WiFi icon
 - <img src="https://img.shields.io/badge/-WiFi-red?style=flat-square&logo=wifi&logoColor=white"> → Disabled / rfkill blocked
 - <img src="https://img.shields.io/badge/-WiFi-orange?style=flat-square&logo=wifi&logoColor=white"> → Interface up, no IP
@@ -37,6 +44,11 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
 - Toggle switches for WiFi and Bluetooth icons in **START > UI SETTINGS**
 - Instant reactivity — icon updates **as soon as the state changes** (udev + NetworkManager dispatcher)
 - Background daemon (`es-status-daemon`) for polling every 5 seconds
+
+---
+
+### 🖥️ Display Settings
+- **Gamma slider** — adjust screen gamma (0.4 → 1.8) in real time via **START > DISPLAY SETTINGS**
 
 ---
 
@@ -72,42 +84,36 @@ Powered by [knubat/BatteryPlus](https://github.com/Mikhailzrick/knubat.component
 
 ---
 
+### 📡 Remote Services (by djparentx)
+Full remote access management integrated directly in ES:
+
+**One-click toggle** that simultaneously starts/stops:
+- SSH server
+- Samba file sharing (with optional `/roms2` share)
+- Filebrowser (web-based file manager on port 80)
+- NetworkManager-wait-online (for NTP sync on connect)
+
+**Additional options:**
+- **Samba Root Access** — switch between default and root Samba config
+- **Remote Services Auto-start** — enable/disable remote services at boot via `remote-autostart.service`
+- **WiFi Monitor** — background service (`wifi_monitor.service`) for WiFi stability
+- **WiFi Helpers** — `wifi_enable.sh` / `wifi_disable.sh` scripts
+- Optimized Samba configuration with default template (`smb.conf.default`)
+- NetworkManager tuning (disable IPv6, background scan, kernel buffer sizes)
+- PSK flags fix for persistent WiFi connections
+
+**Gamma slider** — adjust screen gamma (0.4 → 1.8) in real time via **START > DISPLAY SETTINGS**
+
+---
+
 ### 🌍 Translations
 All new strings translated into **17 languages**:
 `br` `de` `el` `es` `fr` `it` `ja` `ko` `pl` `pt` `ru` `sv` `ua` `uk` `vi` `zh-CN` `zh-TW`
 
 ---
 
-### 🔄 Automatic upstream sync
-The workflow automatically syncs with `christianhaitian/EmulationStation-fcamod:351v` on every build of the `351v` branch, keeping the base up to date without overwriting local patches on `feature/**` branches.
-
----
-
-## 📋 Requirements
-
-- R36S running **dArkOS EN**
-- `Wi-Fi Manager.sh` and `BT Manager.sh` present in `/opt/system/` for the Network Manager entries (optional)
-
----
-
-## 🚀 Installation
-
-1. Download the latest **`emulationstation-roms-tools`** zip from [GitHub Actions](https://github.com/Jason3x/EmulationStation-fcamod-dArkOS-EN/actions)
-2. Extract and copy all contents to: `roms/tools/`
-3. Launch **install-es.sh** from the **Tools** section on your device
-4. Select **Install ES-dArkOS-EN** — the installer will:
-   - Backup the original ES binary
-   - Install the new binary
-   - Copy all resources (icons, locales, battery icons, splash)
-   - Install and start `es-status-daemon`
-   - Install `BatteryPlus` and enable the service
-   - Apply launch optimizations
-
----
-
-## 🏗️ Build
-
-Built automatically on every push via GitHub Actions using:
+### 🔄 Auto-build
+The workflow builds automatically on every push using:
 - `aarch64-linux-gnu-g++` cross-compiler
 - Official **Mali RK bifrost G31** libraries (not Mesa)
 - `-O3 -march=armv8-a+crc -mtune=cortex-a35 -ffast-math`
@@ -115,10 +121,32 @@ Built automatically on every push via GitHub Actions using:
 
 ---
 
+## 📋 Requirements
+
+- R36S running **dArkOS EN**
+- No internet connection required — everything is included in the zip
+- `Wi-Fi Manager.sh` and `BT Manager.sh` in `/opt/system/` for network manager entries
+
+---
+
+## 🚀 Installation
+
+1. Download the latest **`emulationstation-roms-tools`** zip from [GitHub Actions](https://github.com/Jason3x/EmulationStation-fcamod-dArkOS-EN/actions)
+2. Extract and copy all contents to: `roms/tools/`
+3. Launch `install-es.sh` from the **Tools** section on your device
+4. Select **Install ES-dArkOS-EN** — the installer will:
+   - Backup the original ES binary
+   - Install the new binary + all resources (icons, locales, battery packs, splash)
+   - Install and start `es-status-daemon`
+   - Install `BatteryPlus` and enable the service
+   - Apply launch optimizations
+
+---
+
 ## 🙏 Thanks
 
 - [christianhaitian](https://github.com/christianhaitian) for the base EmulationStation fork
-- [djparentx](https://github.com/djparentx) for dArkOS EN and the R36S ecosystem
+- [djparentx](https://github.com/djparentx) for dArkOS EN, the R36S ecosystem and major contributions (gamma, WiFi helpers, network improvements)
 - [lcdyk0517](https://github.com/lcdyk0517) for key latency improvements
 - [Mikhailzrick](https://github.com/Mikhailzrick) for BatteryPlus
 
