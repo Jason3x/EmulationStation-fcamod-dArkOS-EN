@@ -912,15 +912,19 @@ void GuiMenu::openNetworkSettings()
 	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
 
 	// --- WiFi Monitor Service toggle ---
-	bool wifiMonitorEnabled = executeCommand("systemctl is-enabled wifi_monitor.service 2>/dev/null").find("masked") == std::string::npos;
+	std::string wifiMonitorState = executeCommand("systemctl is-enabled wifi_monitor.service 2>/dev/null");
+	bool wifiMonitorEnabled = wifiMonitorState.find("masked") == std::string::npos;
+
 	auto wifiMonitorSwitch = std::make_shared<SwitchComponent>(mWindow);
 	wifiMonitorSwitch->setState(wifiMonitorEnabled);
+
 	wifiMonitorSwitch->setOnChangedCallback([wifiMonitorSwitch] {
 		if (wifiMonitorSwitch->getState())
-			executeCommand("systemctl unmask wifi_monitor.service 2>/dev/null || true");
+			executeCommand("sudo systemctl unmask wifi_monitor.service");
 		else
-			executeCommand("systemctl stop wifi_monitor.service 2>/dev/null; systemctl mask wifi_monitor.service 2>/dev/null || true");
+			executeCommand("sudo systemctl stop wifi_monitor.service; sudo systemctl mask wifi_monitor.service");
 	});
+
 	s->addWithLabel(_("WIFI MONITOR SERVICE"), wifiMonitorSwitch);
 
 	// --- Bluetooth Manager ---
