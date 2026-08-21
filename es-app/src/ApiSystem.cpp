@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <iomanip>
 #include <unistd.h> 
 
@@ -584,9 +585,10 @@ void ApiSystem::setGamma(float value)
 	sprintf(cmd, "/usr/local/bin/gamma -s %.1f > /dev/null 2>&1", value);
 	runSystemCommand(cmd, "", nullptr);
 
-	std::ofstream conf("/etc/gamma-settings.conf");
-	conf << "GAMMA=" << std::fixed << std::setprecision(1) << value << "\n";
-	conf.close();
+	std::stringstream confCmd;
+	confCmd << "echo GAMMA=" << std::fixed << std::setprecision(1) << value
+	        << " | sudo tee /etc/gamma-settings.conf > /dev/null 2>&1";
+	runSystemCommand(confCmd.str(), "", nullptr);
 
 	std::ofstream shm("/dev/shm/CURRENT_GAMMA");
 	shm << std::fixed << std::setprecision(1) << value;
