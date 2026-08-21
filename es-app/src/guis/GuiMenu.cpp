@@ -129,6 +129,13 @@ static std::string executeCommand(const std::string& cmd)
 	return Utils::String::trim(result);
 }
 
+// Check if WiFi is enabled (not blocked by rfkill)
+static bool isWifiRfkillBlocked()
+{
+    std::string result = executeCommand("rfkill list wifi 2>/dev/null | grep -i 'Soft blocked' | head -1");
+    return result.find("yes") != std::string::npos;
+}
+
 // Get active WiFi interface (wlan0, p2p0, etc.)
 static std::string getActiveWifiInterface()
 {
@@ -420,10 +427,17 @@ static void toggleRemoteServices(bool enable)
 		if (Utils::String::trim(gateway).empty()) {
 			return;
 		}
-
 		executeCommand("sudo systemctl enable NetworkManager-wait-online 2>/dev/null");
 		executeCommand("sudo systemctl start NetworkManager-wait-online 2>/dev/null");
 		executeCommand("sudo timedatectl set-ntp 1 2>/dev/null");
+
+		// --- roms2 share toggle in smb.conf ---
+		if (access("/roms2", F_OK) != 0) {
+			executeCommand("sudo sed -i '/^\\[roms2\\]/,/^$/{s/^/#/}' /etc/samba/smb.conf");
+		} else {
+			executeCommand("sudo sed -i '/^#\\[roms2\\]/,/^#$/{s/^#//}' /etc/samba/smb.conf");
+		}
+
 		executeCommand("sudo systemctl start smbd 2>/dev/null");
 		executeCommand("sudo systemctl start nmbd 2>/dev/null");
 		executeCommand("sudo systemctl start ssh.service 2>/dev/null");
@@ -595,6 +609,7 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 	busy->setSize((float)Renderer::getScreenWidth(), (float)Renderer::getScreenHeight());
 	mWindow->pushGui(busy);
 
+	executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
 	executeCommand("nmcli con delete \"" + ssid + "\" 2>/dev/null");
 
 	std::string result;
@@ -613,6 +628,9 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 
 	if (connected) {
 		if (mWifiStatusText) mWifiStatusText->setText(connectedSSID);
+		executeCommand("nmcli con modify \"" + ssid + "\" wifi-sec.psk-flags 0 2>/dev/null || true");
+		executeCommand("nmcli con modify \"" + ssid + "\" 802-11-wireless.bgscan \"\" 2>/dev/null || true");
+		executeCommand("systemctl enable --now wifi_monitor.service 2>/dev/null || true");
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + ssid, _("OK")));
 	} else {
 		executeCommand("sudo rm -f \"/etc/NetworkManager/system-connections/" + ssid + ".nmconnection\" 2>/dev/null");
@@ -670,6 +688,7 @@ void GuiMenu::activateConnection(const std::string& connName)
 	mWindow->pushGui(busy);
 
 	std::string curSsid = getCurrentWifiSSID();
+	executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
 	if (!curSsid.empty() && curSsid != connName) {
 		executeCommand("nmcli con down \"" + curSsid + "\" 2>/dev/null");
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -684,6 +703,8 @@ void GuiMenu::activateConnection(const std::string& connName)
 	std::string newSsid = getCurrentWifiSSID();
 	if (newSsid == connName) {
 		if (mWifiStatusText) mWifiStatusText->setText(newSsid);
+		executeCommand("nmcli con modify \"" + connName + "\" wifi-sec.psk-flags 0 2>/dev/null || true");
+		executeCommand("systemctl enable --now wifi_monitor.service 2>/dev/null || true");
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + connName, _("OK")));
 	} else {
 		if (mWifiStatusText) mWifiStatusText->setText(newSsid.empty() ? _("NOT CONNECTED") : newSsid);
@@ -722,7 +743,7 @@ void GuiMenu::deleteConnections()
 
 					// if deleting the currently connected network, disconnect first
 					if (connName == curSsid) {
-						executeCommand("/usr/local/bin/stop_connection_monitor 2>/dev/null || true");
+						executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
 						executeCommand("nmcli con down \"" + connName + "\" >/dev/null 2>&1 || true");
 						toggleRemoteServices(false);
 					}
@@ -787,6 +808,21 @@ void GuiMenu::openNetworkSettings()
 			s->addWithLabel(_("IP ADDRESS"), ipText);
 		}
 	}
+
+	// WiFi enable/disable toggle
+	auto wifiSwitch = std::make_shared<SwitchComponent>(mWindow);
+	wifiSwitch->setState(!isWifiRfkillBlocked());
+	wifiSwitch->setOnChangedCallback([wifiSwitch] {
+		std::string cmd = wifiSwitch->getState()
+			? "/usr/local/bin/wifi_enable.sh"
+			: "/usr/local/bin/wifi_disable.sh";
+		system(cmd.c_str());
+	});
+	s->addWithLabel(_("WIFI ENABLED"), wifiSwitch);
+	s->addSaveFunc([s, wifiSwitch]
+	{
+		s->setVariable("reloadAll", true);
+	});
 
 	// --- WiFi Network Actions ---
 	s->addEntry(_("SCAN WIFI NETWORKS"), true, [this] {
