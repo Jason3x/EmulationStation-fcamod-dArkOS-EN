@@ -920,9 +920,9 @@ void GuiMenu::openNetworkSettings()
 
 	wifiMonitorSwitch->setOnChangedCallback([wifiMonitorSwitch] {
 		if (wifiMonitorSwitch->getState())
-			executeCommand("sudo systemctl unmask wifi_monitor.service");
+			executeCommand("sudo systemctl unmask wifi_monitor.service && sudo systemctl start wifi_monitor.service");
 		else
-			executeCommand("sudo systemctl stop wifi_monitor.service; sudo systemctl mask wifi_monitor.service");
+			executeCommand("sudo systemctl stop wifi_monitor.service && sudo systemctl mask wifi_monitor.service");
 	});
 
 	s->addWithLabel(_("WIFI MONITOR SERVICE"), wifiMonitorSwitch);
