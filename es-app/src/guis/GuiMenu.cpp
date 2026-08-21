@@ -809,6 +809,34 @@ void GuiMenu::openNetworkSettings()
 		}
 	}
 
+	// --- Gateway (affichée seulement si disponible) ---
+	{
+		char buf[64] = {0};
+		FILE* f = popen("ip r 2>/dev/null | grep default | awk '{print $3}'", "r");
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string gateway(buf);
+		if (!gateway.empty() && gateway.back() == '\n') gateway.pop_back();
+		if (!gateway.empty())
+		{
+			auto gatewayText = std::make_shared<TextComponent>(mWindow, gateway, ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+			s->addWithLabel(_("GATEWAY"), gatewayText);
+		}
+	}
+
+	// --- DNS (affichée seulement si disponible) ---
+	{
+		char buf[64] = {0};
+		FILE* f = popen("nmcli dev show wlan0 2>/dev/null | grep DNS | awk '{print $2}' | head -1", "r");
+		if (f) { fgets(buf, sizeof(buf), f); pclose(f); }
+		std::string dns(buf);
+		if (!dns.empty() && dns.back() == '\n') dns.pop_back();
+		if (!dns.empty())
+		{
+			auto dnsText = std::make_shared<TextComponent>(mWindow, dns, ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+			s->addWithLabel(_("DNS"), dnsText);
+		}
+	}
+
 	// WiFi enable/disable toggle
 	bool wifiInitialState = !isWifiRfkillBlocked();
 	auto wifiSwitch = std::make_shared<SwitchComponent>(mWindow);
@@ -874,27 +902,6 @@ void GuiMenu::openNetworkSettings()
 		}).detach();
 	});
 	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
-
-	// --- Network Info ---
-	s->addEntry(_("NETWORK INFO"), false, [this] {
-		std::string iface = getActiveWifiInterface();
-		std::string ssid = getCurrentWifiSSID();
-		std::string ip = executeCommand("ip -f inet addr show " + iface + " 2>/dev/null | sed -En 's/.*inet ([0-9.]+).*/\\1/p'");
-		std::string gateway = executeCommand("ip r 2>/dev/null | grep default | awk '{print $3}'");
-		std::string dns = executeCommand("nmcli dev show " + iface + " 2>/dev/null | grep DNS | awk '{print $2}' | head -1");
-
-		ip.erase(std::remove_if(ip.begin(), ip.end(), ::isspace), ip.end());
-		gateway.erase(std::remove_if(gateway.begin(), gateway.end(), ::isspace), gateway.end());
-		dns.erase(std::remove_if(dns.begin(), dns.end(), ::isspace), dns.end());
-
-		std::string info;
-		info += _("INTERFACE") + ": " + iface + "\n";
-		info += _("SSID") + ": " + (ssid.empty() ? _("NOT CONNECTED") : ssid) + "\n";
-		info += _("IP") + ": " + (ip.empty() ? "-" : ip) + "\n";
-		info += _("GATEWAY") + ": " + (gateway.empty() ? "-" : gateway) + "\n";
-		info += _("DNS") + ": " + (dns.empty() ? "-" : dns);
-		mWindow->pushGui(new GuiMsgBox(mWindow, info, _("OK")));
-	}, "iconWifi");
 
 	// --- WiFi Manager ---
 	//s->addEntry(_("WI-FI MANAGER"), false, [this] {
