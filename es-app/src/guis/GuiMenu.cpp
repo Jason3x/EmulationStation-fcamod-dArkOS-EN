@@ -1027,6 +1027,32 @@ void GuiMenu::openBatterySettings()
 	mWindow->pushGui(s);
 }
 
+static void setBootVolume(const std::string& percent)
+{
+	if (percent == "Default")
+	{
+		executeCommand("sudo systemctl disable boot_volume.service 2>/dev/null || true");
+		executeCommand("sudo rm -f /usr/local/bin/boot_volume.sh");
+		return;
+	}
+
+	std::string card = executeCommand("aplay -l 2>/dev/null | grep -m1 -oP 'card \\K[0-9]+(?=.*rk817)'");
+	card.erase(std::remove_if(card.begin(), card.end(), ::isspace), card.end());
+	if (card.empty())
+		card = "0";
+
+	std::string createCmd =
+		"sudo bash -c 'cat > /usr/local/bin/boot_volume.sh << \"EOF\"\n"
+		"#!/bin/bash\n"
+		"sleep 2\n"
+		"amixer -c " + card + " -q sset Playback " + percent + "%\n"
+		"EOF'";
+	executeCommand(createCmd);
+	executeCommand("sudo chmod +x /usr/local/bin/boot_volume.sh");
+	executeCommand("sudo systemctl enable boot_volume.service 2>/dev/null || true");
+	executeCommand("sudo systemctl daemon-reload");
+}
+
 void GuiMenu::openSoundSettings()
 {
 	auto s = new GuiSettings(mWindow, _("SOUND SETTINGS"));
@@ -1258,6 +1284,27 @@ void GuiMenu::openSoundSettings()
 		      runSystemCommand("echo " + Settings::getInstance()->getString("VerbalBatteryThreshold") + " > /home/ark/.config/.CUSTOM_BATT_LIFE_WARNING", "", nullptr);
 		    }
 		}
+	});
+
+	// Boot Volume
+	auto BootVol = std::make_shared< OptionListComponent<std::string> >(mWindow, _("BOOT VOLUME (%)"), false);
+	std::vector<std::string> abootvol;
+	abootvol.push_back("Default");
+	for (int v = 5; v <= 100; v += 5)
+		abootvol.push_back(std::to_string(v));
+
+	auto bootvol = Settings::getInstance()->getString("BootVolume");
+	if (bootvol.empty())
+		bootvol = "Default";
+
+	for (auto it = abootvol.cbegin(); it != abootvol.cend(); it++)
+		BootVol->add(_(it->c_str()), *it, bootvol == *it);
+
+	s->addWithLabel(_("BOOT VOLUME (%)"), BootVol);
+	s->addSaveFunc([BootVol] {
+		Settings::getInstance()->setString("BootVolume", BootVol->getSelected());
+		if (BootVol->changed())
+			setBootVolume(BootVol->getSelected());
 	});
 
 #ifdef _RPI_
