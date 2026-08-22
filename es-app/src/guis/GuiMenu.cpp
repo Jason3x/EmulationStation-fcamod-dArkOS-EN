@@ -25,6 +25,7 @@
 #include <vector>
 #include <thread>
 #include <mutex>
+#include <cstdlib>
 #include "utils/StringUtil.h"
 #include "AudioManager.h"
 #include "resources/TextureData.h"
@@ -127,6 +128,59 @@ static std::string executeCommand(const std::string& cmd)
 	}
 	pclose(pipe);
 	return Utils::String::trim(result);
+}
+
+static const std::string DEADZONE_STATE_FILE = "/home/ark/.deadzone_adc_value";
+
+// Read current joystick deadzone (decimal ADC value). Uses the state file if
+// present; otherwise falls back to the dts and writes the state file so the
+// next read doesn't need the fallback.
+static std::string getDeadzoneDecimal()
+{
+	std::string val = executeCommand("cat " + DEADZONE_STATE_FILE + " 2>/dev/null");
+	if (!val.empty())
+		return val;
+
+	executeCommand(
+		"for f in /boot/*linux.dtb; do "
+		"dtc -I dtb -O dts -o \"${f%.dtb}.dts\" \"$f\"; "
+		"done");
+
+	std::string hex = executeCommand(
+		"grep -m1 -E '^[[:space:]]*button-adc-deadzone[[:space:]]*=' "
+		"$(find /boot -maxdepth 1 -name '*.dts') 2>/dev/null | "
+		"sed -E 's/.*<([0-9A-Fa-fx]+)>.*/\\1/'");
+
+	executeCommand("rm -f /boot/*linux.dts");
+
+	int dec = 0;
+	if (!hex.empty())
+		dec = (int)strtol(hex.c_str(), nullptr, 16);
+
+	val = std::to_string(dec);
+	executeCommand("echo " + val + " > " + DEADZONE_STATE_FILE);
+	return val;
+}
+
+// Apply a new deadzone across every *.dts in /boot, recompile each to .dtb,
+// and persist the decimal value to the state file.
+static void setDeadzoneValue(const std::string& hexVal, const std::string& decVal)
+{
+	executeCommand(
+		"for f in /boot/*linux.dtb; do "
+		"dtc -I dtb -O dts -o \"${f%.dtb}.dts\" \"$f\"; "
+		"done");
+
+	executeCommand(
+		"for dts in $(find /boot -type f -name '*.dts'); do "
+		"grep -q 'button-adc-deadzone' \"$dts\" && "
+		"sudo sed -i -E \"s/^([[:space:]]*button-adc-deadzone[[:space:]]*=[[:space:]]*<)[^>]+(>;)$/\\1" + hexVal + "\\2/\" \"$dts\" && "
+		"sudo dtc -I dts -O dtb -o \"${dts%.dts}.dtb\" \"$dts\"; "
+		"done");
+
+	executeCommand("rm -f /boot/*linux.dts");
+
+	executeCommand("echo " + decVal + " > " + DEADZONE_STATE_FILE);
 }
 
 // Check current WiFi state: no interface = disabled, otherwise check rfkill
@@ -2588,6 +2642,36 @@ void GuiMenu::openOtherSettings()
             runSystemCommand("[ -z $(find /home/ark/.config/.SWAPPOWERANDSUSPEND) ] && touch /home/ark/.config/.SWAPPOWERANDSUSPEND", "", nullptr);
 		  else
             runSystemCommand("[ ! -z $(find /home/ark/.config/.SWAPPOWERANDSUSPEND) ] && rm /home/ark/.config/.SWAPPOWERANDSUSPEND", "", nullptr);
+		}
+	});
+
+	// joystick deadzone
+	struct DeadzoneOption { std::string label; std::string hex; std::string dec; };
+	static const std::vector<DeadzoneOption> deadzoneOptions = {
+		{ "64 (stock)",       "0x040", "64"  },
+		{ "128",              "0x080", "128" },
+		{ "256",              "0x100", "256" },
+		{ "384 (recommended)","0x180", "384" },
+		{ "512",              "0x200", "512" },
+		{ "768 (extreme)",    "0x300", "768" }
+	};
+
+	std::string currentDeadzone = getDeadzoneDecimal();
+
+	auto deadzone = std::make_shared< OptionListComponent<std::string> >(mWindow, _("JOYSTICK DEADZONE"), false);
+	for (auto it = deadzoneOptions.cbegin(); it != deadzoneOptions.cend(); it++)
+		deadzone->add(_(it->label.c_str()), it->hex, it->dec == currentDeadzone);
+
+	s->addWithLabel(_("JOYSTICK DEADZONE"), deadzone);
+	s->addSaveFunc([deadzone] {
+		std::string selectedHex = deadzone->getSelected();
+		for (auto it = deadzoneOptions.cbegin(); it != deadzoneOptions.cend(); it++)
+		{
+			if (it->hex == selectedHex)
+			{
+				setDeadzoneValue(it->hex, it->dec);
+				break;
+			}
 		}
 	});
 
