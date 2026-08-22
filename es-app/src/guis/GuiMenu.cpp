@@ -194,6 +194,13 @@ static bool isWifiRfkillBlocked()
     return result.find("OFF") != std::string::npos;
 }
 
+// Check current LED color: gpio77 value 1 = red, 0 = blue/green
+static bool isLedRed()
+{
+    std::string result = executeCommand("cat /sys/class/gpio/gpio77/value 2>/dev/null");
+    return result.find("1") != std::string::npos;
+}
+
 // Get active WiFi interface (wlan0, p2p0, etc.)
 static std::string getActiveWifiInterface()
 {
@@ -2739,6 +2746,33 @@ void GuiMenu::openUISettings()
 			PowerSaver::init();
 		}
 		Settings::getInstance()->setBool("MoveCarousel", move_carousel->getState());
+	});
+
+	// LED color
+	bool ledInitialRed = isLedRed();
+	auto ledColor = std::make_shared<OptionListComponent<std::string>>(mWindow, _("LED COLOR"), false);
+	ledColor->add(_("RED"), "red", ledInitialRed);
+	ledColor->add(_("BLUE/GREEN"), "blue", !ledInitialRed);
+	s->addWithLabel(_("LED COLOR"), ledColor);
+	s->addSaveFunc([ledColor, ledInitialRed] {
+		bool selectRed = ledColor->getSelected() == "red";
+		if (selectRed == ledInitialRed)
+			return;
+
+		if (selectRed)
+		{
+			executeCommand("sudo -n sh -c 'echo 1 > /sys/class/gpio/gpio77/value' 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/batt_life_warning.py.red /usr/local/bin/batt_life_warning.py 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/fix_power_led.red /usr/local/bin/fix_power_led 2>/dev/null");
+		}
+		else
+		{
+			executeCommand("sudo -n sh -c 'echo 0 > /sys/class/gpio/gpio77/value' 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/batt_life_warning.py.green /usr/local/bin/batt_life_warning.py 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/fix_power_led.green /usr/local/bin/fix_power_led 2>/dev/null");
+		}
+
+		executeCommand("sudo -n systemctl restart batt_led 2>/dev/null");
 	});
 
 	// clock
