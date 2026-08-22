@@ -67,11 +67,15 @@ private:
 	std::vector<std::string> getCpuAvailableFreqs();
 	std::vector<std::string> getAvailableGovernors();
 	void setCpuCores(int count);
+	bool isCpuBootApplyEnabled();
+	void toggleCpuBootApply(bool enable);	
 	bool hasGpuFreqControl();
 	std::string getGpuDevPath();
 	std::string getGpuMaxFreq();
 	void setGpuMaxFreq(const std::string& freq);
 	std::vector<std::string> getGpuAvailableFreqs();
+	bool isGpuBootApplyEnabled();
+	void toggleGpuBootApply(bool enable);	
 	bool hasDmcFreqControl();
 	std::string getDmcMaxFreq();
 	void setDmcMaxFreq(const std::string& freq);
