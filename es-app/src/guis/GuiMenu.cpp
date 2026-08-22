@@ -62,6 +62,8 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 
 	addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
+	addEntry(_("PERFORMANCE SETTINGS"), true, [this] { openPerformanceSettings(); }, "iconPerformance");
+
 	if (isFullUI)
 	{
 		addEntry(_("GAME COLLECTION SETTINGS"), true, [this] { openCollectionSystemSettings(); }, "iconGames");
@@ -1434,6 +1436,575 @@ void GuiMenu::openSoundSettings()
 
 }
 
+std::string GuiMenu::getCpuBinning()
+{
+    // Try to get CPU binning info from dmesg (added by rockchip-cpufreq.c)
+    // Format: es_info: cpu_bin=X process=X scale=X volt_sel=X
+    // volt_sel is the actual quality grade based on CPU leakage:
+    // - lower volt_sel = higher leakage = worse quality = needs higher voltage
+    // - higher volt_sel = lower leakage = better quality = can run at lower voltage
+    std::string dmesgBin = executeCommand("dmesg | grep 'es_info: cpu_bin=' | tail -1");
+    
+    if (!dmesgBin.empty()) {
+        // Parse the volt_sel value (actual quality indicator)
+        std::string voltSel = executeCommand("echo '" + dmesgBin + "' | sed 's/.*volt_sel=\\(-*[0-9]*\\).*/\\1/'");
+        voltSel.erase(std::remove_if(voltSel.begin(), voltSel.end(), ::isspace), voltSel.end());
+        
+        int voltVal = atoi(voltSel.c_str());
+        
+        // Rockchip CPU quality grades based on volt_sel:
+        // volt_sel=0: L0 - higher leakage, needs more voltage
+        // volt_sel=1: L1 - slightly better than L0
+        // volt_sel=2: L2 - standard quality
+        // volt_sel=3: L3 - lowest leakage, can run at lowest voltage
+        // negative value: N/A - not detected
+        
+        if (voltVal < 0) return "N/A";
+        if (voltVal == 0) return "L0 (" + std::string(_("AVERAGE")) + ")";
+        if (voltVal == 1) return "L1 (" + std::string(_("POOR")) + ")";
+        if (voltVal == 2) return "L2 (" + std::string(_("STANDARD")) + ")";
+        if (voltVal == 3) return "L3 (" + std::string(_("BEST")) + ")";
+        
+        return "L" + std::to_string(voltVal) + " (" + std::string(_("AVERAGE")) + ")";
+    }
+    
+    return "N/A";
+}
+
+std::string GuiMenu::getCpuTemp()
+{
+    std::string temp = executeCommand("cat /sys/class/thermal/thermal_zone0/temp 2>/dev/null");
+    temp.erase(std::remove_if(temp.begin(), temp.end(), ::isspace), temp.end());
+    
+    if (!temp.empty()) {
+        // Convert millidegree to degree
+        int tempVal = atoi(temp.c_str());
+        if (tempVal > 1000) {
+            tempVal = tempVal / 1000;
+        }
+        return std::to_string(tempVal) + "°C";
+    }
+    
+    return _("N/A");
+}
+
+int GuiMenu::getCpuCoreCount()
+{
+    std::string result = executeCommand("ls -d /sys/devices/system/cpu/cpu[0-9]* 2>/dev/null | wc -l");
+    return atoi(result.c_str());
+}
+
+int GuiMenu::getOnlineCpuCount()
+{
+    int count = 0;
+    int total = getCpuCoreCount();
+    for (int i = 0; i < total; i++) {
+        std::string result = executeCommand("cat /sys/devices/system/cpu/cpu" + std::to_string(i) + "/online 2>/dev/null");
+        // Remove all whitespace including newlines
+        result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+        if (result == "1" || result.empty()) {  // cpu0 has no online file but is always on
+            count++;
+        }
+    }
+    return count;
+}
+
+std::string GuiMenu::getCpuGovernor()
+{
+    std::string result = executeCommand("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null");
+    // Remove all whitespace including newlines
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result;
+}
+
+void GuiMenu::setCpuGovernor(const std::string& governor)
+{
+    int cores = getCpuCoreCount();
+    for (int i = 0; i < cores; i++) {
+        executeCommand("echo " + governor + " | sudo tee /sys/devices/system/cpu/cpu" + std::to_string(i) + "/cpufreq/scaling_governor >/dev/null 2>&1");
+    }
+}
+
+std::string GuiMenu::getCpuMaxFreq()
+{
+    std::string result = executeCommand("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result;
+}
+
+void GuiMenu::setCpuMaxFreq(const std::string& freq)
+{
+    int cores = getCpuCoreCount();
+    for (int i = 0; i < cores; i++) {
+        executeCommand("echo " + freq + " | sudo tee /sys/devices/system/cpu/cpu" + std::to_string(i) + "/cpufreq/scaling_max_freq >/dev/null 2>&1");
+    }
+}
+
+std::vector<std::string> GuiMenu::getCpuAvailableFreqs()
+{
+    std::string result = executeCommand("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies 2>/dev/null");
+    std::vector<std::string> freqs;
+    std::istringstream stream(result);
+    std::string freq;
+    while (stream >> freq) {
+        freq.erase(std::remove_if(freq.begin(), freq.end(), ::isspace), freq.end());
+        if (!freq.empty()) freqs.push_back(freq);
+    }
+    return freqs;
+}
+
+std::vector<std::string> GuiMenu::getAvailableGovernors()
+{
+    std::string result = executeCommand("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors 2>/dev/null");
+    std::vector<std::string> governors;
+    std::istringstream stream(result);
+    std::string gov;
+    while (stream >> gov) {
+        gov.erase(std::remove_if(gov.begin(), gov.end(), ::isspace), gov.end());
+        if (!gov.empty()) governors.push_back(gov);
+    }
+    return governors;
+}
+
+void GuiMenu::setCpuCores(int count)
+{
+    int totalCores = getCpuCoreCount();
+    // Enable all cores first
+    for (int i = 0; i < totalCores; i++) {
+        executeCommand("echo 1 | sudo tee /sys/devices/system/cpu/cpu" + std::to_string(i) + "/online >/dev/null 2>&1");
+    }
+    // Disable cores beyond count (keep cpu0 always on)
+    for (int i = count; i < totalCores; i++) {
+        executeCommand("echo 0 | sudo tee /sys/devices/system/cpu/cpu" + std::to_string(i) + "/online >/dev/null 2>&1");
+    }
+}
+
+bool GuiMenu::hasGpuFreqControl()
+{
+    std::string result = executeCommand("ls -d /sys/class/devfreq/ff400000.gpu 2>/dev/null");
+    return !Utils::String::trim(result).empty();
+}
+
+std::string GuiMenu::getGpuDevPath()
+{
+    return "/sys/class/devfreq/ff400000.gpu/";
+}
+
+std::string GuiMenu::getGpuMaxFreq()
+{
+    std::string gpuPath = getGpuDevPath();
+    if (gpuPath.empty()) return "";
+    std::string result = executeCommand("cat " + gpuPath + "max_freq 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result;
+}
+
+void GuiMenu::setGpuMaxFreq(const std::string& freq)
+{
+    std::string gpuPath = getGpuDevPath();
+    if (gpuPath.empty()) return;
+    executeCommand("echo " + freq + " | sudo tee " + gpuPath + "max_freq >/dev/null 2>&1");
+}
+
+std::vector<std::string> GuiMenu::getGpuAvailableFreqs()
+{
+    std::string gpuPath = getGpuDevPath();
+    if (gpuPath.empty()) return {};
+    std::string result = executeCommand("cat " + gpuPath + "available_frequencies 2>/dev/null");
+    std::vector<std::string> freqs;
+    std::istringstream stream(result);
+    std::string freq;
+    while (stream >> freq) {
+        freq.erase(std::remove_if(freq.begin(), freq.end(), ::isspace), freq.end());
+        if (!freq.empty()) freqs.push_back(freq);
+    }
+    return freqs;
+}
+
+bool GuiMenu::hasDmcFreqControl()
+{
+    std::string result = executeCommand("ls /sys/class/devfreq/dmc/available_frequencies 2>/dev/null");
+    return !Utils::String::trim(result).empty();
+}
+
+std::string GuiMenu::getDmcMaxFreq()
+{
+    std::string result = executeCommand("cat /sys/class/devfreq/dmc/max_freq 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result;
+}
+
+void GuiMenu::setDmcMaxFreq(const std::string& freq)
+{
+    executeCommand("echo " + freq + " | sudo tee /sys/class/devfreq/dmc/max_freq >/dev/null 2>&1");
+}
+
+std::vector<std::string> GuiMenu::getDmcAvailableFreqs()
+{
+    std::string result = executeCommand("cat /sys/class/devfreq/dmc/available_frequencies 2>/dev/null");
+    std::vector<std::string> freqs;
+    std::istringstream stream(result);
+    std::string freq;
+    while (stream >> freq) {
+        freq.erase(std::remove_if(freq.begin(), freq.end(), ::isspace), freq.end());
+        if (!freq.empty()) freqs.push_back(freq);
+    }
+    return freqs;
+}
+
+std::string GuiMenu::getZramSize()
+{
+    std::string result = executeCommand("cat /sys/block/zram0/disksize 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    if (result.empty()) return "0";
+    long size = atol(result.c_str());
+    // Convert to MB
+    long mb = size / (1024 * 1024);
+    return std::to_string(mb) + "M";
+}
+
+bool GuiMenu::isZramEnabled()
+{
+    std::string result = executeCommand("grep -q '^/dev/zram0' /proc/swaps 2>/dev/null && echo yes || echo no");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result == "yes";
+}
+
+std::string GuiMenu::getZramCompAlgorithm()
+{
+    std::string result = executeCommand("cat /sys/block/zram0/comp_algorithm 2>/dev/null");
+    // Parse current algorithm from format like "[lzo] lz4 lz4hc zstd"
+    size_t start = result.find('[');
+    size_t end = result.find(']');
+    if (start != std::string::npos && end != std::string::npos && end > start) {
+        return result.substr(start + 1, end - start - 1);
+    }
+    return "lz4";
+}
+
+std::vector<std::string> GuiMenu::getAvailableZramAlgorithms()
+{
+    std::vector<std::string> algos;
+    std::string result = executeCommand("cat /sys/block/zram0/comp_algorithm 2>/dev/null");
+    // Parse format like "[lzo] lz4 lz4hc zstd"
+    std::string current;
+    for (size_t i = 0; i < result.size(); i++) {
+        char c = result[i];
+        if (c == '[' || c == ']') continue;
+        if (c == ' ' || c == '\n' || c == '\t') {
+            if (!current.empty()) {
+                algos.push_back(current);
+                current.clear();
+            }
+        } else {
+            current += c;
+        }
+    }
+    if (!current.empty()) {
+        algos.push_back(current);
+    }
+    return algos;
+}
+
+void GuiMenu::toggleZram(bool enable, const std::string& size,
+                                         const std::string& compAlgo)
+{
+    if (enable) {
+        // Disable first if already enabled
+        executeCommand("sudo swapoff /dev/zram0 2>/dev/null || true");
+        // Reset zram
+        executeCommand("echo 1 | sudo tee /sys/block/zram0/reset >/dev/null 2>&1");
+
+        // Set compression algorithm (must be set after reset, before disksize)
+        executeCommand("echo " + compAlgo + " | sudo tee /sys/block/zram0/comp_algorithm >/dev/null 2>&1");
+
+        // Convert size string (e.g., "512M") to bytes
+        long bytes = 536870912; // default 512M
+        if (size == "128M") bytes = 134217728;
+        else if (size == "256M") bytes = 268435456;
+        else if (size == "512M") bytes = 536870912;
+        else if (size == "1024M") bytes = 1073741824;
+
+        // Set size in bytes
+        executeCommand("echo " + std::to_string(bytes) + " | sudo tee /sys/block/zram0/disksize >/dev/null 2>&1");
+        // Create swap and enable
+        executeCommand("sudo mkswap /dev/zram0 >/dev/null 2>&1");
+        executeCommand("sudo swapon -p 5 /dev/zram0 >/dev/null 2>&1");
+    } else {
+        executeCommand("sudo swapoff /dev/zram0 2>/dev/null || true");
+        executeCommand("echo 1 | sudo tee /sys/block/zram0/reset >/dev/null 2>&1 || true");
+    }
+}
+
+void GuiMenu::saveZramConfig(const std::string& size, const std::string& compAlgo)
+{
+    long bytes = 536870912;
+    if (size == "128M") bytes = 134217728;
+    else if (size == "256M") bytes = 268435456;
+    else if (size == "512M") bytes = 536870912;
+    else if (size == "1024M") bytes = 1073741824;
+
+    std::string cmd = "echo -e 'ENABLED=1\\nALGORITHM=" + compAlgo +
+                      "\\nSIZE=" + std::to_string(bytes) +
+                      "' | sudo tee /etc/zram.conf >/dev/null 2>&1";
+    executeCommand(cmd);
+}
+
+bool GuiMenu::isZramAutoStart()
+{
+    std::string result = executeCommand("systemctl is-enabled zram-swap.service 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result == "enabled";
+}
+
+void GuiMenu::toggleZramAutoStart(bool enable, const std::string& size,
+                                                  const std::string& compAlgo)
+{
+    if (enable) {
+        saveZramConfig(size, compAlgo);
+        executeCommand("sudo systemctl enable zram-swap.service 2>/dev/null || true");
+    } else {
+        executeCommand("sudo systemctl disable zram-swap.service 2>/dev/null || true");
+    }
+}
+
+void GuiArkOS4CloneSettings::openZramSettings()
+{
+    auto s = new GuiSettings(mWindow, _("ZRAM SETTINGS"));
+
+    // ZRAM Enable/Disable
+    bool zramEnabled = isZramEnabled();
+    auto zramSwitch = std::make_shared<SwitchComponent>(mWindow);
+    zramSwitch->setState(zramEnabled);
+    s->addWithLabel(_("ZRAM ENABLE"), zramSwitch);
+
+    // ZRAM Compression Algorithm
+    auto algoList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("COMP ALGO"), false);
+    std::vector<std::string> algos = getAvailableZramAlgorithms();
+    std::string currentAlgo = getZramCompAlgorithm();
+    if (algos.empty()) {
+        algos.push_back("lz4");
+    }
+    bool algoFound = false;
+    for (const auto& a : algos) {
+        if (a == currentAlgo) algoFound = true;
+    }
+    if (!algoFound) currentAlgo = "lz4";
+    for (const auto& a : algos) {
+        algoList->add(a, a, a == currentAlgo);
+    }
+    s->addWithLabel(_("ZRAM COMP ALGO"), algoList);
+
+
+void GuiMenu::openPerformanceSettings()
+{
+	auto s = new GuiSettings(mWindow, _("PERFORMANCE SETTINGS"));
+	
+	// --- CPU Grade ---
+    std::string cpuBinning = getCpuBinning();
+    auto cpuText = std::make_shared<TextComponent>(mWindow, 
+        cpuBinning, 
+        Font::get(FONT_SIZE_SMALL), 0x777777FF);
+    s->addWithLabel(_("CPU GRADE"), cpuText);
+	
+	// --- CPU Temp ---
+    auto cpuTempText = std::make_shared<TextComponent>(mWindow, 
+        getCpuTemp(), 
+        Font::get(FONT_SIZE_SMALL), 0x777777FF);
+    s->addWithLabel(_("CPU TEMP"), cpuTempText);
+
+	// --- CPU Cores ---
+    int coreCount = getCpuCoreCount();
+    int onlineCount = getOnlineCpuCount();
+    LOG(LogDebug) << "CPU totalCores: " << coreCount << " onlineCores: " << onlineCount;
+    if (coreCount > 1) {
+        auto coreList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("CPU CORES"), false);
+        for (int i = 1; i <= coreCount; i++) {
+            coreList->add(std::to_string(i), std::to_string(i), i == onlineCount);
+        }
+        s->addWithLabel(_("CPU CORES"), coreList);
+        
+        coreList->setSelectedChangedCallback([this](const std::string& val) {
+            setCpuCores(atoi(val.c_str()));
+        });
+    }
+	
+	// --- CPU Governor ---
+    auto governors = getAvailableGovernors();
+    if (!governors.empty()) {
+        auto govList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("GOVERNOR"), false);
+        std::string currentGov = getCpuGovernor();
+        LOG(LogDebug) << "CPU currentGov: '" << currentGov << "'";
+        bool found = false;
+        for (const auto& gov : governors) {
+            bool isSelected = (gov == currentGov);
+            LOG(LogDebug) << "CPU gov option: '" << gov << "' selected: " << isSelected;
+            if (isSelected) found = true;
+            govList->add(gov, gov, isSelected);
+        }
+        if (!found && !governors.empty()) {
+            govList->selectFirstItem();
+        }
+        s->addWithLabel(_("CPU GOVERNOR"), govList);
+        
+        govList->setSelectedChangedCallback([this](const std::string& val) {
+            setCpuGovernor(val);
+        });
+    }
+	
+	// --- CPU Frequency ---
+    auto freqs = getCpuAvailableFreqs();
+    if (!freqs.empty()) {
+        auto freqList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("MAX FREQ"), false);
+        std::string currentFreq = getCpuMaxFreq();
+        LOG(LogDebug) << "CPU currentFreq: '" << currentFreq << "'";
+        bool found = false;
+        for (const auto& freq : freqs) {
+            // Convert kHz to MHz for display
+            int mhz = atoi(freq.c_str()) / 1000;
+            bool isSelected = (freq == currentFreq);
+            LOG(LogDebug) << "CPU freq option: '" << freq << "' selected: " << isSelected;
+            if (isSelected) found = true;
+            freqList->add(std::to_string(mhz) + " MHz", freq, isSelected);
+        }
+        if (!found && !freqs.empty()) {
+            freqList->selectFirstItem();
+        }
+        s->addWithLabel(_("CPU MAX FREQ"), freqList);
+        
+        freqList->setSelectedChangedCallback([this](const std::string& val) {
+            setCpuMaxFreq(val);
+        });
+    }
+	
+	// --- CPU Persistence ---
+	
+	// --- GPU Frequency ---
+    auto freqs = getGpuAvailableFreqs();
+    if (!freqs.empty()) {
+        auto freqList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("MAX FREQ"), false);
+        std::string currentFreq = getGpuMaxFreq();
+        LOG(LogDebug) << "GPU currentFreq: '" << currentFreq << "'";
+        bool found = false;
+        for (const auto& freq : freqs) {
+            // Convert Hz to MHz for display
+            int mhz = atoi(freq.c_str()) / 1000000;
+            bool isSelected = (freq == currentFreq);
+            LOG(LogDebug) << "GPU freq option: '" << freq << "' selected: " << isSelected;
+            if (isSelected) found = true;
+            freqList->add(std::to_string(mhz) + " MHz", freq, isSelected);
+        }
+        if (!found && !freqs.empty()) {
+            freqList->selectFirstItem();
+        }
+        s->addWithLabel(_("GPU MAX FREQ"), freqList);
+        
+        freqList->setSelectedChangedCallback([this](const std::string& val) {
+            setGpuMaxFreq(val);
+        });
+    }
+		
+	// --- GPU Persistence ---
+	
+	// --- RAM Frequency ---
+    auto freqs = getDmcAvailableFreqs();
+    if (!freqs.empty()) {
+        auto freqList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("MAX FREQ"), false);
+        std::string currentFreq = getDmcMaxFreq();
+        LOG(LogDebug) << "DMC currentFreq: '" << currentFreq << "'";
+        bool found = false;
+        for (const auto& freq : freqs) {
+            // Convert Hz to MHz for display
+            int mhz = atoi(freq.c_str()) / 1000000;
+            bool isSelected = (freq == currentFreq);
+            LOG(LogDebug) << "DMC freq option: '" << freq << "' selected: " << isSelected;
+            if (isSelected) found = true;
+            freqList->add(std::to_string(mhz) + " MHz", freq, isSelected);
+        }
+        if (!found && !freqs.empty()) {
+            freqList->selectFirstItem();
+        }
+        s->addWithLabel(_("DMC MAX FREQ"), freqList);
+        
+        freqList->setSelectedChangedCallback([this](const std::string& val) {
+            setDmcMaxFreq(val);
+        });
+    }	
+	
+	// --- ZRAM ---
+    auto sizeList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("SIZE"), false);
+    std::vector<std::string> sizes = {"128M", "256M", "512M", "1024M"};
+    std::string currentSize = getZramSize();
+    bool found = false;
+    for (const auto& size : sizes) {
+        if (size == currentSize) found = true;
+    }
+    if (!found) currentSize = "512M";
+    for (const auto& size : sizes) {
+        sizeList->add(size, size, size == currentSize);
+    }
+    s->addWithLabel(_("ZRAM SIZE"), sizeList);
+
+    // Auto Start
+    bool autoStart = isZramAutoStart();
+    auto autoStartSwitch = std::make_shared<SwitchComponent>(mWindow);
+    autoStartSwitch->setState(autoStart);
+    s->addWithLabel(_("ZRAM AUTO START"), autoStartSwitch);
+
+    // Enable/Disable callback
+    zramSwitch->setOnChangedCallback([this, zramSwitch, sizeList, algoList, autoStartSwitch] {
+        std::string selectedSize = sizeList->getSelected();
+        if (selectedSize.empty()) selectedSize = "512M";
+        std::string selectedAlgo = algoList->getSelected();
+        if (selectedAlgo.empty()) selectedAlgo = "lz4";
+        toggleZram(zramSwitch->getState(), selectedSize, selectedAlgo);
+        if (autoStartSwitch->getState()) {
+            saveZramConfig(selectedSize, selectedAlgo);
+        }
+    });
+
+    // Compression algorithm change callback
+    algoList->setSelectedChangedCallback([this, zramSwitch, sizeList, autoStartSwitch](const std::string& val) {
+        if (zramSwitch->getState()) {
+            std::string selectedSize = sizeList->getSelected();
+            if (selectedSize.empty()) selectedSize = "512M";
+            toggleZram(false);
+            toggleZram(true, selectedSize, val);
+        }
+        if (autoStartSwitch->getState()) {
+            std::string selectedSize = sizeList->getSelected();
+            if (selectedSize.empty()) selectedSize = "512M";
+            saveZramConfig(selectedSize, val);
+        }
+    });
+
+    // Size change callback
+    sizeList->setSelectedChangedCallback([this, zramSwitch, algoList, autoStartSwitch](const std::string& val) {
+        if (zramSwitch->getState()) {
+            std::string selectedAlgo = algoList->getSelected();
+            if (selectedAlgo.empty()) selectedAlgo = "lz4";
+            toggleZram(false);
+            toggleZram(true, val, selectedAlgo);
+        }
+        if (autoStartSwitch->getState()) {
+            std::string selectedAlgo = algoList->getSelected();
+            if (selectedAlgo.empty()) selectedAlgo = "lz4";
+            saveZramConfig(val, selectedAlgo);
+        }
+    });
+
+    // Auto Start toggle callback
+    autoStartSwitch->setOnChangedCallback([this, zramSwitch, sizeList, algoList, autoStartSwitch] {
+        std::string selectedSize = sizeList->getSelected();
+        if (selectedSize.empty()) selectedSize = "512M";
+        std::string selectedAlgo = algoList->getSelected();
+        if (selectedAlgo.empty()) selectedAlgo = "lz4";
+        toggleZramAutoStart(autoStartSwitch->getState(), selectedSize, selectedAlgo);
+    });
+
+	mWindow->pushGui(s);
+}
+
 struct ThemeConfigOption
 {
 	std::string defaultSettingName;
@@ -2714,6 +3285,7 @@ void GuiMenu::openOtherSettings()
 			if (it->hex == selectedHex)
 			{
 				setDeadzoneValue(it->hex, it->dec);
+				mWindow->pushGui(new GuiMsgBox(mWindow, _("DEADZONE CHANGED") + "\n" + _("REBOOT REQUIRED FOR FULL EFFECT"), _("OK")));
 				break;
 			}
 		}
