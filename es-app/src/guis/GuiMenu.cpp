@@ -2660,13 +2660,20 @@ void GuiMenu::openOtherSettings()
 
 	std::string currentDeadzone = getDeadzoneDecimal();
 
+	std::string currentDeadzoneHex;
+	for (auto it = deadzoneOptions.cbegin(); it != deadzoneOptions.cend(); it++)
+		if (it->dec == currentDeadzone) { currentDeadzoneHex = it->hex; break; }
+
 	auto deadzone = std::make_shared< OptionListComponent<std::string> >(mWindow, _("JOYSTICK DEADZONE"), false);
 	for (auto it = deadzoneOptions.cbegin(); it != deadzoneOptions.cend(); it++)
 		deadzone->add(_(it->label.c_str()), it->hex, it->dec == currentDeadzone);
 
 	s->addWithLabel(_("JOYSTICK DEADZONE"), deadzone);
-	s->addSaveFunc([deadzone] {
+	s->addSaveFunc([deadzone, currentDeadzoneHex] {
 		std::string selectedHex = deadzone->getSelected();
+		if (selectedHex == currentDeadzoneHex)
+			return;
+
 		for (auto it = deadzoneOptions.cbegin(); it != deadzoneOptions.cend(); it++)
 		{
 			if (it->hex == selectedHex)
