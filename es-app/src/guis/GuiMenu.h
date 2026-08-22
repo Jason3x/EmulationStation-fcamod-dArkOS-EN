@@ -36,6 +36,8 @@ private:
 	void scanWifi();
 	void showWifiPasswordInput(const std::string& ssid);
 	void connectWifi(const std::string& ssid, const std::string& password);
+	void showHostnameInput(std::shared_ptr<TextComponent> hostnameText);
+	void applyHostname(const std::string& newHostname, std::shared_ptr<TextComponent> hostnameText);
 	void activateExistingConnection();
 	void activateConnection(const std::string& connName);
 	void deleteConnections();

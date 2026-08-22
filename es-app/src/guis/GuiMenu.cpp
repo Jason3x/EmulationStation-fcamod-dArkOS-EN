@@ -711,6 +711,31 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 	}
 }
 
+void GuiMenu::showHostnameInput(std::shared_ptr<TextComponent> hostnameText)
+{
+	mWindow->pushGui(new GuiTextEditPopupKeyboard(mWindow,
+		_("HOSTNAME"),
+		hostnameText->getValue(),
+		[this, hostnameText](const std::string& newHostname) {
+			applyHostname(newHostname, hostnameText);
+		},
+		false, _("SAVE")));
+}
+
+void GuiMenu::applyHostname(const std::string& newHostname, std::shared_ptr<TextComponent> hostnameText)
+{
+	if (newHostname.empty())
+		return;
+
+	executeCommand("echo \"" + newHostname + "\" | sudo tee /etc/hostname > /dev/null");
+	executeCommand("sudo hostname \"" + newHostname + "\"");
+	executeCommand("sudo sed -i 's/^127\\.0\\.1\\.1[[:space:]].*/127.0.1.1\\t" + newHostname + "/' /etc/hosts");
+
+	hostnameText->setValue(newHostname);
+
+	mWindow->pushGui(new GuiMsgBox(mWindow, _("HOSTNAME CHANGED") + "\n" + _("REBOOT REQUIRED FOR FULL EFFECT"), _("OK")));
+}
+
 void GuiMenu::activateExistingConnection()
 {
 	std::string conns = executeCommand("ls -1 /etc/NetworkManager/system-connections/ 2>/dev/null | sed 's/\\.nmconnection$//'");
@@ -853,8 +878,23 @@ void GuiMenu::openNetworkSettings()
 			if (!hn.empty() && hn.back() == '\n') hn.pop_back();
 			if (!hn.empty())
 			{
-				auto hostnameText = std::make_shared<TextComponent>(mWindow, hn, ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
-				s->addWithLabel(_("HOSTNAME"), hostnameText);
+				auto hostnameText = std::make_shared<TextComponent>(mWindow, hn, ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color, ALIGN_RIGHT);
+
+				ComponentListRow hostnameRow;
+				auto hostnameLbl = std::make_shared<TextComponent>(mWindow, _("HOSTNAME"), ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+				hostnameRow.addElement(hostnameLbl, true);
+				hostnameRow.addElement(hostnameText, true);
+
+				auto hostnameBracket = std::make_shared<ImageComponent>(mWindow);
+				hostnameBracket->setImage(ThemeData::getMenuTheme()->Icons.arrow);
+				hostnameBracket->setResize(Vector2f(0, hostnameLbl->getFont()->getLetterHeight()));
+				hostnameRow.addElement(hostnameBracket, false);
+
+				hostnameRow.makeAcceptInputHandler([this, hostnameText] {
+					showHostnameInput(hostnameText);
+				});
+
+				s->addRow(hostnameRow);
 			}
 		}
 	}
