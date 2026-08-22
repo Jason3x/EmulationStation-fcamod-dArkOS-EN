@@ -143,7 +143,7 @@ static std::string getDeadzoneDecimal()
 
 	executeCommand(
 		"for f in /boot/*linux.dtb; do "
-		"dtc -I dtb -O dts -o \"${f%.dtb}.dts\" \"$f\"; "
+		"sudo dtc -I dtb -O dts -o \"${f%.dtb}.dts\" \"$f\"; "
 		"done");
 
 	std::string hex = executeCommand(
@@ -151,7 +151,7 @@ static std::string getDeadzoneDecimal()
 		"$(find /boot -maxdepth 1 -name '*.dts') 2>/dev/null | "
 		"sed -E 's/.*<([0-9A-Fa-fx]+)>.*/\\1/'");
 
-	executeCommand("rm -f /boot/*linux.dts");
+	executeCommand("sudo rm -f /boot/*linux.dts");
 
 	int dec = 0;
 	if (!hex.empty())
@@ -168,7 +168,7 @@ static void setDeadzoneValue(const std::string& hexVal, const std::string& decVa
 {
 	executeCommand(
 		"for f in /boot/*linux.dtb; do "
-		"dtc -I dtb -O dts -o \"${f%.dtb}.dts\" \"$f\"; "
+		"sudo dtc -I dtb -O dts -o \"${f%.dtb}.dts\" \"$f\"; "
 		"done");
 
 	executeCommand(
@@ -178,7 +178,7 @@ static void setDeadzoneValue(const std::string& hexVal, const std::string& decVa
 		"sudo dtc -I dts -O dtb -o \"${dts%.dts}.dtb\" \"$dts\"; "
 		"done");
 
-	executeCommand("rm -f /boot/*linux.dts");
+	executeCommand("sudo rm -f /boot/*linux.dts");
 
 	executeCommand("echo " + decVal + " > " + DEADZONE_STATE_FILE);
 }
