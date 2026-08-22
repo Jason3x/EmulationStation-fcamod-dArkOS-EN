@@ -137,7 +137,9 @@ static const std::string DEADZONE_STATE_FILE = "/home/ark/.deadzone_adc_value";
 // next read doesn't need the fallback.
 static std::string getDeadzoneDecimal()
 {
-	std::string val = executeCommand("cat " + DEADZONE_STATE_FILE + " 2>/dev/null | tr -d '\\n\\r'");
+	std::string val = executeCommand("cat " + DEADZONE_STATE_FILE + " 2>/dev/null");
+	while (!val.empty() && (val.back() == '\n' || val.back() == '\r'))
+		val.pop_back();
 	if (!val.empty())
 		return val;
 
