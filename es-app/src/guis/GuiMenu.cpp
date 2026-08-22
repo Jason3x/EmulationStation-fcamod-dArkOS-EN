@@ -885,11 +885,6 @@ void GuiMenu::openNetworkSettings()
 				hostnameRow.addElement(hostnameLbl, true);
 				hostnameRow.addElement(hostnameText, true);
 
-				auto hostnameBracket = std::make_shared<ImageComponent>(mWindow);
-				hostnameBracket->setImage(ThemeData::getMenuTheme()->Icons.arrow);
-				hostnameBracket->setResize(Vector2f(0, hostnameLbl->getFont()->getLetterHeight()));
-				hostnameRow.addElement(hostnameBracket, false);
-
 				hostnameRow.makeAcceptInputHandler([this, hostnameText] {
 					showHostnameInput(hostnameText);
 				});
