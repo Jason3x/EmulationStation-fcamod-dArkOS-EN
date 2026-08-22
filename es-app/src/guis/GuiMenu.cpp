@@ -2133,7 +2133,7 @@ void GuiMenu::openUISettings()
 		if (Settings::getInstance()->setString("BatteryIconPack", pack)) {
 			// Copier les SVG du pack sélectionné vers resources/battery/
 			std::string src = "/usr/bin/emulationstation/resources/battery-packs/" + pack;
-			std::string cmd = "cp -f " + src + "/*.svg /usr/bin/emulationstation/resources/battery/ 2>/dev/null";
+			std::string cmd = "sudo -n cp -f " + src + "/*.svg /usr/bin/emulationstation/resources/battery/ 2>/dev/null";
 			runSystemCommand(cmd, "", nullptr);
 			Settings::getInstance()->saveFile();
 			s->setVariable("reloadAll", true);
