@@ -1896,7 +1896,7 @@ void GuiMenu::openPerformanceSettings()
         if (!found && !dmcFreqs.empty()) {
             freqList->selectFirstItem();
         }
-        s->addWithLabel(_("DMC MAX FREQ"), freqList);
+        s->addWithLabel(_("RAM MAX FREQ"), freqList);
         
         freqList->setSelectedChangedCallback([this](const std::string& val) {
             setDmcMaxFreq(val);
@@ -1928,7 +1928,7 @@ void GuiMenu::openPerformanceSettings()
 	
 	// --- ZRAM Size ---
     auto sizeList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("SIZE"), false);
-    std::vector<std::string> sizes = {"128M", "256M", "512M", "1024M"};
+    std::vector<std::string> sizes = {"256M", "512M", "768M"};
     std::string currentSize = getZramSize();
     bool found = false;
     for (const auto& size : sizes) {
@@ -3270,7 +3270,7 @@ void GuiMenu::openOtherSettings()
 		deadzone->add(_(it->label.c_str()), it->hex, it->dec == currentDeadzone);
 
 	s->addWithLabel(_("JOYSTICK DEADZONE"), deadzone);
-	s->addSaveFunc([deadzone, currentDeadzoneHex] {
+	s->addSaveFunc([this, deadzone, currentDeadzoneHex] {
 		std::string selectedHex = deadzone->getSelected();
 		if (selectedHex == currentDeadzoneHex)
 			return;
