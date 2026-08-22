@@ -50,6 +50,21 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
 ### 🖥️ Display Settings
 - **Gamma slider** — adjust screen gamma (0.4 → 1.8) in real time via **START > DISPLAY SETTINGS**
 
+### ⚡ Performance Settings (by djparentx)
+New menu — **START > PERFORMANCE SETTINGS**:
+
+| Entry | Description |
+|-------|-------------|
+| **CPU Temp** | Real-time CPU temperature display |
+| **CPU Cores** | Enable/disable CPU cores on the fly (1-4) |
+| **CPU Governor** | Switch between performance/ondemand/schedutil/powersave |
+| **GPU Governor** | GPU frequency governor |
+| **Global Performance** | Quick preset for the whole device |
+
+### 🖥️ Hostname Editor (by djparentx)
+- Edit the device hostname directly from ES — **START > NETWORK SETTINGS > HOSTNAME**
+- Changes applied immediately with reboot notice
+
 ---
 
 ### 🌐 Network Settings menu
