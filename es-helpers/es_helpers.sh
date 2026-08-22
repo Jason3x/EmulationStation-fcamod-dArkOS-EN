@@ -13,6 +13,7 @@ chmod 644 /etc/samba/smb.conf.root
 chmod +x "/usr/local/bin/wifi_monitor.sh"
 chmod +x "/usr/local/bin/wifi_enable.sh"
 chmod +x "/usr/local/bin/wifi_disable.sh"
+chmod +x "/usr/local/bin/boot_volume.sh"
 chmod +x "/etc/NetworkManager/dispatcher.d/99-disable-bgscan.sh"
 chmod +x "/etc/NetworkManager/dispatcher.d/99-disable-ipv6.sh"
 chown ark:ark /etc/samba/smb.conf
