@@ -274,6 +274,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
 		{ "iconControllers", PATH },
 		{ "iconGames", PATH },
 		{ "iconUI", PATH },
+		{ "iconPerformance", PATH },
 		{ "iconSound", PATH },
 		{ "iconNetwork", PATH },
 		{ "iconScraper", PATH },
