@@ -1293,16 +1293,22 @@ void GuiMenu::openSoundSettings()
 	for (int v = 5; v <= 100; v += 5)
 		abootvol.push_back(std::to_string(v));
 
-	auto bootvol = Settings::getInstance()->getString("BootVolume");
-	if (bootvol.empty())
-		bootvol = "Default";
+	std::string bootvol = "Default";
+	std::string bootvolSvc = executeCommand("systemctl is-enabled boot_volume.service 2>/dev/null");
+	bootvolSvc.erase(std::remove_if(bootvolSvc.begin(), bootvolSvc.end(), ::isspace), bootvolSvc.end());
+	if (bootvolSvc == "enabled")
+	{
+		std::string current = executeCommand("grep -oE '[0-9]+%' /usr/local/bin/boot_volume.sh 2>/dev/null | tail -1");
+		current.erase(std::remove_if(current.begin(), current.end(), ::isspace), current.end());
+		if (!current.empty())
+			bootvol = current.substr(0, current.size() - 1);
+	}
 
 	for (auto it = abootvol.cbegin(); it != abootvol.cend(); it++)
 		BootVol->add(_(it->c_str()), *it, bootvol == *it);
 
 	s->addWithLabel(_("BOOT VOLUME (%)"), BootVol);
 	s->addSaveFunc([BootVol] {
-		Settings::getInstance()->setString("BootVolume", BootVol->getSelected());
 		if (BootVol->changed())
 			setBootVolume(BootVol->getSelected());
 	});
