@@ -1768,34 +1768,6 @@ void GuiMenu::toggleZramAutoStart(bool enable, const std::string& size,
     }
 }
 
-void GuiArkOS4CloneSettings::openZramSettings()
-{
-    auto s = new GuiSettings(mWindow, _("ZRAM SETTINGS"));
-
-    // ZRAM Enable/Disable
-    bool zramEnabled = isZramEnabled();
-    auto zramSwitch = std::make_shared<SwitchComponent>(mWindow);
-    zramSwitch->setState(zramEnabled);
-    s->addWithLabel(_("ZRAM ENABLE"), zramSwitch);
-
-    // ZRAM Compression Algorithm
-    auto algoList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("COMP ALGO"), false);
-    std::vector<std::string> algos = getAvailableZramAlgorithms();
-    std::string currentAlgo = getZramCompAlgorithm();
-    if (algos.empty()) {
-        algos.push_back("lz4");
-    }
-    bool algoFound = false;
-    for (const auto& a : algos) {
-        if (a == currentAlgo) algoFound = true;
-    }
-    if (!algoFound) currentAlgo = "lz4";
-    for (const auto& a : algos) {
-        algoList->add(a, a, a == currentAlgo);
-    }
-    s->addWithLabel(_("ZRAM COMP ALGO"), algoList);
-
-
 void GuiMenu::openPerformanceSettings()
 {
 	auto s = new GuiSettings(mWindow, _("PERFORMANCE SETTINGS"));
@@ -1853,13 +1825,13 @@ void GuiMenu::openPerformanceSettings()
     }
 	
 	// --- CPU Frequency ---
-    auto freqs = getCpuAvailableFreqs();
-    if (!freqs.empty()) {
+    auto cpuFreqs = getCpuAvailableFreqs();
+    if (!cpuFreqs.empty()) {
         auto freqList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("MAX FREQ"), false);
         std::string currentFreq = getCpuMaxFreq();
         LOG(LogDebug) << "CPU currentFreq: '" << currentFreq << "'";
         bool found = false;
-        for (const auto& freq : freqs) {
+        for (const auto& freq : cpuFreqs) {
             // Convert kHz to MHz for display
             int mhz = atoi(freq.c_str()) / 1000;
             bool isSelected = (freq == currentFreq);
@@ -1867,7 +1839,7 @@ void GuiMenu::openPerformanceSettings()
             if (isSelected) found = true;
             freqList->add(std::to_string(mhz) + " MHz", freq, isSelected);
         }
-        if (!found && !freqs.empty()) {
+        if (!found && !cpuFreqs.empty()) {
             freqList->selectFirstItem();
         }
         s->addWithLabel(_("CPU MAX FREQ"), freqList);
@@ -1880,13 +1852,13 @@ void GuiMenu::openPerformanceSettings()
 	// --- CPU Persistence ---
 	
 	// --- GPU Frequency ---
-    auto freqs = getGpuAvailableFreqs();
-    if (!freqs.empty()) {
+    auto gpuFreqs = getGpuAvailableFreqs();
+    if (!gpuFreqs.empty()) {
         auto freqList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("MAX FREQ"), false);
         std::string currentFreq = getGpuMaxFreq();
         LOG(LogDebug) << "GPU currentFreq: '" << currentFreq << "'";
         bool found = false;
-        for (const auto& freq : freqs) {
+        for (const auto& freq : gpuFreqs) {
             // Convert Hz to MHz for display
             int mhz = atoi(freq.c_str()) / 1000000;
             bool isSelected = (freq == currentFreq);
@@ -1894,7 +1866,7 @@ void GuiMenu::openPerformanceSettings()
             if (isSelected) found = true;
             freqList->add(std::to_string(mhz) + " MHz", freq, isSelected);
         }
-        if (!found && !freqs.empty()) {
+        if (!found && !gpuFreqs.empty()) {
             freqList->selectFirstItem();
         }
         s->addWithLabel(_("GPU MAX FREQ"), freqList);
@@ -1907,13 +1879,13 @@ void GuiMenu::openPerformanceSettings()
 	// --- GPU Persistence ---
 	
 	// --- RAM Frequency ---
-    auto freqs = getDmcAvailableFreqs();
-    if (!freqs.empty()) {
+    auto dmcFreqs = getDmcAvailableFreqs();
+    if (!dmcFreqs.empty()) {
         auto freqList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("MAX FREQ"), false);
         std::string currentFreq = getDmcMaxFreq();
         LOG(LogDebug) << "DMC currentFreq: '" << currentFreq << "'";
         bool found = false;
-        for (const auto& freq : freqs) {
+        for (const auto& freq : dmcFreqs) {
             // Convert Hz to MHz for display
             int mhz = atoi(freq.c_str()) / 1000000;
             bool isSelected = (freq == currentFreq);
@@ -1921,7 +1893,7 @@ void GuiMenu::openPerformanceSettings()
             if (isSelected) found = true;
             freqList->add(std::to_string(mhz) + " MHz", freq, isSelected);
         }
-        if (!found && !freqs.empty()) {
+        if (!found && !dmcFreqs.empty()) {
             freqList->selectFirstItem();
         }
         s->addWithLabel(_("DMC MAX FREQ"), freqList);
@@ -1930,8 +1902,31 @@ void GuiMenu::openPerformanceSettings()
             setDmcMaxFreq(val);
         });
     }	
+
+    // ZRAM Enable/Disable
+    bool zramEnabled = isZramEnabled();
+    auto zramSwitch = std::make_shared<SwitchComponent>(mWindow);
+    zramSwitch->setState(zramEnabled);
+    s->addWithLabel(_("ZRAM ENABLE"), zramSwitch);
+
+    // ZRAM Compression Algorithm
+    auto algoList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("COMP ALGO"), false);
+    std::vector<std::string> algos = getAvailableZramAlgorithms();
+    std::string currentAlgo = getZramCompAlgorithm();
+    if (algos.empty()) {
+        algos.push_back("lz4");
+    }
+    bool algoFound = false;
+    for (const auto& a : algos) {
+        if (a == currentAlgo) algoFound = true;
+    }
+    if (!algoFound) currentAlgo = "lz4";
+    for (const auto& a : algos) {
+        algoList->add(a, a, a == currentAlgo);
+    }
+    s->addWithLabel(_("ZRAM COMP ALGO"), algoList);
 	
-	// --- ZRAM ---
+	// --- ZRAM Size ---
     auto sizeList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("SIZE"), false);
     std::vector<std::string> sizes = {"128M", "256M", "512M", "1024M"};
     std::string currentSize = getZramSize();
