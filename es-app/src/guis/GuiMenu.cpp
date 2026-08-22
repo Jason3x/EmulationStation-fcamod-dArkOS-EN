@@ -1579,6 +1579,22 @@ void GuiMenu::setCpuCores(int count)
     }
 }
 
+bool GuiMenu::isCpuBootApplyEnabled()
+{
+    std::string result = executeCommand("systemctl is-enabled cpu-governor.service 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result == "enabled";
+}
+
+void GuiMenu::toggleCpuBootApply(bool enable)
+{
+    if (enable) {
+        executeCommand("sudo systemctl enable cpu-governor.service 2>/dev/null || true");
+    } else {
+        executeCommand("sudo systemctl disable cpu-governor.service 2>/dev/null || true");
+    }
+}
+
 bool GuiMenu::hasGpuFreqControl()
 {
     std::string result = executeCommand("ls -d /sys/class/devfreq/ff400000.gpu 2>/dev/null");
@@ -1619,6 +1635,22 @@ std::vector<std::string> GuiMenu::getGpuAvailableFreqs()
         if (!freq.empty()) freqs.push_back(freq);
     }
     return freqs;
+}
+
+bool GuiMenu::isGpuBootApplyEnabled()
+{
+    std::string result = executeCommand("systemctl is-enabled gpu-freq.service 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result == "enabled";
+}
+
+void GuiMenu::toggleGpuBootApply(bool enable)
+{
+    if (enable) {
+        executeCommand("sudo systemctl enable gpu-freq.service 2>/dev/null || true");
+    } else {
+        executeCommand("sudo systemctl disable gpu-freq.service 2>/dev/null || true");
+    }
 }
 
 bool GuiMenu::hasDmcFreqControl()
@@ -1773,16 +1805,17 @@ void GuiMenu::openPerformanceSettings()
 	auto s = new GuiSettings(mWindow, _("PERFORMANCE SETTINGS"));
 	
 	// --- CPU Grade ---
-    std::string cpuBinning = getCpuBinning();
-    auto cpuText = std::make_shared<TextComponent>(mWindow, 
-        cpuBinning, 
-        Font::get(FONT_SIZE_SMALL), 0x777777FF);
+    /* std::string cpuBinning = getCpuBinning();
+    auto cpuText = std::make_shared<TextComponent>(mWindow,
+        cpuBinning,
+        ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
     s->addWithLabel(_("CPU GRADE"), cpuText);
+	*/
 	
 	// --- CPU Temp ---
-    auto cpuTempText = std::make_shared<TextComponent>(mWindow, 
-        getCpuTemp(), 
-        Font::get(FONT_SIZE_SMALL), 0x777777FF);
+    auto cpuTempText = std::make_shared<TextComponent>(mWindow,
+        getCpuTemp(),
+        ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
     s->addWithLabel(_("CPU TEMP"), cpuTempText);
 
 	// --- CPU Cores ---
@@ -1850,6 +1883,12 @@ void GuiMenu::openPerformanceSettings()
     }
 	
 	// --- CPU Persistence ---
+    auto cpuBootApplySwitch = std::make_shared<SwitchComponent>(mWindow);
+    cpuBootApplySwitch->setState(isCpuBootApplyEnabled());
+    s->addWithLabel(_("CPU APPLY AT BOOT"), cpuBootApplySwitch);
+    cpuBootApplySwitch->setOnChangedCallback([this, cpuBootApplySwitch] {
+        toggleCpuBootApply(cpuBootApplySwitch->getState());
+    });	
 	
 	// --- GPU Frequency ---
     auto gpuFreqs = getGpuAvailableFreqs();
@@ -1877,6 +1916,12 @@ void GuiMenu::openPerformanceSettings()
     }
 		
 	// --- GPU Persistence ---
+    auto gpuBootApplySwitch = std::make_shared<SwitchComponent>(mWindow);
+    gpuBootApplySwitch->setState(isGpuBootApplyEnabled());
+    s->addWithLabel(_("GPU APPLY AT BOOT"), gpuBootApplySwitch);
+    gpuBootApplySwitch->setOnChangedCallback([this, gpuBootApplySwitch] {
+        toggleGpuBootApply(gpuBootApplySwitch->getState());
+    });
 	
 	// --- RAM Frequency ---
     auto dmcFreqs = getDmcAvailableFreqs();
@@ -1908,6 +1953,20 @@ void GuiMenu::openPerformanceSettings()
     auto zramSwitch = std::make_shared<SwitchComponent>(mWindow);
     zramSwitch->setState(zramEnabled);
     s->addWithLabel(_("ZRAM ENABLE"), zramSwitch);
+	
+	// --- ZRAM Size ---
+    auto sizeList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("SIZE"), false);
+    std::vector<std::string> sizes = {"256M", "512M", "768M"};
+    std::string currentSize = getZramSize();
+    bool found = false;
+    for (const auto& size : sizes) {
+        if (size == currentSize) found = true;
+    }
+    if (!found) currentSize = "512M";
+    for (const auto& size : sizes) {
+        sizeList->add(size, size, size == currentSize);
+    }
+    s->addWithLabel(_("ZRAM SIZE"), sizeList);
 
     // ZRAM Compression Algorithm
     auto algoList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("COMP ALGO"), false);
@@ -1924,77 +1983,38 @@ void GuiMenu::openPerformanceSettings()
     for (const auto& a : algos) {
         algoList->add(a, a, a == currentAlgo);
     }
-    s->addWithLabel(_("ZRAM COMP ALGO"), algoList);
-	
-	// --- ZRAM Size ---
-    auto sizeList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("SIZE"), false);
-    std::vector<std::string> sizes = {"256M", "512M", "768M"};
-    std::string currentSize = getZramSize();
-    bool found = false;
-    for (const auto& size : sizes) {
-        if (size == currentSize) found = true;
-    }
-    if (!found) currentSize = "512M";
-    for (const auto& size : sizes) {
-        sizeList->add(size, size, size == currentSize);
-    }
-    s->addWithLabel(_("ZRAM SIZE"), sizeList);
-
-    // Auto Start
-    bool autoStart = isZramAutoStart();
-    auto autoStartSwitch = std::make_shared<SwitchComponent>(mWindow);
-    autoStartSwitch->setState(autoStart);
-    s->addWithLabel(_("ZRAM AUTO START"), autoStartSwitch);
+    s->addWithLabel(_("ZRAM COMPRESSION"), algoList);
 
     // Enable/Disable callback
-    zramSwitch->setOnChangedCallback([this, zramSwitch, sizeList, algoList, autoStartSwitch] {
+    zramSwitch->setOnChangedCallback([this, zramSwitch, sizeList, algoList] {
         std::string selectedSize = sizeList->getSelected();
         if (selectedSize.empty()) selectedSize = "512M";
         std::string selectedAlgo = algoList->getSelected();
         if (selectedAlgo.empty()) selectedAlgo = "lz4";
         toggleZram(zramSwitch->getState(), selectedSize, selectedAlgo);
-        if (autoStartSwitch->getState()) {
-            saveZramConfig(selectedSize, selectedAlgo);
-        }
+        toggleZramAutoStart(zramSwitch->getState(), selectedSize, selectedAlgo);
     });
 
     // Compression algorithm change callback
-    algoList->setSelectedChangedCallback([this, zramSwitch, sizeList, autoStartSwitch](const std::string& val) {
+    algoList->setSelectedChangedCallback([this, zramSwitch, sizeList](const std::string& val) {
+        std::string selectedSize = sizeList->getSelected();
+        if (selectedSize.empty()) selectedSize = "512M";
         if (zramSwitch->getState()) {
-            std::string selectedSize = sizeList->getSelected();
-            if (selectedSize.empty()) selectedSize = "512M";
             toggleZram(false);
             toggleZram(true, selectedSize, val);
-        }
-        if (autoStartSwitch->getState()) {
-            std::string selectedSize = sizeList->getSelected();
-            if (selectedSize.empty()) selectedSize = "512M";
-            saveZramConfig(selectedSize, val);
+            toggleZramAutoStart(true, selectedSize, val);
         }
     });
 
     // Size change callback
-    sizeList->setSelectedChangedCallback([this, zramSwitch, algoList, autoStartSwitch](const std::string& val) {
-        if (zramSwitch->getState()) {
-            std::string selectedAlgo = algoList->getSelected();
-            if (selectedAlgo.empty()) selectedAlgo = "lz4";
-            toggleZram(false);
-            toggleZram(true, val, selectedAlgo);
-        }
-        if (autoStartSwitch->getState()) {
-            std::string selectedAlgo = algoList->getSelected();
-            if (selectedAlgo.empty()) selectedAlgo = "lz4";
-            saveZramConfig(val, selectedAlgo);
-        }
-    });
-
-    // Auto Start toggle callback
-    autoStartSwitch->setOnChangedCallback([this, zramSwitch, sizeList, algoList, autoStartSwitch] {
-        std::string selectedSize = sizeList->getSelected();
-        if (selectedSize.empty()) selectedSize = "512M";
+    sizeList->setSelectedChangedCallback([this, zramSwitch, algoList](const std::string& val) {
         std::string selectedAlgo = algoList->getSelected();
         if (selectedAlgo.empty()) selectedAlgo = "lz4";
-        toggleZramAutoStart(autoStartSwitch->getState(), selectedSize, selectedAlgo);
+        if (zramSwitch->getState()) {
+            toggleZram(false);
+            toggleZram(true, val, selectedAlgo);
+            toggleZramAutoStart(true, val, selectedAlgo);
+        }
     });
 
 	mWindow->pushGui(s);
