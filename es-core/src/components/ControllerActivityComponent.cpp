@@ -333,8 +333,7 @@ void ControllerActivityComponent::render(const Transform4x4f& parentTrans)
 			if (mBatteryText == nullptr || mBatteryTextX != x)
 			{
 				mBatteryTextX = x;
-				float batteryTextPad = mSize.y() * 0.3f;
-				mBatteryText = std::unique_ptr<TextCache>(mBatteryFont->buildTextCache(batteryText, Vector2f(x + batteryTextPad, batteryTextOffset), mColorShift, mSize.x(), Alignment::ALIGN_LEFT, 1.0f));
+				mBatteryText = std::unique_ptr<TextCache>(mBatteryFont->buildTextCache(batteryText, Vector2f(x, batteryTextOffset), mColorShift, mSize.x(), Alignment::ALIGN_LEFT, 1.0f));
 			}
 
 			mBatteryFont->renderTextCache(mBatteryText.get());
