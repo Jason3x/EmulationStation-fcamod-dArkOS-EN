@@ -1044,7 +1044,7 @@ void GuiMenu::openNetworkSettings()
 			toggleSambaRootAccess(enable);
 		}).detach();
 	});
-	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
+	s->addWithLabel(_("ROOT SAMBA ACCESS"), sambaRootSwitch);
 
 	// --- WiFi Monitor Service toggle ---
 	std::string wifiMonitorState = executeCommand("systemctl is-enabled wifi_monitor.service 2>/dev/null");
