@@ -3663,22 +3663,6 @@ void GuiMenu::openOtherSettings()
 		}
 	});
 
-	// UPDATE DARKOSEN
-	s->addEntry(_("UPDATE DARKOSEN"), false, [this] {
-		if (access("/usr/local/bin/Update.sh", F_OK) == 0)
-		{
-			AudioManager::getInstance()->deinit();
-			VolumeControl::getInstance()->deinit();
-			mWindow->deinit(true);
-			system("/bin/bash \"/usr/local/bin/Update.sh\" 2>&1 > /dev/tty1");
-			mWindow->init(true);
-			VolumeControl::getInstance()->init();
-			AudioManager::getInstance()->init();
-		}
-		else
-			mWindow->pushGui(new GuiMsgBox(mWindow, _("UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"), _("OK")));
-	}, "iconUpdates");
-	
 	s->updatePosition();
 
 	auto pthis = this;
