@@ -187,6 +187,41 @@ static void setDeadzoneValue(const std::string& hexVal, const std::string& decVa
 	executeCommand("echo " + decVal + " > " + DEADZONE_STATE_FILE);
 }
 
+static const std::string FILEMGR_SCRIPT = "/opt/system/File Manager.sh";
+static const std::string FILES351_SCRIPT = "/opt/system/351Files.sh";
+
+// Root file access state is read from File Manager.sh: "on" if its exec line
+// still has sudo, "off" if sudo has been stripped.
+static bool isRootFileAccessEnabled()
+{
+	std::string result = executeCommand(
+		"grep -m1 -E '^exec sudo ' \"" + FILEMGR_SCRIPT + "\" 2>/dev/null");
+	return !Utils::String::trim(result).empty();
+}
+
+// Add or strip sudo from both file explorers' launch lines.
+static void toggleRootFileAccess(bool enable)
+{
+	if (enable)
+	{
+		executeCommand(
+			"sudo sed -i -E 's|^exec (sudo )?/opt/dingux/DinguxCommander|exec sudo /opt/dingux/DinguxCommander|' \""
+			+ FILEMGR_SCRIPT + "\"");
+		executeCommand(
+			"sudo sed -i -E 's|^(sudo )?\\./351Files-sd2|sudo ./351Files-sd2|' \""
+			+ FILES351_SCRIPT + "\"");
+	}
+	else
+	{
+		executeCommand(
+			"sudo sed -i -E 's|^exec (sudo )?/opt/dingux/DinguxCommander|exec /opt/dingux/DinguxCommander|' \""
+			+ FILEMGR_SCRIPT + "\"");
+		executeCommand(
+			"sudo sed -i -E 's|^(sudo )?\\./351Files-sd2|./351Files-sd2|' \""
+			+ FILES351_SCRIPT + "\"");
+	}
+}
+
 // Check current WiFi state: no interface = disabled, otherwise check rfkill
 static bool isWifiRfkillBlocked()
 {
@@ -2752,7 +2787,7 @@ void GuiMenu::openUISettings()
 	bool ledInitialRed = isLedRed();
 	auto ledColor = std::make_shared<OptionListComponent<std::string>>(mWindow, _("LED COLOR"), false);
 	ledColor->add(_("RED"), "red", ledInitialRed);
-	ledColor->add(_("BLUE/GREEN"), "blue", !ledInitialRed);
+	ledColor->add(_("DEFAULT"), "blue", !ledInitialRed);
 	s->addWithLabel(_("LED COLOR"), ledColor);
 	s->addSaveFunc([ledColor, ledInitialRed] {
 		bool selectRed = ledColor->getSelected() == "red";
@@ -3341,6 +3376,17 @@ void GuiMenu::openOtherSettings()
 			}
 		}
 	});
+
+	// --- Root File Access toggle ---
+	auto rootFileAccessSwitch = std::make_shared<SwitchComponent>(mWindow);
+	rootFileAccessSwitch->setState(isRootFileAccessEnabled());
+	rootFileAccessSwitch->setOnChangedCallback([rootFileAccessSwitch] {
+		bool enable = rootFileAccessSwitch->getState();
+		std::thread([enable] {
+			toggleRootFileAccess(enable);
+		}).detach();
+	});
+	s->addWithLabel(_("ROOT FILE ACCESS"), rootFileAccessSwitch);
 
 	// power saver
 	auto power_saver = std::make_shared< OptionListComponent<std::string> >(mWindow, _("POWER SAVER MODES"), false);
