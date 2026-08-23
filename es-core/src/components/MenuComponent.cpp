@@ -177,7 +177,8 @@ void MenuComponent::addEntry(const std::string name, bool add_arrow, const std::
 	if (add_arrow)	
 		row.addElement(makeArrow(mWindow), false);
 
-	row.makeAcceptInputHandler(func);
+	if (func != nullptr)
+		row.makeAcceptInputHandler(func);
 
 	addRow(row, setCursorHere);
 }
