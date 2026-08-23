@@ -1,6 +1,8 @@
 #include <string>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "guis/GuiMenu.h"
+#include "components/AsyncNotificationComponent.h"
 #include "guis/GuiTools.h"
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
@@ -131,6 +133,107 @@ static std::string executeCommand(const std::string& cmd)
 	pclose(pipe);
 	return Utils::String::trim(result);
 }
+
+// ============================================================================
+// dArkOSen Update
+// ============================================================================
+class DarkosenUpdateThread
+{
+public:
+	DarkosenUpdateThread(Window* window) : mWindow(window)
+	{
+		mWndNotification = new AsyncNotificationComponent(window, false);
+		mWndNotification->updateTitle(_U("\uF019 ") + _("UPDATE DARKOSEN"));
+		mWindow->registerNotificationComponent(mWndNotification);
+		mHandle = new std::thread(&DarkosenUpdateThread::threadUpdate, this);
+	}
+
+	~DarkosenUpdateThread()
+	{
+		mWindow->unRegisterNotificationComponent(mWndNotification);
+		delete mWndNotification;
+	}
+
+	void threadUpdate()
+	{
+		const std::string LOG_FILE = "/home/ark/djp-update.log";
+		const std::string LOCATION = "https://raw.githubusercontent.com/djparentx/dArkOSen-updates/main";
+		const std::string UPDATE_SCRIPT = "/home/ark/dArkOSen-Update.sh";
+
+		mWndNotification->updateText(_("FIXING HOME FOLDER PERMISSIONS"));
+		if (executeCommand("stat -c \"%U\" /home/ark") != "ark")
+		{
+			system("sudo chown -R ark:ark /home/ark");
+			system("sudo chmod -R 755 /home/ark");
+		}
+
+		mWndNotification->updateText(_("CHECKING FOR UPDATES"));
+
+		if (Utils::FileSystem::exists(LOG_FILE))
+			Utils::FileSystem::removeFile(LOG_FILE);
+
+		system("sudo timedatectl set-ntp 1");
+
+		std::string wgetLicense = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/LICENSE\" -O /dev/shm/LICENSE -a \"" + LOG_FILE + "\"";
+		if (WEXITSTATUS(system(wgetLicense.c_str())) != 0)
+		{
+			fail(_("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY."));
+			return;
+		}
+
+		std::string wgetScript = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/dArkOSen-Update.sh\" -O " + UPDATE_SCRIPT + " -a \"" + LOG_FILE + "\"";
+		if (WEXITSTATUS(system(wgetScript.c_str())) != 0)
+		{
+			system(("rm -f " + UPDATE_SCRIPT).c_str());
+			fail(_("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY."));
+			return;
+		}
+
+		system(("sudo chmod 777 " + UPDATE_SCRIPT).c_str());
+
+		mWndNotification->updateText(_("RUNNING UPDATE"));
+		int result = WEXITSTATUS(system(UPDATE_SCRIPT.c_str()));
+		bool updateFailed = (result != 187);
+
+		if (updateFailed && Utils::FileSystem::exists(UPDATE_SCRIPT))
+			Utils::FileSystem::removeFile(UPDATE_SCRIPT);
+
+		// runs regardless of update success/failure, matching source script
+		std::string pid = executeCommand("pidof rg351p-js2xbox");
+		if (!pid.empty())
+		{
+			system(("sudo kill -9 " + pid).c_str());
+			system("sudo rm -f /dev/input/by-path/platform-odroidgo2-joypad-event-joystick");
+		}
+
+		if (updateFailed)
+		{
+			fail(_("THERE WAS AN ERROR WITH ATTEMPTING THIS UPDATE.  DID YOU MAKE SURE TO ENABLE YOUR WIFI AND CONNECT TO A WIFI NETWORK?  IF SO, ENABLE REMOTE SERVICES IN OPTIONS AND TRY TO UPDATE AGAIN."));
+			return;
+		}
+
+		mWndNotification->updateTitle(_U("\uF019 ") + _("UPDATE DARKOSEN"));
+		mWndNotification->updateText(_("UPDATE COMPLETE"));
+		mWindow->postToUiThread([](Window* w) {
+			w->displayNotificationMessage(_U("\uF019 ") + _("DARKOSEN UPDATE COMPLETE"));
+		});
+
+		delete this;
+	}
+
+private:
+	void fail(const std::string& message)
+	{
+		mWindow->postToUiThread([message](Window* w) {
+			w->pushGui(new GuiMsgBox(w, message));
+		});
+		delete this;
+	}
+
+	std::thread* mHandle;
+	AsyncNotificationComponent* mWndNotification;
+	Window* mWindow;
+};
 
 static const std::string DEADZONE_STATE_FILE = "/home/ark/.deadzone_adc_value";
 
@@ -3649,8 +3752,10 @@ void GuiMenu::openOtherSettings()
 		}
 	});
 
-
-
+	// UPDATE DARKOSEN
+	s->addEntry(_("UPDATE DARKOSEN"), false, [this] {
+		new DarkosenUpdateThread(mWindow);
+	}, "iconUpdates");
 
 	s->updatePosition();
 
