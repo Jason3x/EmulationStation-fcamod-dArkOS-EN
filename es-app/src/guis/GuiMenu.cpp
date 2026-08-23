@@ -2,7 +2,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "guis/GuiMenu.h"
-#include "components/AsyncNotificationComponent.h"
 #include "guis/GuiTools.h"
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
@@ -48,7 +47,7 @@
 GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(window, _("MAIN MENU")), mVersion(window)
 {
 
-	addEntry(_("DISPLAY SETTINGS AND INFO"), true, [this] { openDisplaySettings(); }, "iconBrightnessctl");
+	addEntry(_("DISPLAY SETTINGS AND INFO"), true, [this] { openDisplaySettings(); }, "iconSystem");
 
 	auto theme = ThemeData::getMenuTheme();
 
@@ -64,7 +63,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 
 	addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
-	addEntry(_("PERFORMANCE SETTINGS"), true, [this] { openPerformanceSettings(); }, "iconPerformance");
+	addEntry(_("PERFORMANCE SETTINGS"), true, [this] { openPerformanceSettings(); }, "iconGames");
 
 	if (isFullUI)
 	{
@@ -89,7 +88,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
     // Tools Menu
     mMenu.addEntry(_("OPTIONS"), true, [this, window] {
         window->pushGui(new GuiTools(window));
-    }, "iconOptions");
+    }, "iconAdvanced");
 
 		addEntry(_("ADVANCED SETTINGS"), true, [this] { openOtherSettings(); }, "iconAdvanced");
 	}
@@ -137,103 +136,115 @@ static std::string executeCommand(const std::string& cmd)
 // ============================================================================
 // dArkOSen Update
 // ============================================================================
-class DarkosenUpdateThread
+
+// Wifi connectivity check (nmcli device state == connected)
+static bool isDarkosenWifiConnected()
 {
-public:
-	DarkosenUpdateThread(Window* window) : mWindow(window)
+	std::string result = executeCommand("nmcli -t -f DEVICE,TYPE,STATE dev 2>/dev/null");
+	std::istringstream stream(result);
+	std::string line;
+	while (std::getline(stream, line))
 	{
-		mWndNotification = new AsyncNotificationComponent(window, false);
-		mWndNotification->updateTitle(_U("\uF019 ") + _("UPDATE DARKOSEN"));
-		mWindow->registerNotificationComponent(mWndNotification);
-		mHandle = new std::thread(&DarkosenUpdateThread::threadUpdate, this);
+		if (line.find(":wifi:") != std::string::npos && line.find(":connected") != std::string::npos)
+			return true;
+	}
+	return false;
+}
+
+// Runs the update steps synchronously (ES is deinitialized by the caller, so this
+// has the tty/CPU/IO to itself, same as the original standalone script).
+// Returns true on success. On failure, sets errorMessage and appends a matching
+// line to LOG_FILE, mirroring the original script's `| tee -a "$LOG_FILE"` calls.
+static bool runDarkosenUpdateSteps(std::string& errorMessage)
+{
+	const std::string LOG_FILE = "/home/ark/djp-update.log";
+	const std::string LOCATION = "https://raw.githubusercontent.com/djparentx/dArkOSen-updates/main";
+	const std::string UPDATE_SCRIPT = "/home/ark/dArkOSen-Update.sh";
+
+	if (Utils::FileSystem::exists(LOG_FILE))
+		Utils::FileSystem::removeFile(LOG_FILE);
+
+	if (executeCommand("stat -c \"%U\" /home/ark") != "ark")
+	{
+		system("sudo chown -R ark:ark /home/ark");
+		system("sudo chmod -R 755 /home/ark");
 	}
 
-	~DarkosenUpdateThread()
+	system("sudo timedatectl set-ntp 1");
+
+	// 1) check wifi
+	if (!isDarkosenWifiConnected())
 	{
-		mWindow->unRegisterNotificationComponent(mWndNotification);
-		delete mWndNotification;
+		errorMessage = _("NO WIFI CONNECTION DETECTED.  PLEASE CONNECT TO A WIFI NETWORK AND TRY AGAIN.");
+		system(("printf \"There was an error with attempting this update: no wifi connection.\" | tee -a \"" + LOG_FILE + "\"").c_str());
+		return false;
 	}
 
-	void threadUpdate()
+	// 2) download update files
+	std::string wgetLicense = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/LICENSE\" -O /dev/shm/LICENSE -a \"" + LOG_FILE + "\"";
+	if (WEXITSTATUS(system(wgetLicense.c_str())) != 0)
 	{
-		const std::string LOG_FILE = "/home/ark/djp-update.log";
-		const std::string LOCATION = "https://raw.githubusercontent.com/djparentx/dArkOSen-updates/main";
-		const std::string UPDATE_SCRIPT = "/home/ark/dArkOSen-Update.sh";
+		errorMessage = _("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY.");
+		system(("printf \"There was an error with attempting this update.\" | tee -a \"" + LOG_FILE + "\"").c_str());
+		return false;
+	}
 
-		mWndNotification->updateText(_("FIXING HOME FOLDER PERMISSIONS"));
-		if (executeCommand("stat -c \"%U\" /home/ark") != "ark")
-		{
-			system("sudo chown -R ark:ark /home/ark");
-			system("sudo chmod -R 755 /home/ark");
-		}
+	std::string wgetScript = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/dArkOSen-Update.sh\" -O " + UPDATE_SCRIPT + " -a \"" + LOG_FILE + "\"";
+	if (WEXITSTATUS(system(wgetScript.c_str())) != 0)
+	{
+		system(("rm -f " + UPDATE_SCRIPT).c_str());
+		errorMessage = _("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY.");
+		system(("printf \"There was an error with attempting this update.\" | tee -a \"" + LOG_FILE + "\"").c_str());
+		return false;
+	}
 
-		mWndNotification->updateText(_("CHECKING FOR UPDATES"));
+	// 3) execute downloaded update script
+	system(("sudo chmod -v 777 " + UPDATE_SCRIPT + " | tee -a \"" + LOG_FILE + "\"").c_str());
 
-		if (Utils::FileSystem::exists(LOG_FILE))
-			Utils::FileSystem::removeFile(LOG_FILE);
-
-		system("sudo timedatectl set-ntp 1");
-
-		std::string wgetLicense = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/LICENSE\" -O /dev/shm/LICENSE -a \"" + LOG_FILE + "\"";
-		if (WEXITSTATUS(system(wgetLicense.c_str())) != 0)
-		{
-			fail(_("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY."));
-			return;
-		}
-
-		std::string wgetScript = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/dArkOSen-Update.sh\" -O " + UPDATE_SCRIPT + " -a \"" + LOG_FILE + "\"";
-		if (WEXITSTATUS(system(wgetScript.c_str())) != 0)
-		{
-			system(("rm -f " + UPDATE_SCRIPT).c_str());
-			fail(_("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY."));
-			return;
-		}
-
-		system(("sudo chmod 777 " + UPDATE_SCRIPT).c_str());
-
-		mWndNotification->updateText(_("RUNNING UPDATE"));
-		int result = WEXITSTATUS(system(UPDATE_SCRIPT.c_str()));
-		bool updateFailed = (result != 187);
-
-		if (updateFailed && Utils::FileSystem::exists(UPDATE_SCRIPT))
+	int result = WEXITSTATUS(system(UPDATE_SCRIPT.c_str()));
+	if (result != 187)
+	{
+		if (Utils::FileSystem::exists(UPDATE_SCRIPT))
 			Utils::FileSystem::removeFile(UPDATE_SCRIPT);
 
-		// runs regardless of update success/failure, matching source script
-		std::string pid = executeCommand("pidof rg351p-js2xbox");
-		if (!pid.empty())
-		{
-			system(("sudo kill -9 " + pid).c_str());
-			system("sudo rm -f /dev/input/by-path/platform-odroidgo2-joypad-event-joystick");
-		}
-
-		if (updateFailed)
-		{
-			fail(_("THERE WAS AN ERROR WITH ATTEMPTING THIS UPDATE.  DID YOU MAKE SURE TO ENABLE YOUR WIFI AND CONNECT TO A WIFI NETWORK?  IF SO, ENABLE REMOTE SERVICES IN OPTIONS AND TRY TO UPDATE AGAIN."));
-			return;
-		}
-
-		mWndNotification->updateTitle(_U("\uF019 ") + _("UPDATE DARKOSEN"));
-		mWndNotification->updateText(_("UPDATE COMPLETE"));
-		mWindow->postToUiThread([](Window* w) {
-			w->displayNotificationMessage(_U("\uF019 ") + _("DARKOSEN UPDATE COMPLETE"));
-		});
-
-		delete this;
+		errorMessage = _("THERE WAS AN ERROR WITH ATTEMPTING THIS UPDATE.  DID YOU MAKE SURE TO ENABLE YOUR WIFI AND CONNECT TO A WIFI NETWORK?  IF SO, ENABLE REMOTE SERVICES IN OPTIONS AND TRY TO UPDATE AGAIN.");
+		system(("printf \"There was an error with attempting this update.\" | tee -a \"" + LOG_FILE + "\"").c_str());
+		return false;
 	}
 
-private:
-	void fail(const std::string& message)
-	{
-		mWindow->postToUiThread([message](Window* w) {
-			w->pushGui(new GuiMsgBox(w, message));
-		});
-		delete this;
-	}
+	return true;
+}
 
-	std::thread* mHandle;
-	AsyncNotificationComponent* mWndNotification;
-	Window* mWindow;
-};
+// Singleton-guarded launcher: deinits ES for direct tty/sudo access (same
+// pattern as GuiTools::launchTool), runs the update synchronously so it has
+// full CPU/IO instead of sharing with ES's render loop, then reinits ES.
+static void launchDarkosenUpdate(Window* window)
+{
+	static bool sRunning = false;
+	if (sRunning)
+		return;
+	sRunning = true;
+
+	AudioManager::getInstance()->deinit();
+	VolumeControl::getInstance()->deinit();
+	window->deinit(true);
+
+	system("sudo chmod 666 /dev/tty1");
+
+	std::string errorMessage;
+	bool success = runDarkosenUpdateSteps(errorMessage);
+
+	system("setterm -clear all > /dev/tty1");
+
+	window->init(true);
+	VolumeControl::getInstance()->init();
+	AudioManager::getInstance()->init();
+
+	if (!success)
+		window->pushGui(new GuiMsgBox(window, errorMessage));
+
+	sRunning = false;
+}
 
 static const std::string DEADZONE_STATE_FILE = "/home/ark/.deadzone_adc_value";
 
@@ -3753,8 +3764,8 @@ void GuiMenu::openOtherSettings()
 	});
 
 	// UPDATE DARKOSEN
-	s->addEntry(_("UPDATE DARKOSEN"), false, [this] {
-		new DarkosenUpdateThread(mWindow);
+	s->addEntry(_("UPDATE DARKOSEN"), false, [window] {
+		launchDarkosenUpdate(window);
 	}, "iconUpdates");
 
 	s->updatePosition();
