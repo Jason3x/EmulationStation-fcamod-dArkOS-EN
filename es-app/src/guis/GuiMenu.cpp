@@ -1,5 +1,6 @@
 #include <string>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "guis/GuiMenu.h"
 #include "guis/GuiTools.h"
 #include "components/OptionListComponent.h"
@@ -46,7 +47,7 @@
 GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(window, _("MAIN MENU")), mVersion(window)
 {
 
-	addEntry(_("DISPLAY SETTINGS AND INFO"), true, [this] { openDisplaySettings(); }, "iconBrightnessctl");
+	addEntry(_("DISPLAY SETTINGS AND INFO"), true, [this] { openDisplaySettings(); }, "iconSystem");
 
 	auto theme = ThemeData::getMenuTheme();
 
@@ -62,7 +63,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 
 	addEntry(_("SOUND SETTINGS"), true, [this] { openSoundSettings(); }, "iconSound");
 
-	addEntry(_("PERFORMANCE SETTINGS"), true, [this] { openPerformanceSettings(); }, "iconPerformance");
+	addEntry(_("PERFORMANCE SETTINGS"), true, [this] { openPerformanceSettings(); }, "iconGames");
 
 	if (isFullUI)
 	{
@@ -87,7 +88,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
     // Tools Menu
     mMenu.addEntry(_("OPTIONS"), true, [this, window] {
         window->pushGui(new GuiTools(window));
-    }, "iconOptions");
+    }, "iconAdvanced");
 
 		addEntry(_("ADVANCED SETTINGS"), true, [this] { openOtherSettings(); }, "iconAdvanced");
 	}
@@ -187,11 +188,53 @@ static void setDeadzoneValue(const std::string& hexVal, const std::string& decVa
 	executeCommand("echo " + decVal + " > " + DEADZONE_STATE_FILE);
 }
 
+static const std::string FILEMGR_SCRIPT = "/opt/system/File Manager.sh";
+static const std::string FILES351_SCRIPT = "/opt/system/351Files.sh";
+
+// Root file access state is read from File Manager.sh: "on" if its exec line
+// still has sudo, "off" if sudo has been stripped.
+static bool isRootFileAccessEnabled()
+{
+	std::string result = executeCommand(
+		"grep -m1 -E '^exec sudo ' \"" + FILEMGR_SCRIPT + "\" 2>/dev/null");
+	return !Utils::String::trim(result).empty();
+}
+
+// Add or strip sudo from both file explorers' launch lines.
+static void toggleRootFileAccess(bool enable)
+{
+	if (enable)
+	{
+		executeCommand(
+			"sudo sed -i -E 's|^exec (sudo )?/opt/dingux/DinguxCommander|exec sudo /opt/dingux/DinguxCommander|' \""
+			+ FILEMGR_SCRIPT + "\"");
+		executeCommand(
+			"sudo sed -i -E 's|^(sudo )?\\./351Files-sd2|sudo ./351Files-sd2|' \""
+			+ FILES351_SCRIPT + "\"");
+	}
+	else
+	{
+		executeCommand(
+			"sudo sed -i -E 's|^exec (sudo )?/opt/dingux/DinguxCommander|exec /opt/dingux/DinguxCommander|' \""
+			+ FILEMGR_SCRIPT + "\"");
+		executeCommand(
+			"sudo sed -i -E 's|^(sudo )?\\./351Files-sd2|./351Files-sd2|' \""
+			+ FILES351_SCRIPT + "\"");
+	}
+}
+
 // Check current WiFi state: no interface = disabled, otherwise check rfkill
 static bool isWifiRfkillBlocked()
 {
     std::string result = executeCommand("cat /var/cache/wifi_manager_state 2>/dev/null");
     return result.find("OFF") != std::string::npos;
+}
+
+// Check current LED color: gpio77 value 1 = red, 0 = blue/green
+static bool isLedRed()
+{
+    std::string result = executeCommand("cat /sys/class/gpio/gpio77/value 2>/dev/null");
+    return result.find("1") != std::string::npos;
 }
 
 // Get active WiFi interface (wlan0, p2p0, etc.)
@@ -1002,7 +1045,7 @@ void GuiMenu::openNetworkSettings()
 			toggleSambaRootAccess(enable);
 		}).detach();
 	});
-	s->addWithLabel(_("SAMBA ROOT ACCESS"), sambaRootSwitch);
+	s->addWithLabel(_("ROOT SAMBA ACCESS"), sambaRootSwitch);
 
 	// --- WiFi Monitor Service toggle ---
 	std::string wifiMonitorState = executeCommand("systemctl is-enabled wifi_monitor.service 2>/dev/null");
@@ -2741,6 +2784,33 @@ void GuiMenu::openUISettings()
 		Settings::getInstance()->setBool("MoveCarousel", move_carousel->getState());
 	});
 
+	// LED color
+	bool ledInitialRed = isLedRed();
+	auto ledColor = std::make_shared<OptionListComponent<std::string>>(mWindow, _("LED COLOR"), false);
+	ledColor->add(_("RED"), "red", ledInitialRed);
+	ledColor->add(_("DEFAULT"), "blue", !ledInitialRed);
+	s->addWithLabel(_("LED COLOR"), ledColor);
+	s->addSaveFunc([ledColor, ledInitialRed] {
+		bool selectRed = ledColor->getSelected() == "red";
+		if (selectRed == ledInitialRed)
+			return;
+
+		if (selectRed)
+		{
+			executeCommand("sudo -n sh -c 'echo 1 > /sys/class/gpio/gpio77/value' 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/batt_life_warning.py.red /usr/local/bin/batt_life_warning.py 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/fix_power_led.red /usr/local/bin/fix_power_led 2>/dev/null");
+		}
+		else
+		{
+			executeCommand("sudo -n sh -c 'echo 0 > /sys/class/gpio/gpio77/value' 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/batt_life_warning.py.green /usr/local/bin/batt_life_warning.py 2>/dev/null");
+			executeCommand("sudo -n cp -f /usr/local/bin/fix_power_led.green /usr/local/bin/fix_power_led 2>/dev/null");
+		}
+
+		executeCommand("sudo -n systemctl restart batt_led 2>/dev/null");
+	});
+
 	// clock
 	auto clock = std::make_shared<SwitchComponent>(mWindow);
 	clock->setState(Settings::getInstance()->getBool("DrawClock"));
@@ -3270,6 +3340,17 @@ void GuiMenu::openOtherSettings()
 		}
 	});
 
+	// --- Root File Access toggle ---
+	auto rootFileAccessSwitch = std::make_shared<SwitchComponent>(mWindow);
+	rootFileAccessSwitch->setState(isRootFileAccessEnabled());
+	rootFileAccessSwitch->setOnChangedCallback([rootFileAccessSwitch] {
+		bool enable = rootFileAccessSwitch->getState();
+		std::thread([enable] {
+			toggleRootFileAccess(enable);
+		}).detach();
+	});
+	s->addWithLabel(_("ROOT FILE ACCESS"), rootFileAccessSwitch);
+
 	// joystick deadzone
 	struct DeadzoneOption { std::string label; std::string hex; std::string dec; };
 	static const std::vector<DeadzoneOption> deadzoneOptions = {
@@ -3569,8 +3650,21 @@ void GuiMenu::openOtherSettings()
 		}
 	});
 
-
-
+	// UPDATE DARKOSEN
+	s->addEntry(_("UPDATE DARKOSEN"), false, [this] {
+		if (access("/usr/local/bin/Update.sh", F_OK) == 0)
+		{
+			AudioManager::getInstance()->deinit();
+			VolumeControl::getInstance()->deinit();
+			mWindow->deinit(true);
+			system("/bin/bash \"/usr/local/bin/Update.sh\" 2>&1 > /dev/tty1");
+			mWindow->init(true);
+			VolumeControl::getInstance()->init();
+			AudioManager::getInstance()->init();
+		}
+		else
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"), _("OK")));
+	}, "iconUpdates");
 
 	s->updatePosition();
 
