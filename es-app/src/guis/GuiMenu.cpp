@@ -133,88 +133,6 @@ static std::string executeCommand(const std::string& cmd)
 	return Utils::String::trim(result);
 }
 
-// ============================================================================
-// dArkOSen Update
-// ============================================================================
-
-// Wifi connectivity check (nmcli device state == connected)
-static bool isDarkosenWifiConnected()
-{
-	std::string result = executeCommand("nmcli -t -f DEVICE,TYPE,STATE dev 2>/dev/null");
-	std::istringstream stream(result);
-	std::string line;
-	while (std::getline(stream, line))
-	{
-		if (line.find(":wifi:") != std::string::npos && line.find(":connected") != std::string::npos)
-			return true;
-	}
-	return false;
-}
-
-// Runs the update steps synchronously (ES is deinitialized by the caller, so this
-// has the tty/CPU/IO to itself, same as the original standalone script).
-// Returns true on success. On failure, sets errorMessage and appends a matching
-// line to LOG_FILE, mirroring the original script's `| tee -a "$LOG_FILE"` calls.
-static bool runDarkosenUpdateSteps(std::string& errorMessage)
-{
-	const std::string LOG_FILE = "/home/ark/djp-update.log";
-	const std::string LOCATION = "https://raw.githubusercontent.com/djparentx/dArkOSen-updates/main";
-	const std::string UPDATE_SCRIPT = "/home/ark/dArkOSen-Update.sh";
-
-	if (Utils::FileSystem::exists(LOG_FILE))
-		Utils::FileSystem::removeFile(LOG_FILE);
-
-	if (executeCommand("stat -c \"%U\" /home/ark") != "ark")
-	{
-		system("sudo chown -R ark:ark /home/ark");
-		system("sudo chmod -R 755 /home/ark");
-	}
-
-	system("sudo timedatectl set-ntp 1");
-
-	// 1) check wifi
-	if (!isDarkosenWifiConnected())
-	{
-		errorMessage = _("NO WIFI CONNECTION DETECTED.  PLEASE CONNECT TO A WIFI NETWORK AND TRY AGAIN.");
-		system(("printf \"There was an error with attempting this update: no wifi connection.\" | tee -a \"" + LOG_FILE + "\"").c_str());
-		return false;
-	}
-
-	// 2) download update files
-	std::string wgetLicense = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/LICENSE\" -O /dev/shm/LICENSE -a \"" + LOG_FILE + "\"";
-	if (WEXITSTATUS(system(wgetLicense.c_str())) != 0)
-	{
-		errorMessage = _("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY.");
-		system(("printf \"There was an error with attempting this update.\" | tee -a \"" + LOG_FILE + "\"").c_str());
-		return false;
-	}
-
-	std::string wgetScript = "wget -t 3 -T 60 --no-check-certificate \"" + LOCATION + "/dArkOSen-Update.sh\" -O " + UPDATE_SCRIPT + " -a \"" + LOG_FILE + "\"";
-	if (WEXITSTATUS(system(wgetScript.c_str())) != 0)
-	{
-		system(("rm -f " + UPDATE_SCRIPT).c_str());
-		errorMessage = _("LOOKS LIKE OTA UPDATING IS CURRENTLY DOWN OR YOUR WIFI OR INTERNET CONNECTION IS NOT FUNCTIONING CORRECTLY.");
-		system(("printf \"There was an error with attempting this update.\" | tee -a \"" + LOG_FILE + "\"").c_str());
-		return false;
-	}
-
-	// 3) execute downloaded update script
-	system(("sudo chmod -v 777 " + UPDATE_SCRIPT + " | tee -a \"" + LOG_FILE + "\"").c_str());
-
-	int result = WEXITSTATUS(system(UPDATE_SCRIPT.c_str()));
-	if (result != 187)
-	{
-		if (Utils::FileSystem::exists(UPDATE_SCRIPT))
-			Utils::FileSystem::removeFile(UPDATE_SCRIPT);
-
-		errorMessage = _("THERE WAS AN ERROR WITH ATTEMPTING THIS UPDATE.  DID YOU MAKE SURE TO ENABLE YOUR WIFI AND CONNECT TO A WIFI NETWORK?  IF SO, ENABLE REMOTE SERVICES IN OPTIONS AND TRY TO UPDATE AGAIN.");
-		system(("printf \"There was an error with attempting this update.\" | tee -a \"" + LOG_FILE + "\"").c_str());
-		return false;
-	}
-
-	return true;
-}
-
 // Singleton-guarded launcher: deinits ES for direct tty/sudo access (same
 // pattern as GuiTools::launchTool), runs the update synchronously so it has
 // full CPU/IO instead of sharing with ES's render loop, then reinits ES.
@@ -3764,8 +3682,19 @@ void GuiMenu::openOtherSettings()
 	});
 
 	// UPDATE DARKOSEN
-	s->addEntry(_("UPDATE DARKOSEN"), false, [window] {
-		launchDarkosenUpdate(window);
+	s->addEntry(_("UPDATE DARKOSEN"), false, [this] {
+		if (access("/usr/local/bin/Update.sh", F_OK) == 0)
+		{
+			AudioManager::getInstance()->deinit();
+			VolumeControl::getInstance()->deinit();
+			mWindow->deinit(true);
+			system("/bin/bash \"/usr/local/bin/Update.sh\" 2>&1 > /dev/tty1");
+			mWindow->init(true);
+			VolumeControl::getInstance()->init();
+			AudioManager::getInstance()->init();
+		}
+		else
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"), _("OK")));
 	}, "iconUpdates");
 
 	s->updatePosition();
