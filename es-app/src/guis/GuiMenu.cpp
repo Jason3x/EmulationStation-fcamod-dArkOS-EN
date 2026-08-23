@@ -2798,8 +2798,8 @@ void GuiMenu::openUISettings()
 	// --- Battery Icon Pack ---
 	auto batteryIconPack = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BATTERY ICON"), false);
 	std::string currentPack = Settings::getInstance()->getString("BatteryIconPack");
-	if (currentPack.empty()) currentPack = "default";
-	batteryIconPack->add(_("DEFAULT"),          "default",          currentPack == "default");
+	if (currentPack.empty()) currentPack = "Default";
+	batteryIconPack->add(_("DEFAULT"),          "Default",          currentPack == "Default");
 	batteryIconPack->add(_("POWER PULSE"),      "Power-Pulse-Icons", currentPack == "Power-Pulse-Icons");
 	batteryIconPack->add(_("SEGMENTED"),        "segmented-battery", currentPack == "segmented-battery");
 	batteryIconPack->add(_("HEARTS"),           "hearts-battery",   currentPack == "hearts-battery");
