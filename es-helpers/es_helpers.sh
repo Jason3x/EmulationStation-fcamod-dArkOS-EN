@@ -14,12 +14,19 @@ chmod +x "/usr/local/bin/wifi_monitor.sh"
 chmod +x "/usr/local/bin/wifi_enable.sh"
 chmod +x "/usr/local/bin/wifi_disable.sh"
 chmod +x "/usr/local/bin/boot_volume.sh"
+chmod +x "/usr/local/bin/batt_life_warning.py.red"
+chmod +x "/usr/local/bin/batt_life_warning.py.green"
+chmod +x "/usr/local/bin/batt_life_warning.py"
+chmod +x "/usr/local/bin/fix_power_led.red"
+chmod +x "/usr/local/bin/fix_power_led.green"
+chmod +x "/usr/local/bin/fix_power_led"
 chmod +x "/etc/NetworkManager/dispatcher.d/99-disable-bgscan.sh"
 chmod +x "/etc/NetworkManager/dispatcher.d/99-disable-ipv6.sh"
 chown ark:ark /etc/samba/smb.conf
 chown ark:ark /etc/samba/smb.conf.default
 chown ark:ark /etc/samba/smb.conf.root
 systemctl daemon-reload
+systemctl enable fix-power-led
 
 # cleanup
 rm -f /etc/samba/smb.conf.bak
