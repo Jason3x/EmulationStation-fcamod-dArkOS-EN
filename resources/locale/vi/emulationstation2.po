@@ -1650,3 +1650,195 @@ msgstr "TRÁI TIM"
 
 msgid "STOCK"
 msgstr "GỐC"
+
+msgid "GAMMA"
+msgstr "GAMMA"
+
+msgid "CPU TEMP"
+msgstr "NHIỆT ĐỘ CPU"
+
+msgid "CPU CORES"
+msgstr "NHÂN CPU"
+
+msgid "CPU GOVERNOR"
+msgstr "BỘ ĐIỀU CHỈNH CPU"
+
+msgid "CPU MAX FREQ"
+msgstr "TẦN SỐ TỐI ĐA CPU"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "ÁP DỤNG KHI KHỞI ĐỘNG CPU"
+
+msgid "GPU MAX FREQ"
+msgstr "TẦN SỐ TỐI ĐA GPU"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "ÁP DỤNG KHI KHỞI ĐỘNG GPU"
+
+msgid "RAM MAX FREQ"
+msgstr "TẦN SỐ TỐI ĐA RAM"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "CÀI ĐẶT HIỆU NĂNG"
+
+msgid "REMOTE SERVICES"
+msgstr "DỊCH VỤ TỪ XA"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "TỰ KHỞI ĐỘNG DỊCH VỤ"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "TRUY CẬP SAMBA ROOT"
+
+msgid "ROOT FILE ACCESS"
+msgstr "TRUY CẬP FILE ROOT"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "GIÁM SÁT WiFi"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "QUÉT MẠNG WiFi"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "ĐANG QUÉT..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "CHỌN MẠNG WiFi"
+
+msgid "CURRENT NETWORK"
+msgstr "MẠNG HIỆN TẠI"
+
+msgid "CONNECT"
+msgstr "KẾT NỐI"
+
+msgid "CONNECTED TO"
+msgstr "ĐÃ KẾT NỐI VỚI"
+
+msgid "CONNECTING TO"
+msgstr "ĐANG KẾT NỐI VỚI"
+
+msgid "CONNECTING..."
+msgstr "ĐANG KẾT NỐI..."
+
+msgid "CONNECTION FAILED"
+msgstr "KẾT NỐI THẤT BẠI"
+
+msgid "NETWORK NOT FOUND"
+msgstr "KHÔNG TÌM THẤY MẠNG"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "KHÔNG CÓ MẠNG WiFi"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "KHÔNG CÓ KẾT NỐI ĐÃ LƯU"
+
+msgid "SELECT CONNECTION"
+msgstr "CHỌN KẾT NỐI"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "KÍCH HOẠT KẾT NỐI"
+
+msgid "DELETE CONNECTION"
+msgstr "XÓA KẾT NỐI"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "XÓA TẤT CẢ KẾT NỐI"
+
+msgid "DELETED"
+msgstr "ĐÃ XÓA"
+
+msgid "PASSWORD FOR"
+msgstr "MẬT KHẨU CHO"
+
+msgid "INVALID PASSWORD"
+msgstr "MẬT KHẨU KHÔNG HỢP LỆ"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "CỔNG MẶC ĐỊNH"
+
+msgid "HOSTNAME CHANGED"
+msgstr "ĐÃ ĐỔI TÊN MÁY CHỦ"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "CẦN KHỞI ĐỘNG LẠI"
+
+msgid "SHOW NETWORK ICON"
+msgstr "HIỂN THỊ BIỂU TƯỢNG MẠNG"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "CÀI ĐẶT BATTERYPLUS"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS ĐÃ BẬT"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "VÙNG CHẾT JOYSTICK"
+
+msgid "DEADZONE CHANGED"
+msgstr "VÙNG CHẾT ĐÃ THAY ĐỔI"
+
+msgid "LED COLOR"
+msgstr "MÀU LED"
+
+msgid "RED"
+msgstr "ĐỎ"
+
+msgid "BOOT VOLUME (%)"
+msgstr "ÂM LƯỢNG KHỞI ĐỘNG (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "BẬT ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "KÍCH THƯỚC ZRAM"
+
+msgid "ZRAM COMPRESSION"
+msgstr "NÉN ZRAM"
+
+msgid "COMP ALGO"
+msgstr "THUẬT TOÁN NÉN"
+
+msgid "UPDATE DARKOSEN"
+msgstr "CẬP NHẬT DARKOSEN"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "TRUNG BÌNH"
+
+msgid "POOR"
+msgstr "KÉM"
+
+msgid "BEST"
+msgstr "TỐI ƯU"
+
+msgid "STANDARD"
+msgstr "TIÊU CHUẨN"
+
+msgid "SIZE"
+msgstr "KÍCH THƯỚC"
+
+msgid "IMAGE"
+msgstr "HÌNH ẢNH"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "VIDEO"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

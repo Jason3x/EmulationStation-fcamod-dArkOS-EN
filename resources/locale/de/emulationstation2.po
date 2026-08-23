@@ -2354,3 +2354,195 @@ msgstr "HERZEN"
 
 msgid "STOCK"
 msgstr "ORIGINAL"
+
+msgid "GAMMA"
+msgstr "GAMMA"
+
+msgid "CPU TEMP"
+msgstr "CPU-TEMP."
+
+msgid "CPU CORES"
+msgstr "CPU-KERNE"
+
+msgid "CPU GOVERNOR"
+msgstr "CPU-GOVERNOR"
+
+msgid "CPU MAX FREQ"
+msgstr "CPU MAX FREQ"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "BEIM START ANWENDEN"
+
+msgid "GPU MAX FREQ"
+msgstr "GPU MAX FREQ"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "GPU BEIM START"
+
+msgid "RAM MAX FREQ"
+msgstr "RAM MAX FREQ"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "LEISTUNGSEINSTELLUNGEN"
+
+msgid "REMOTE SERVICES"
+msgstr "REMOTE-DIENSTE"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "REMOTE-DIENSTE AUTOSTART"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "SAMBA ROOT-ZUGRIFF"
+
+msgid "ROOT FILE ACCESS"
+msgstr "DATEIZUGRIFF ROOT"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "WLAN-MONITOR"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "WLAN SCANNEN"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "WIRD GESCANNT..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "WLAN AUSWÄHLEN"
+
+msgid "CURRENT NETWORK"
+msgstr "AKTUELLES NETZWERK"
+
+msgid "CONNECT"
+msgstr "VERBINDEN"
+
+msgid "CONNECTED TO"
+msgstr "VERBUNDEN MIT"
+
+msgid "CONNECTING TO"
+msgstr "VERBINDE MIT"
+
+msgid "CONNECTING..."
+msgstr "VERBINDE..."
+
+msgid "CONNECTION FAILED"
+msgstr "VERBINDUNG FEHLGESCHLAGEN"
+
+msgid "NETWORK NOT FOUND"
+msgstr "NETZWERK NICHT GEFUNDEN"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "KEINE WLAN-NETZWERKE"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "KEINE GESPEICHERTEN VERBINDUNGEN"
+
+msgid "SELECT CONNECTION"
+msgstr "VERBINDUNG AUSWÄHLEN"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "VERBINDUNG AKTIVIEREN"
+
+msgid "DELETE CONNECTION"
+msgstr "VERBINDUNG LÖSCHEN"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "VERBINDUNGEN LÖSCHEN"
+
+msgid "DELETED"
+msgstr "GELÖSCHT"
+
+msgid "PASSWORD FOR"
+msgstr "PASSWORT FÜR"
+
+msgid "INVALID PASSWORD"
+msgstr "FALSCHES PASSWORT"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "GATEWAY"
+
+msgid "HOSTNAME CHANGED"
+msgstr "HOSTNAME GEÄNDERT"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "NEUSTART ERFORDERLICH"
+
+msgid "SHOW NETWORK ICON"
+msgstr "NETZWERKSYMBOL ANZEIGEN"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "BATTERYPLUS EINSTELLUNGEN"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS AKTIV"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "JOYSTICK TOTZONE"
+
+msgid "DEADZONE CHANGED"
+msgstr "TOTZONE GEÄNDERT"
+
+msgid "LED COLOR"
+msgstr "LED-FARBE"
+
+msgid "RED"
+msgstr "ROT"
+
+msgid "BOOT VOLUME (%)"
+msgstr "STARTLAUTSTÄRKE (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "ZRAM AKTIVIEREN"
+
+msgid "ZRAM SIZE"
+msgstr "ZRAM GRÖSSE"
+
+msgid "ZRAM COMPRESSION"
+msgstr "ZRAM KOMPRESSION"
+
+msgid "COMP ALGO"
+msgstr "KOMPRESSIONSALGO"
+
+msgid "UPDATE DARKOSEN"
+msgstr "DARKOSEN AKTUALISIEREN"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "DURCHSCHNITT"
+
+msgid "POOR"
+msgstr "SCHLECHT"
+
+msgid "BEST"
+msgstr "OPTIMAL"
+
+msgid "STANDARD"
+msgstr "STANDARD"
+
+msgid "SIZE"
+msgstr "GRÖSSE"
+
+msgid "IMAGE"
+msgstr "BILD"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "VIDEO"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

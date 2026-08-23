@@ -2054,3 +2054,195 @@ msgstr "ΚΑΡΔΙΈΣ"
 
 msgid "STOCK"
 msgstr "ΑΡΧΙΚΌ"
+
+msgid "GAMMA"
+msgstr "ΓΚΑΜΑ"
+
+msgid "CPU TEMP"
+msgstr "ΘΕΡΜ. ΕΠΕ"
+
+msgid "CPU CORES"
+msgstr "ΠΥΡΉΝΕΣ ΕΠΕ"
+
+msgid "CPU GOVERNOR"
+msgstr "ΔΙΑΧΕΙΡΙΣΤΉΣ ΕΠΕ"
+
+msgid "CPU MAX FREQ"
+msgstr "ΜΈΓ. ΣΥΧΝ. ΕΠΕ"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "ΕΦΑΡΜΟΓΉ ΚΑΤΆ ΕΚΚΊΝΗΣΗ ΕΠΕ"
+
+msgid "GPU MAX FREQ"
+msgstr "ΜΈΓ. ΣΥΧΝ. ΕΜΕ"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "ΕΦΑΡΜΟΓΉ ΚΑΤΆ ΕΚΚΊΝΗΣΗ ΕΜΕ"
+
+msgid "RAM MAX FREQ"
+msgstr "ΜΈΓ. ΣΥΧΝ. ΜΝ"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "ΡΥΘΜΊΣΕΙΣ ΑΠΌΔΟΣΗΣ"
+
+msgid "REMOTE SERVICES"
+msgstr "ΑΠΟΜΑΚΡΥΣΜΈΝΕΣ ΥΠΗΡΕΣΊΕΣ"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "ΑΥΤΌΜΑΤΗ ΕΚΚΊΝΗΣΗ"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "ΠΡΌΣΒΑΣΗ SAMBA ROOT"
+
+msgid "ROOT FILE ACCESS"
+msgstr "ΠΡΌΣΒΑΣΗ ΑΡΧΕΊΩΝ ROOT"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "MONITOR WiFi"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "ΣΆΡΩΣΗ WiFi"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "ΣΆΡΩΣΗ..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "ΕΠΙΛΟΓΉ WiFi"
+
+msgid "CURRENT NETWORK"
+msgstr "ΤΡΈΧΟΝ ΔΊΚΤΥΟ"
+
+msgid "CONNECT"
+msgstr "ΣΎΝΔΕΣΗ"
+
+msgid "CONNECTED TO"
+msgstr "ΣΥΝΔΕΔΕΜΈΝΟ ΜΕ"
+
+msgid "CONNECTING TO"
+msgstr "ΣΎΝΔΕΣΗ ΜΕ"
+
+msgid "CONNECTING..."
+msgstr "ΣΎΝΔΕΣΗ..."
+
+msgid "CONNECTION FAILED"
+msgstr "ΑΠΟΤΥΧΊΑ ΣΎΝΔΕΣΗΣ"
+
+msgid "NETWORK NOT FOUND"
+msgstr "ΤΟ ΔΊΚΤΥΟ ΔΕΝ ΒΡΈΘΗΚΕ"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "ΔΕΝ ΒΡΈΘΗΚΑΝ ΔΊΚΤΥΑ"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "ΔΕΝ ΥΠΆΡΧΟΥΝ ΑΠΟΘΗΚΕΥΜΈΝΕΣ ΣΥΝΔΈΣΕΙΣ"
+
+msgid "SELECT CONNECTION"
+msgstr "ΕΠΙΛΟΓΉ ΣΎΝΔΕΣΗΣ"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "ΕΝΕΡΓΟΠΟΊΗΣΗ"
+
+msgid "DELETE CONNECTION"
+msgstr "ΔΙΑΓΡΑΦΉ ΣΎΝΔΕΣΗΣ"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "ΔΙΑΓΡΑΦΉ ΣΥΝΔΈΣΕΩΝ"
+
+msgid "DELETED"
+msgstr "ΔΙΑΓΡΆΦΗΚΕ"
+
+msgid "PASSWORD FOR"
+msgstr "ΚΩΔΙΚΌΣ ΓΙΑ"
+
+msgid "INVALID PASSWORD"
+msgstr "ΛΆΘΟΣ ΚΩΔΙΚΌΣ"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "ΠΎΛΗ"
+
+msgid "HOSTNAME CHANGED"
+msgstr "ΤΟ ΌΝΟΜΑ ΑΛΛΑΞΕ"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "ΑΠΑΙΤΕΊΤΑΙ ΕΠΑΝΕΚΚΊΝΗΣΗ"
+
+msgid "SHOW NETWORK ICON"
+msgstr "ΕΜΦΆΝΙΣΗ ΕΙΚΟΝΙΔΊΟΥ ΔΙΚΤΎΟΥ"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "ΡΥΘΜΊΣΕΙΣ BATTERYPLUS"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS ΕΝΕΡΓΌ"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "ΝΕΚΡΉ ΖΏΝΗ JOYSTICK"
+
+msgid "DEADZONE CHANGED"
+msgstr "ΝΕΚΡΉ ΖΏΝΗ ΆΛΛΑΞΕ"
+
+msgid "LED COLOR"
+msgstr "ΧΡΏΜΑ LED"
+
+msgid "RED"
+msgstr "ΚΌΚΚΙΝΟ"
+
+msgid "BOOT VOLUME (%)"
+msgstr "ΈΝΤΑΣΗ ΕΚΚΊΝΗΣΗΣ (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "ΕΝΕΡΓΟΠΟΊΗΣΗ ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "ΜΈΓΕΘΟΣ ZRAM"
+
+msgid "ZRAM COMPRESSION"
+msgstr "ΣΥΜΠΊΕΣΗ ZRAM"
+
+msgid "COMP ALGO"
+msgstr "ΑΛΓΌΡΙΘΜΟΣ ΣΥΜΠΊΕΣΗΣ"
+
+msgid "UPDATE DARKOSEN"
+msgstr "ΕΝΗΜΈΡΩΣΗ DARKOSEN"
+
+msgid "N/A"
+msgstr "Δ/Υ"
+
+msgid "AVERAGE"
+msgstr "ΜΈΣΟΣ"
+
+msgid "POOR"
+msgstr "ΧΑΜΗΛΌΣ"
+
+msgid "BEST"
+msgstr "ΆΡΙΣΤΟΣ"
+
+msgid "STANDARD"
+msgstr "ΤΥΠΙΚΌ"
+
+msgid "SIZE"
+msgstr "ΜΈΓΕΘΟΣ"
+
+msgid "IMAGE"
+msgstr "ΕΙΚΌΝΑ"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "ΒΊΝΤΕΟ"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

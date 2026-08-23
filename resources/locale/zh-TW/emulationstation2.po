@@ -3571,3 +3571,192 @@ msgstr "愛心"
 
 msgid "STOCK"
 msgstr "原版"
+
+msgid "GAMMA"
+msgstr "伽瑪"
+
+msgid "CPU TEMP"
+msgstr "CPU溫度"
+
+msgid "CPU CORES"
+msgstr "CPU核心數"
+
+msgid "CPU GOVERNOR"
+msgstr "CPU調速器"
+
+msgid "CPU MAX FREQ"
+msgstr "CPU最大頻率"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "開機套用CPU"
+
+msgid "GPU MAX FREQ"
+msgstr "GPU最大頻率"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "開機套用GPU"
+
+msgid "RAM MAX FREQ"
+msgstr "RAM最大頻率"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "效能設定"
+
+msgid "REMOTE SERVICES"
+msgstr "遠端服務"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "遠端服務自動啟動"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "Samba Root存取"
+
+msgid "ROOT FILE ACCESS"
+msgstr "檔案Root存取"
+
+msgid "WIFI ENABLED"
+msgstr "WiFi已啟用"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "WiFi監控"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "掃描WiFi"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "掃描中..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "選擇WiFi"
+
+msgid "CURRENT NETWORK"
+msgstr "目前網路"
+
+msgid "CONNECT"
+msgstr "連線"
+
+msgid "CONNECTED TO"
+msgstr "已連線至"
+
+msgid "CONNECTING TO"
+msgstr "正在連線"
+
+msgid "CONNECTING..."
+msgstr "連線中..."
+
+msgid "CONNECTION FAILED"
+msgstr "連線失敗"
+
+msgid "NETWORK NOT FOUND"
+msgstr "找不到網路"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "無已儲存連線"
+
+msgid "SELECT CONNECTION"
+msgstr "選擇連線"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "啟用連線"
+
+msgid "DELETE CONNECTION"
+msgstr "刪除連線"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "刪除所有連線"
+
+msgid "DELETED"
+msgstr "已刪除"
+
+msgid "PASSWORD FOR"
+msgstr "密碼"
+
+msgid "INVALID PASSWORD"
+msgstr "密碼無效"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "閘道"
+
+msgid "HOSTNAME CHANGED"
+msgstr "主機名稱已變更"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "需要重新開機"
+
+msgid "SHOW NETWORK ICON"
+msgstr "顯示網路圖示"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "BatteryPlus設定"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BatteryPlus已啟用"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "搖桿死區"
+
+msgid "DEADZONE CHANGED"
+msgstr "死區已變更"
+
+msgid "LED COLOR"
+msgstr "LED顏色"
+
+msgid "BOOT VOLUME (%)"
+msgstr "開機音量(%)"
+
+msgid "ZRAM ENABLE"
+msgstr "啟用ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "ZRAM大小"
+
+msgid "ZRAM COMPRESSION"
+msgstr "ZRAM壓縮"
+
+msgid "COMP ALGO"
+msgstr "壓縮演算法"
+
+msgid "UPDATE DARKOSEN"
+msgstr "更新DarkOSen"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "平均"
+
+msgid "POOR"
+msgstr "差"
+
+msgid "BEST"
+msgstr "最佳"
+
+msgid "STANDARD"
+msgstr "標準"
+
+msgid "SIZE"
+msgstr "大小"
+
+msgid "IMAGE"
+msgstr "圖像"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "影片"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

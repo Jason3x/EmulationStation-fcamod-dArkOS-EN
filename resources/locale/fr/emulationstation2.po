@@ -1546,3 +1546,240 @@ msgstr "CŒURS"
 
 msgid "STOCK"
 msgstr "ORIGINAL"
+
+msgid "GAMMA"
+msgstr "GAMMA"
+
+msgid "CPU TEMP"
+msgstr "TEMP. CPU"
+
+msgid "CPU CORES"
+msgstr "CŒURS CPU"
+
+msgid "CPU GOVERNOR"
+msgstr "GOUVERNEUR CPU"
+
+msgid "CPU GRADE"
+msgstr "GRADE CPU"
+
+msgid "CPU MAX FREQ"
+msgstr "FRÉQ. MAX CPU"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "APPLIQUER AU DÉMARRAGE CPU"
+
+msgid "GPU MAX FREQ"
+msgstr "FRÉQ. MAX GPU"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "APPLIQUER AU DÉMARRAGE GPU"
+
+msgid "RAM MAX FREQ"
+msgstr "FRÉQ. MAX RAM"
+
+msgid "MAX FREQ"
+msgstr "FRÉQ. MAX"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "PARAMÈTRES PERFORMANCES"
+
+msgid "REMOTE SERVICES"
+msgstr "SERVICES DISTANTS"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "DÉMARRAGE AUTO SERVICES DISTANTS"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "ACCÈS SAMBA ROOT"
+
+msgid "ROOT FILE ACCESS"
+msgstr "ACCÈS FICHIERS ROOT"
+
+msgid "WIFI ENABLED"
+msgstr "WIFI ACTIVÉ"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "SERVICE MONITEUR WIFI"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "SCANNER LES RÉSEAUX WIFI"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "SCAN EN COURS..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "SÉLECTIONNER UN RÉSEAU WIFI"
+
+msgid "CURRENT NETWORK"
+msgstr "RÉSEAU ACTUEL"
+
+msgid "CONNECT"
+msgstr "CONNECTER"
+
+msgid "CONNECTED"
+msgstr "CONNECTÉ"
+
+msgid "CONNECTED TO"
+msgstr "CONNECTÉ À"
+
+msgid "CONNECTING TO"
+msgstr "CONNEXION À"
+
+msgid "CONNECTING..."
+msgstr "CONNEXION EN COURS..."
+
+msgid "CONNECTION FAILED"
+msgstr "CONNEXION ÉCHOUÉE"
+
+msgid "NOT CONNECTED"
+msgstr "NON CONNECTÉ"
+
+msgid "NETWORK NOT FOUND"
+msgstr "RÉSEAU INTROUVABLE"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "AUCUN RÉSEAU WIFI TROUVÉ"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "AUCUNE CONNEXION SAUVEGARDÉE"
+
+msgid "SELECT CONNECTION"
+msgstr "SÉLECTIONNER UNE CONNEXION"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "ACTIVER UNE CONNEXION EXISTANTE"
+
+msgid "DELETE CONNECTION"
+msgstr "SUPPRIMER LA CONNEXION"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "SUPPRIMER LES CONNEXIONS EXISTANTES"
+
+msgid "DELETED"
+msgstr "SUPPRIMÉ"
+
+msgid "PASSWORD FOR"
+msgstr "MOT DE PASSE POUR"
+
+msgid "INVALID PASSWORD"
+msgstr "MOT DE PASSE INVALIDE"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "PASSERELLE"
+
+msgid "HOSTNAME CHANGED"
+msgstr "NOM D'HÔTE MODIFIÉ"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "REDÉMARRAGE REQUIS"
+
+msgid "SHOW NETWORK ICON"
+msgstr "AFFICHER L'ICÔNE RÉSEAU"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "PARAMÈTRES BATTERYPLUS"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS ACTIVÉ"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "ZONE MORTE JOYSTICK"
+
+msgid "DEADZONE CHANGED"
+msgstr "ZONE MORTE MODIFIÉE"
+
+msgid "LED COLOR"
+msgstr "COULEUR LED"
+
+msgid "RED"
+msgstr "ROUGE"
+
+msgid "BOOT VOLUME (%)"
+msgstr "VOLUME AU DÉMARRAGE (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "ACTIVER ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "TAILLE ZRAM"
+
+msgid "ZRAM COMPRESSION"
+msgstr "COMPRESSION ZRAM"
+
+msgid "COMP ALGO"
+msgstr "ALGO DE COMPRESSION"
+
+msgid "UPDATE DARKOSEN"
+msgstr "METTRE À JOUR DARKOSEN"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "SCRIPT DE MAJ INTROUVABLE\n/usr/local/bin/Update.sh"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "GESTIONNAIRE BT INTROUVABLE\n/usr/local/bin/BT Manager.sh"
+
+msgid "Do you want to proceed?"
+msgstr "Voulez-vous continuer ?"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Cela masquera la plupart des options de menu."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "Pour déverrouiller, entrez ce code :"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "MOYEN"
+
+msgid "POOR"
+msgstr "FAIBLE"
+
+msgid "BEST"
+msgstr "OPTIMAL"
+
+msgid "STANDARD"
+msgstr "STANDARD"
+
+msgid "SIZE"
+msgstr "TAILLE"
+
+msgid "IMAGE"
+msgstr "IMAGE"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "VIDÉO"
+
+msgid "FILE EXTENSIONS"
+msgstr "EXTENSIONS DE FICHIERS"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "RÉINITIALISER LES EXTENSIONS"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "PERSONNALISATION VUE"
+
+msgid "REGION SOURCE"
+msgstr "SOURCE RÉGION"
+
+msgid "API KEY"
+msgstr "CLÉ API"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

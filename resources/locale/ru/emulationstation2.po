@@ -3585,3 +3585,189 @@ msgstr "СЕРДЦА"
 
 msgid "STOCK"
 msgstr "ОРИГИНАЛ"
+
+msgid "GAMMA"
+msgstr "ГАММА"
+
+msgid "CPU TEMP"
+msgstr "ТЕМП. ЦП"
+
+msgid "CPU CORES"
+msgstr "ЯДРА ЦП"
+
+msgid "CPU GOVERNOR"
+msgstr "РЕГУЛЯТОР ЦП"
+
+msgid "CPU MAX FREQ"
+msgstr "МАКС. ЧАСТОТА ЦП"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "ПРИМЕНИТЬ ПРИ ЗАГРУЗКЕ ЦП"
+
+msgid "GPU MAX FREQ"
+msgstr "МАКС. ЧАСТОТА ГП"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "ПРИМЕНИТЬ ПРИ ЗАГРУЗКЕ ГП"
+
+msgid "RAM MAX FREQ"
+msgstr "МАКС. ЧАСТОТА ОЗУ"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "НАСТРОЙКИ ПРОИЗВОДИТЕЛЬНОСТИ"
+
+msgid "REMOTE SERVICES"
+msgstr "УДАЛЁННЫЕ СЛУЖБЫ"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "АВТОЗАПУСК СЛУЖБ"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "ДОСТУП SAMBA ROOT"
+
+msgid "ROOT FILE ACCESS"
+msgstr "ДОСТУП К ФАЙЛАМ ROOT"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "МОНИТОР WI-FI"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "ПОИСК СЕТЕЙ WI-FI"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "ПОИСК..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "ВЫБРАТЬ СЕТЬ WI-FI"
+
+msgid "CURRENT NETWORK"
+msgstr "ТЕКУЩАЯ СЕТЬ"
+
+msgid "CONNECT"
+msgstr "ПОДКЛЮЧИТЬ"
+
+msgid "CONNECTED TO"
+msgstr "ПОДКЛЮЧЕНО К"
+
+msgid "CONNECTING TO"
+msgstr "ПОДКЛЮЧЕНИЕ К"
+
+msgid "CONNECTING..."
+msgstr "ПОДКЛЮЧЕНИЕ..."
+
+msgid "CONNECTION FAILED"
+msgstr "ОШИБКА ПОДКЛЮЧЕНИЯ"
+
+msgid "NETWORK NOT FOUND"
+msgstr "СЕТЬ НЕ НАЙДЕНА"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "НЕТ СОХРАНЁННЫХ ПОДКЛЮЧЕНИЙ"
+
+msgid "SELECT CONNECTION"
+msgstr "ВЫБРАТЬ ПОДКЛЮЧЕНИЕ"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "АКТИВИРОВАТЬ"
+
+msgid "DELETE CONNECTION"
+msgstr "УДАЛИТЬ ПОДКЛЮЧЕНИЕ"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "УДАЛИТЬ ПОДКЛЮЧЕНИЯ"
+
+msgid "DELETED"
+msgstr "УДАЛЕНО"
+
+msgid "PASSWORD FOR"
+msgstr "ПАРОЛЬ ДЛЯ"
+
+msgid "INVALID PASSWORD"
+msgstr "НЕВЕРНЫЙ ПАРОЛЬ"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "ШЛЮЗ"
+
+msgid "HOSTNAME CHANGED"
+msgstr "ИМЯ ХОСТА ИЗМЕНЕНО"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "ТРЕБУЕТСЯ ПЕРЕЗАГРУЗКА"
+
+msgid "SHOW NETWORK ICON"
+msgstr "ПОКАЗАТЬ ЗНАЧОК СЕТИ"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "НАСТРОЙКИ BATTERYPLUS"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS ВКЛЮЧЁН"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "МЁРТВАЯ ЗОНА ДЖОЙСТИКА"
+
+msgid "DEADZONE CHANGED"
+msgstr "ЗОНА ИЗМЕНЕНА"
+
+msgid "LED COLOR"
+msgstr "ЦВЕТ LED"
+
+msgid "BOOT VOLUME (%)"
+msgstr "ГРОМКОСТЬ ПРИ ЗАГРУЗКЕ (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "ВКЛЮЧИТЬ ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "РАЗМЕР ZRAM"
+
+msgid "ZRAM COMPRESSION"
+msgstr "СЖАТИЕ ZRAM"
+
+msgid "COMP ALGO"
+msgstr "АЛГОРИТМ СЖАТИЯ"
+
+msgid "UPDATE DARKOSEN"
+msgstr "ОБНОВИТЬ DARKOSEN"
+
+msgid "N/A"
+msgstr "Н/Д"
+
+msgid "AVERAGE"
+msgstr "СРЕДНИЙ"
+
+msgid "POOR"
+msgstr "СЛАБЫЙ"
+
+msgid "BEST"
+msgstr "ОПТИМАЛЬНЫЙ"
+
+msgid "STANDARD"
+msgstr "СТАНДАРТНЫЙ"
+
+msgid "SIZE"
+msgstr "РАЗМЕР"
+
+msgid "IMAGE"
+msgstr "ИЗОБРАЖЕНИЕ"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "ВИДЕО"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

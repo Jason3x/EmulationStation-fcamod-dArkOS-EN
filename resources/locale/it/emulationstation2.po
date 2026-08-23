@@ -2895,3 +2895,177 @@ msgstr "SEGMENTATO"
 
 msgid "HEARTS"
 msgstr "CUORI"
+
+msgid "GAMMA"
+msgstr "GAMMA"
+
+msgid "CPU TEMP"
+msgstr "TEMP. CPU"
+
+msgid "CPU CORES"
+msgstr "CORE CPU"
+
+msgid "CPU GOVERNOR"
+msgstr "GOVERNOR CPU"
+
+msgid "CPU MAX FREQ"
+msgstr "FREQ. MAX CPU"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "APPLICA ALL'AVVIO CPU"
+
+msgid "GPU MAX FREQ"
+msgstr "FREQ. MAX GPU"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "APPLICA ALL'AVVIO GPU"
+
+msgid "RAM MAX FREQ"
+msgstr "FREQ. MAX RAM"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "IMPOSTAZIONI PRESTAZIONI"
+
+msgid "REMOTE SERVICES"
+msgstr "SERVIZI REMOTI"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "AVVIO AUTO SERVIZI REMOTI"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "ACCESSO SAMBA ROOT"
+
+msgid "ROOT FILE ACCESS"
+msgstr "ACCESSO FILE ROOT"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "MONITOR WIFI"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "SCANSIONA RETI WIFI"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "SCANSIONE..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "SELEZIONA RETE WIFI"
+
+msgid "CURRENT NETWORK"
+msgstr "RETE ATTUALE"
+
+msgid "CONNECT"
+msgstr "CONNETTI"
+
+msgid "CONNECTED TO"
+msgstr "CONNESSO A"
+
+msgid "CONNECTING TO"
+msgstr "CONNESSIONE A"
+
+msgid "CONNECTING..."
+msgstr "CONNESSIONE..."
+
+msgid "CONNECTION FAILED"
+msgstr "CONNESSIONE FALLITA"
+
+msgid "NETWORK NOT FOUND"
+msgstr "RETE NON TROVATA"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "NESSUNA RETE WIFI"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "NESSUNA CONNESSIONE SALVATA"
+
+msgid "SELECT CONNECTION"
+msgstr "SELEZIONA CONNESSIONE"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "ATTIVA CONNESSIONE"
+
+msgid "DELETE CONNECTION"
+msgstr "ELIMINA CONNESSIONE"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "ELIMINA CONNESSIONI"
+
+msgid "DELETED"
+msgstr "ELIMINATO"
+
+msgid "PASSWORD FOR"
+msgstr "PASSWORD PER"
+
+msgid "INVALID PASSWORD"
+msgstr "PASSWORD NON VALIDA"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "GATEWAY"
+
+msgid "HOSTNAME CHANGED"
+msgstr "HOSTNAME MODIFICATO"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "RIAVVIO RICHIESTO"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "IMPOSTAZIONI BATTERYPLUS"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS ATTIVO"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "ZONA MORTA JOYSTICK"
+
+msgid "DEADZONE CHANGED"
+msgstr "ZONA MORTA CAMBIATA"
+
+msgid "LED COLOR"
+msgstr "COLORE LED"
+
+msgid "RED"
+msgstr "ROSSO"
+
+msgid "BOOT VOLUME (%)"
+msgstr "VOLUME AVVIO (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "ABILITA ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "DIMENSIONE ZRAM"
+
+msgid "ZRAM COMPRESSION"
+msgstr "COMPRESSIONE ZRAM"
+
+msgid "COMP ALGO"
+msgstr "ALGORITMO COMPRESSIONE"
+
+msgid "UPDATE DARKOSEN"
+msgstr "AGGIORNA DARKOSEN"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "MEDIO"
+
+msgid "POOR"
+msgstr "SCARSO"
+
+msgid "BEST"
+msgstr "OTTIMALE"
+
+msgid "STANDARD"
+msgstr "STANDARD"
+
+msgid "SIZE"
+msgstr "DIMENSIONE"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "VIDEO"

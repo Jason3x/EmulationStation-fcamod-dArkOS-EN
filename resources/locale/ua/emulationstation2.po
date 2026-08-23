@@ -3793,3 +3793,192 @@ msgstr "СЕРЦЯ"
 
 msgid "STOCK"
 msgstr "ОРИГІНАЛ"
+
+msgid "GAMMA"
+msgstr "ГАММА"
+
+msgid "CPU TEMP"
+msgstr "ТЕМП. ЦП"
+
+msgid "CPU CORES"
+msgstr "ЯДРА ЦП"
+
+msgid "CPU GOVERNOR"
+msgstr "РЕГУЛЯТОР ЦП"
+
+msgid "CPU MAX FREQ"
+msgstr "МАКС. ЧАСТОТА ЦП"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "ЗАСТОСУВАТИ ПРИ ЗАВАНТАЖЕННІ"
+
+msgid "GPU MAX FREQ"
+msgstr "МАКС. ЧАСТОТА ГП"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "ГП ПРИ ЗАВАНТАЖЕННІ"
+
+msgid "RAM MAX FREQ"
+msgstr "МАКС. ЧАСТОТА ПАМ."
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "НАЛАШТУВАННЯ ПРОДУКТИВНОСТІ"
+
+msgid "REMOTE SERVICES"
+msgstr "ВІДДАЛЕНІ СЛУЖБИ"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "АВТОЗАПУСК СЛУЖБ"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "ДОСТУП SAMBA ROOT"
+
+msgid "ROOT FILE ACCESS"
+msgstr "ДОСТУП ДО ФАЙЛІВ ROOT"
+
+msgid "WIFI ENABLED"
+msgstr "WiFi УВІМКНЕНО"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "МОНІТОР WiFi"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "ПОШУК МЕРЕЖ WiFi"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "ПОШУК..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "ВИБРАТИ МЕРЕЖУ WiFi"
+
+msgid "CURRENT NETWORK"
+msgstr "ПОТОЧНА МЕРЕЖА"
+
+msgid "CONNECT"
+msgstr "ПІДКЛЮЧИТИ"
+
+msgid "CONNECTED TO"
+msgstr "ПІДКЛЮЧЕНО ДО"
+
+msgid "CONNECTING TO"
+msgstr "ПІДКЛЮЧЕННЯ ДО"
+
+msgid "CONNECTING..."
+msgstr "ПІДКЛЮЧЕННЯ..."
+
+msgid "CONNECTION FAILED"
+msgstr "ПОМИЛКА ПІДКЛЮЧЕННЯ"
+
+msgid "NETWORK NOT FOUND"
+msgstr "МЕРЕЖУ НЕ ЗНАЙДЕНО"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "НЕМАЄ ЗБЕРЕЖЕНИХ ПІДКЛЮЧЕНЬ"
+
+msgid "SELECT CONNECTION"
+msgstr "ВИБРАТИ ПІДКЛЮЧЕННЯ"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "АКТИВУВАТИ"
+
+msgid "DELETE CONNECTION"
+msgstr "ВИДАЛИТИ ПІДКЛЮЧЕННЯ"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "ВИДАЛИТИ ВСІ"
+
+msgid "DELETED"
+msgstr "ВИДАЛЕНО"
+
+msgid "PASSWORD FOR"
+msgstr "ПАРОЛЬ ДО"
+
+msgid "INVALID PASSWORD"
+msgstr "НЕВІРНИЙ ПАРОЛЬ"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "ШЛЮЗ"
+
+msgid "HOSTNAME CHANGED"
+msgstr "ІМ'Я ХОСТА ЗМІНЕНО"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "ПОТРІБНЕ ПЕРЕЗАВАНТАЖЕННЯ"
+
+msgid "SHOW NETWORK ICON"
+msgstr "ПОКАЗАТИ ЗНАЧОК МЕРЕЖІ"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "НАЛАШТУВАННЯ BATTERYPLUS"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS УВІМКНЕНО"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "МЕРТВА ЗОНА ДЖОЙСТИКА"
+
+msgid "DEADZONE CHANGED"
+msgstr "ЗОНУ ЗМІНЕНО"
+
+msgid "LED COLOR"
+msgstr "КОЛІР LED"
+
+msgid "BOOT VOLUME (%)"
+msgstr "ГУЧНІСТЬ ПРИ ЗАВАНТАЖЕННІ (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "УВІМКНУТИ ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "РОЗМІР ZRAM"
+
+msgid "ZRAM COMPRESSION"
+msgstr "СТИСНЕННЯ ZRAM"
+
+msgid "COMP ALGO"
+msgstr "АЛГОРИТМ СТИСНЕННЯ"
+
+msgid "UPDATE DARKOSEN"
+msgstr "ОНОВИТИ DARKOSEN"
+
+msgid "N/A"
+msgstr "Н/Д"
+
+msgid "AVERAGE"
+msgstr "СЕРЕДНІЙ"
+
+msgid "POOR"
+msgstr "СЛАБКИЙ"
+
+msgid "BEST"
+msgstr "ОПТИМАЛЬНИЙ"
+
+msgid "STANDARD"
+msgstr "СТАНДАРТНИЙ"
+
+msgid "SIZE"
+msgstr "РОЗМІР"
+
+msgid "IMAGE"
+msgstr "ЗОБРАЖЕННЯ"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "ВІДЕО"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

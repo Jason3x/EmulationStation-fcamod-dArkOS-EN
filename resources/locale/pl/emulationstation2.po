@@ -2990,3 +2990,177 @@ msgstr "SEGMENTOWANY"
 
 msgid "HEARTS"
 msgstr "SERCA"
+
+msgid "GAMMA"
+msgstr "GAMMA"
+
+msgid "CPU TEMP"
+msgstr "TEMP. CPU"
+
+msgid "CPU CORES"
+msgstr "RDZENIE CPU"
+
+msgid "CPU GOVERNOR"
+msgstr "ZARZĄDCA CPU"
+
+msgid "CPU MAX FREQ"
+msgstr "MAKS. CZĘSTOT. CPU"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "ZASTOSUJ PRZY STARCIE CPU"
+
+msgid "GPU MAX FREQ"
+msgstr "MAKS. CZĘSTOT. GPU"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "ZASTOSUJ PRZY STARCIE GPU"
+
+msgid "RAM MAX FREQ"
+msgstr "MAKS. CZĘSTOT. RAM"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "USTAWIENIA WYDAJNOŚCI"
+
+msgid "REMOTE SERVICES"
+msgstr "USŁUGI ZDALNE"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "AUTOSTART USŁUG"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "DOSTĘP SAMBA ROOT"
+
+msgid "ROOT FILE ACCESS"
+msgstr "DOSTĘP DO PLIKÓW ROOT"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "MONITOR WIFI"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "SKANUJ SIECI WIFI"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "SKANOWANIE..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "WYBIERZ SIEĆ WIFI"
+
+msgid "CURRENT NETWORK"
+msgstr "BIEŻĄCA SIEĆ"
+
+msgid "CONNECT"
+msgstr "POŁĄCZ"
+
+msgid "CONNECTED TO"
+msgstr "POŁĄCZONO Z"
+
+msgid "CONNECTING TO"
+msgstr "ŁĄCZENIE Z"
+
+msgid "CONNECTING..."
+msgstr "ŁĄCZENIE..."
+
+msgid "CONNECTION FAILED"
+msgstr "POŁĄCZENIE NIEUDANE"
+
+msgid "NETWORK NOT FOUND"
+msgstr "SIEĆ NIE ZNALEZIONA"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "BRAK SIECI WIFI"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "BRAK ZAPISANYCH POŁĄCZEŃ"
+
+msgid "SELECT CONNECTION"
+msgstr "WYBIERZ POŁĄCZENIE"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "AKTYWUJ POŁĄCZENIE"
+
+msgid "DELETE CONNECTION"
+msgstr "USUŃ POŁĄCZENIE"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "USUŃ POŁĄCZENIA"
+
+msgid "DELETED"
+msgstr "USUNIĘTO"
+
+msgid "PASSWORD FOR"
+msgstr "HASŁO DO"
+
+msgid "INVALID PASSWORD"
+msgstr "BŁĘDNE HASŁO"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "BRAMA"
+
+msgid "HOSTNAME CHANGED"
+msgstr "NAZWA HOSTA ZMIENIONA"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "WYMAGANY RESTART"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "USTAWIENIA BATTERYPLUS"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS AKTYWNY"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "MARTWA STREFA JOYSTICKA"
+
+msgid "DEADZONE CHANGED"
+msgstr "STREFA ZMIENIONA"
+
+msgid "LED COLOR"
+msgstr "KOLOR LED"
+
+msgid "RED"
+msgstr "CZERWONY"
+
+msgid "BOOT VOLUME (%)"
+msgstr "GŁOŚNOŚĆ STARTU (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "WŁĄCZ ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "ROZMIAR ZRAM"
+
+msgid "ZRAM COMPRESSION"
+msgstr "KOMPRESJA ZRAM"
+
+msgid "COMP ALGO"
+msgstr "ALGORYTM KOMPRESJI"
+
+msgid "UPDATE DARKOSEN"
+msgstr "AKTUALIZUJ DARKOSEN"
+
+msgid "N/A"
+msgstr "N/D"
+
+msgid "AVERAGE"
+msgstr "ŚREDNI"
+
+msgid "POOR"
+msgstr "SŁABY"
+
+msgid "BEST"
+msgstr "OPTYMALNY"
+
+msgid "STANDARD"
+msgstr "STANDARDOWY"
+
+msgid "SIZE"
+msgstr "ROZMIAR"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "WIDEO"
