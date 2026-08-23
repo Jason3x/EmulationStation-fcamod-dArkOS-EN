@@ -3339,6 +3339,17 @@ void GuiMenu::openOtherSettings()
 		}
 	});
 
+	// --- Root File Access toggle ---
+	auto rootFileAccessSwitch = std::make_shared<SwitchComponent>(mWindow);
+	rootFileAccessSwitch->setState(isRootFileAccessEnabled());
+	rootFileAccessSwitch->setOnChangedCallback([rootFileAccessSwitch] {
+		bool enable = rootFileAccessSwitch->getState();
+		std::thread([enable] {
+			toggleRootFileAccess(enable);
+		}).detach();
+	});
+	s->addWithLabel(_("ROOT FILE ACCESS"), rootFileAccessSwitch);
+
 	// joystick deadzone
 	struct DeadzoneOption { std::string label; std::string hex; std::string dec; };
 	static const std::vector<DeadzoneOption> deadzoneOptions = {
@@ -3376,17 +3387,6 @@ void GuiMenu::openOtherSettings()
 			}
 		}
 	});
-
-	// --- Root File Access toggle ---
-	auto rootFileAccessSwitch = std::make_shared<SwitchComponent>(mWindow);
-	rootFileAccessSwitch->setState(isRootFileAccessEnabled());
-	rootFileAccessSwitch->setOnChangedCallback([rootFileAccessSwitch] {
-		bool enable = rootFileAccessSwitch->getState();
-		std::thread([enable] {
-			toggleRootFileAccess(enable);
-		}).detach();
-	});
-	s->addWithLabel(_("ROOT FILE ACCESS"), rootFileAccessSwitch);
 
 	// power saver
 	auto power_saver = std::make_shared< OptionListComponent<std::string> >(mWindow, _("POWER SAVER MODES"), false);
