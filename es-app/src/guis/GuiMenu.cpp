@@ -133,37 +133,6 @@ static std::string executeCommand(const std::string& cmd)
 	return Utils::String::trim(result);
 }
 
-// Singleton-guarded launcher: deinits ES for direct tty/sudo access (same
-// pattern as GuiTools::launchTool), runs the update synchronously so it has
-// full CPU/IO instead of sharing with ES's render loop, then reinits ES.
-static void launchDarkosenUpdate(Window* window)
-{
-	static bool sRunning = false;
-	if (sRunning)
-		return;
-	sRunning = true;
-
-	AudioManager::getInstance()->deinit();
-	VolumeControl::getInstance()->deinit();
-	window->deinit(true);
-
-	system("sudo chmod 666 /dev/tty1");
-
-	std::string errorMessage;
-	bool success = runDarkosenUpdateSteps(errorMessage);
-
-	system("setterm -clear all > /dev/tty1");
-
-	window->init(true);
-	VolumeControl::getInstance()->init();
-	AudioManager::getInstance()->init();
-
-	if (!success)
-		window->pushGui(new GuiMsgBox(window, errorMessage));
-
-	sRunning = false;
-}
-
 static const std::string DEADZONE_STATE_FILE = "/home/ark/.deadzone_adc_value";
 
 // Read current joystick deadzone (decimal ADC value). Uses the state file if
