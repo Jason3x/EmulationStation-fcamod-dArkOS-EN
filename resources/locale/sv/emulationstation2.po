@@ -3331,3 +3331,204 @@ msgstr "HJÄRTAN"
 
 msgid "STOCK"
 msgstr "ORIGINAL"
+
+msgid "GAMMA"
+msgstr "GAMMA"
+
+msgid "CPU TEMP"
+msgstr "CPU-TEMP"
+
+msgid "CPU CORES"
+msgstr "CPU-KÄRNOR"
+
+msgid "CPU GOVERNOR"
+msgstr "CPU-STYRARE"
+
+msgid "CPU MAX FREQ"
+msgstr "CPU MAX FREKVENS"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "TILLÄMPA VID START CPU"
+
+msgid "GPU MAX FREQ"
+msgstr "GPU MAX FREKVENS"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "TILLÄMPA VID START GPU"
+
+msgid "RAM MAX FREQ"
+msgstr "RAM MAX FREKVENS"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "PRESTANDAINSTÄLLNINGAR"
+
+msgid "REMOTE SERVICES"
+msgstr "FJÄRRTJÄNSTER"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "AUTOSTART FJÄRRTJÄNSTER"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "SAMBA ROOT-ÅTKOMST"
+
+msgid "ROOT FILE ACCESS"
+msgstr "FILÅTKOMST ROOT"
+
+msgid "WIFI ENABLED"
+msgstr "WIFI AKTIVERAT"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "WIFI-MONITOR"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "SKANNA WIFI"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "SKANNAR..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "VÄLJ WIFI-NÄTVERK"
+
+msgid "CURRENT NETWORK"
+msgstr "AKTUELLT NÄTVERK"
+
+msgid "CONNECT"
+msgstr "ANSLUT"
+
+msgid "CONNECTED"
+msgstr "ANSLUTEN"
+
+msgid "CONNECTED TO"
+msgstr "ANSLUTEN TILL"
+
+msgid "CONNECTING TO"
+msgstr "ANSLUTER TILL"
+
+msgid "CONNECTING..."
+msgstr "ANSLUTER..."
+
+msgid "CONNECTION FAILED"
+msgstr "ANSLUTNING MISSLYCKADES"
+
+msgid "NOT CONNECTED"
+msgstr "EJ ANSLUTEN"
+
+msgid "NETWORK NOT FOUND"
+msgstr "NÄTVERK EJ HITTAT"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "INGA WIFI-NÄTVERK"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "INGA SPARADE ANSLUTNINGAR"
+
+msgid "SELECT CONNECTION"
+msgstr "VÄLJ ANSLUTNING"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "AKTIVERA ANSLUTNING"
+
+msgid "DELETE CONNECTION"
+msgstr "RADERA ANSLUTNING"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "RADERA ANSLUTNINGAR"
+
+msgid "DELETED"
+msgstr "RADERAT"
+
+msgid "PASSWORD FOR"
+msgstr "LÖSENORD FÖR"
+
+msgid "INVALID PASSWORD"
+msgstr "OGILTIGT LÖSENORD"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "GATEWAY"
+
+msgid "HOSTNAME CHANGED"
+msgstr "VÄRDNAMN ÄNDRAT"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "OMSTART KRÄVS"
+
+msgid "SHOW NETWORK ICON"
+msgstr "VISA NÄTVERKSIKON"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "BATTERYPLUS-INSTÄLLNINGAR"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BATTERYPLUS AKTIVT"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "JOYSTICK DÖDZON"
+
+msgid "DEADZONE CHANGED"
+msgstr "DÖDZON ÄNDRAD"
+
+msgid "LED COLOR"
+msgstr "LED-FÄRG"
+
+msgid "RED"
+msgstr "RÖD"
+
+msgid "BOOT VOLUME (%)"
+msgstr "STARTVOLYM (%)"
+
+msgid "ZRAM ENABLE"
+msgstr "AKTIVERA ZRAM"
+
+msgid "ZRAM SIZE"
+msgstr "ZRAM-STORLEK"
+
+msgid "ZRAM COMPRESSION"
+msgstr "ZRAM-KOMPRIMERING"
+
+msgid "COMP ALGO"
+msgstr "KOMPRIMERINGSALGORITM"
+
+msgid "UPDATE DARKOSEN"
+msgstr "UPPDATERA DARKOSEN"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "MEDEL"
+
+msgid "POOR"
+msgstr "SVAG"
+
+msgid "BEST"
+msgstr "OPTIMAL"
+
+msgid "STANDARD"
+msgstr "STANDARD"
+
+msgid "SIZE"
+msgstr "STORLEK"
+
+msgid "IMAGE"
+msgstr "BILD"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "VIDEO"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"

@@ -1788,3 +1788,180 @@ msgstr "분할형"
 
 msgid "HEARTS"
 msgstr "하트"
+
+msgid "GAMMA"
+msgstr "감마"
+
+msgid "CPU TEMP"
+msgstr "CPU 온도"
+
+msgid "CPU CORES"
+msgstr "CPU 코어"
+
+msgid "CPU GOVERNOR"
+msgstr "CPU 거버너"
+
+msgid "CPU MAX FREQ"
+msgstr "CPU 최대 주파수"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "부팅 시 CPU 적용"
+
+msgid "GPU MAX FREQ"
+msgstr "GPU 최대 주파수"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "부팅 시 GPU 적용"
+
+msgid "RAM MAX FREQ"
+msgstr "RAM 최대 주파수"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "성능 설정"
+
+msgid "REMOTE SERVICES"
+msgstr "원격 서비스"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "원격 서비스 자동 시작"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "삼바 루트 접근"
+
+msgid "ROOT FILE ACCESS"
+msgstr "파일 루트 접근"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "WiFi 모니터"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "WiFi 검색"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "검색 중..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "WiFi 선택"
+
+msgid "CURRENT NETWORK"
+msgstr "현재 네트워크"
+
+msgid "CONNECT"
+msgstr "연결"
+
+msgid "CONNECTED TO"
+msgstr "연결된 곳"
+
+msgid "CONNECTING TO"
+msgstr "연결 중"
+
+msgid "CONNECTING..."
+msgstr "연결 중..."
+
+msgid "CONNECTION FAILED"
+msgstr "연결 실패"
+
+msgid "NETWORK NOT FOUND"
+msgstr "네트워크 없음"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "WiFi 없음"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "저장된 연결 없음"
+
+msgid "SELECT CONNECTION"
+msgstr "연결 선택"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "연결 활성화"
+
+msgid "DELETE CONNECTION"
+msgstr "연결 삭제"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "모든 연결 삭제"
+
+msgid "DELETED"
+msgstr "삭제됨"
+
+msgid "PASSWORD FOR"
+msgstr "비밀번호"
+
+msgid "INVALID PASSWORD"
+msgstr "잘못된 비밀번호"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "게이트웨이"
+
+msgid "HOSTNAME CHANGED"
+msgstr "호스트명 변경됨"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "재부팅 필요"
+
+msgid "SHOW NETWORK ICON"
+msgstr "네트워크 아이콘 표시"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "BatteryPlus 설정"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BatteryPlus 활성화"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "조이스틱 데드존"
+
+msgid "DEADZONE CHANGED"
+msgstr "데드존 변경됨"
+
+msgid "LED COLOR"
+msgstr "LED 색상"
+
+msgid "RED"
+msgstr "빨간색"
+
+msgid "BOOT VOLUME (%)"
+msgstr "부팅 볼륨(%)"
+
+msgid "ZRAM ENABLE"
+msgstr "ZRAM 활성화"
+
+msgid "ZRAM SIZE"
+msgstr "ZRAM 크기"
+
+msgid "ZRAM COMPRESSION"
+msgstr "ZRAM 압축"
+
+msgid "COMP ALGO"
+msgstr "압축 알고리즘"
+
+msgid "UPDATE DARKOSEN"
+msgstr "DarkOSen 업데이트"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "보통"
+
+msgid "POOR"
+msgstr "낮음"
+
+msgid "BEST"
+msgstr "최적"
+
+msgid "STANDARD"
+msgstr "표준"
+
+msgid "SIZE"
+msgstr "크기"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "비디오"

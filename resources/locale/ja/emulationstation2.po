@@ -1423,3 +1423,204 @@ msgstr "ハート"
 
 msgid "STOCK"
 msgstr "オリジナル"
+
+msgid "GAMMA"
+msgstr "ガンマ"
+
+msgid "CPU TEMP"
+msgstr "CPU温度"
+
+msgid "CPU CORES"
+msgstr "CPUコア数"
+
+msgid "CPU GOVERNOR"
+msgstr "CPUガバナー"
+
+msgid "CPU MAX FREQ"
+msgstr "CPU最大周波数"
+
+msgid "CPU APPLY AT BOOT"
+msgstr "起動時CPU適用"
+
+msgid "GPU MAX FREQ"
+msgstr "GPU最大周波数"
+
+msgid "GPU APPLY AT BOOT"
+msgstr "起動時GPU適用"
+
+msgid "RAM MAX FREQ"
+msgstr "RAM最大周波数"
+
+msgid "PERFORMANCE SETTINGS"
+msgstr "パフォーマンス設定"
+
+msgid "REMOTE SERVICES"
+msgstr "リモートサービス"
+
+msgid "REMOTE SERVICES AUTO-START"
+msgstr "リモート自動起動"
+
+msgid "ROOT SAMBA ACCESS"
+msgstr "Samba rootアクセス"
+
+msgid "ROOT FILE ACCESS"
+msgstr "ファイルrootアクセス"
+
+msgid "WIFI ENABLED"
+msgstr "WiFi有効"
+
+msgid "WIFI MONITOR SERVICE"
+msgstr "WiFiモニター"
+
+msgid "SCAN WIFI NETWORKS"
+msgstr "WiFiスキャン"
+
+msgid "SCANNING WIFI NETWORKS"
+msgstr "スキャン中..."
+
+msgid "SELECT WIFI NETWORK"
+msgstr "WiFiネットワーク選択"
+
+msgid "CURRENT NETWORK"
+msgstr "現在のネットワーク"
+
+msgid "CONNECT"
+msgstr "接続"
+
+msgid "CONNECTED"
+msgstr "接続済み"
+
+msgid "CONNECTED TO"
+msgstr "接続先"
+
+msgid "CONNECTING TO"
+msgstr "接続中"
+
+msgid "CONNECTING..."
+msgstr "接続中..."
+
+msgid "CONNECTION FAILED"
+msgstr "接続失敗"
+
+msgid "NOT CONNECTED"
+msgstr "未接続"
+
+msgid "NETWORK NOT FOUND"
+msgstr "ネットワーク未検出"
+
+msgid "NO WIFI NETWORKS FOUND"
+msgstr "WiFiなし"
+
+msgid "NO SAVED CONNECTIONS"
+msgstr "保存済み接続なし"
+
+msgid "SELECT CONNECTION"
+msgstr "接続選択"
+
+msgid "ACTIVATE EXISTING CONNECTION"
+msgstr "接続を有効化"
+
+msgid "DELETE CONNECTION"
+msgstr "接続削除"
+
+msgid "DELETE EXISTING CONNECTIONS"
+msgstr "接続を全削除"
+
+msgid "DELETED"
+msgstr "削除済み"
+
+msgid "PASSWORD FOR"
+msgstr "パスワード"
+
+msgid "INVALID PASSWORD"
+msgstr "パスワード無効"
+
+msgid "DNS"
+msgstr "DNS"
+
+msgid "GATEWAY"
+msgstr "ゲートウェイ"
+
+msgid "HOSTNAME CHANGED"
+msgstr "ホスト名変更済み"
+
+msgid "REBOOT REQUIRED FOR FULL EFFECT"
+msgstr "再起動が必要です"
+
+msgid "SHOW NETWORK ICON"
+msgstr "ネットワークアイコン表示"
+
+msgid "BATTERYPLUS SETTINGS"
+msgstr "BatteryPlus設定"
+
+msgid "BATTERYPLUS ENABLED"
+msgstr "BatteryPlus有効"
+
+msgid "JOYSTICK DEADZONE"
+msgstr "ジョイスティック不感帯"
+
+msgid "DEADZONE CHANGED"
+msgstr "不感帯変更"
+
+msgid "LED COLOR"
+msgstr "LED色"
+
+msgid "RED"
+msgstr "赤"
+
+msgid "BOOT VOLUME (%)"
+msgstr "起動音量(%)"
+
+msgid "ZRAM ENABLE"
+msgstr "ZRAM有効"
+
+msgid "ZRAM SIZE"
+msgstr "ZRAMサイズ"
+
+msgid "ZRAM COMPRESSION"
+msgstr "ZRAM圧縮"
+
+msgid "COMP ALGO"
+msgstr "圧縮アルゴリズム"
+
+msgid "UPDATE DARKOSEN"
+msgstr "DarkOSen更新"
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "AVERAGE"
+msgstr "平均"
+
+msgid "POOR"
+msgstr "低"
+
+msgid "BEST"
+msgstr "最適"
+
+msgid "STANDARD"
+msgstr "標準"
+
+msgid "SIZE"
+msgstr "サイズ"
+
+msgid "IMAGE"
+msgstr "画像"
+
+msgid "GIF"
+msgstr "GIF"
+
+msgid "VID"
+msgstr "動画"
+
+msgid "US"
+msgstr "US"
+
+msgid "EU"
+msgstr "EU"
+
+msgid "JP"
+msgstr "JP"
+
+msgid "FR"
+msgstr "FR"
