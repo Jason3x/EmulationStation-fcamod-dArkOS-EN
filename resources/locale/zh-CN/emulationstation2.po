@@ -3475,44 +3475,8 @@ msgstr "显示Wi-Fi图标"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "显示蓝牙图标"
 
-msgid "WI-FI MANAGER"
-msgstr "Wi-Fi管理器"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "蓝牙管理器"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "未找到Wi-Fi管理器"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "未找到蓝牙管理器"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "SSH共享 (启动/停止)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "开机SSH (启用/禁用)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "Samba共享 (启动/停止)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "开机Samba (启用/禁用)"
-
-msgid "SAMBA SHARING"
-msgstr "Samba共享"
-
-msgid "SAMBA ON BOOT"
-msgstr "开机Samba"
-
-msgid "SSH SHARING"
-msgstr "SSH共享"
-
-msgid "SSH ON BOOT"
-msgstr "开机SSH"
-
-msgid "BATTERY SETTINGS"
-msgstr "电池设置"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "BatteryPlus状态"
@@ -3535,9 +3499,6 @@ msgstr "未校准"
 msgid "BATTERY LEVEL"
 msgstr "电池电量"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "BatteryPlus守护进程"
-
 msgid "BATTERYPLUS MODE"
 msgstr "BatteryPlus模式"
 
@@ -3555,12 +3516,6 @@ msgstr "重置校准?\n这将删除学习的数据。"
 
 msgid "BATTERY ICON"
 msgstr "电池图标"
-
-msgid "POWER PULSE"
-msgstr "能量脉冲"
-
-msgid "SEGMENTED"
-msgstr "分段式"
 
 msgid "HEARTS"
 msgstr "爱心"
@@ -3715,9 +3670,6 @@ msgstr "ZRAM压缩"
 msgid "COMP ALGO"
 msgstr "压缩算法"
 
-msgid "UPDATE DARKOSEN"
-msgstr "更新DarkOSen"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -3756,3 +3708,42 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "API 密钥"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "未找到蓝牙管理器\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "彩色"
+
+msgid "CPU GRADE"
+msgstr "CPU 体质"
+
+msgid "Do you want to proceed?"
+msgstr "是否要继续？"
+
+msgid "FILE EXTENSIONS"
+msgstr "文件扩展名"
+
+msgid "MAX FREQ"
+msgstr "最大频率"
+
+msgid "REGION SOURCE"
+msgstr "区域源"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "重置文件扩展名"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "这将隐藏大部分菜单选项，以防止对系统进行更改。"
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "要解锁并恢复完整界面，请输入此代码："
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "未找到更新脚本\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "界面自定义"

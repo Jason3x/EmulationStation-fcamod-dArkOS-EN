@@ -2427,44 +2427,8 @@ msgstr "MOSTRAR ICONO WI-FI"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "MOSTRAR ICONO BLUETOOTH"
 
-msgid "WI-FI MANAGER"
-msgstr "GESTOR WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "GESTOR BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "GESTOR WI-FI NO ENCONTRADO"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "GESTOR BLUETOOTH NO ENCONTRADO"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "COMPARTIR SSH (INICIAR/DETENER)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH AL INICIO (ACTIVAR/DESACTIVAR)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "COMPARTIR SAMBA (INICIAR/DETENER)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA AL INICIO (ACTIVAR/DESACTIVAR)"
-
-msgid "SAMBA SHARING"
-msgstr "COMPARTIR SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA AL INICIO"
-
-msgid "SSH SHARING"
-msgstr "COMPARTIR SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH AL INICIO"
-
-msgid "BATTERY SETTINGS"
-msgstr "CONFIGURACIÓN DE BATERÍA"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "ESTADO BATTERYPLUS"
@@ -2487,9 +2451,6 @@ msgstr "NO CALIBRADO"
 msgid "BATTERY LEVEL"
 msgstr "NIVEL DE BATERÍA"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "DAEMON BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "MODO BATTERYPLUS"
 
@@ -2507,12 +2468,6 @@ msgstr "¿RESTABLECER CALIBRACIÓN?\nEsto eliminará los datos aprendidos."
 
 msgid "BATTERY ICON"
 msgstr "ICONO DE BATERÍA"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTADO"
 
 msgid "HEARTS"
 msgstr "CORAZONES"
@@ -2670,9 +2625,6 @@ msgstr "COMPRESIÓN ZRAM"
 msgid "COMP ALGO"
 msgstr "ALGORITMO COMPRESIÓN"
 
-msgid "UPDATE DARKOSEN"
-msgstr "ACTUALIZAR DARKOSEN"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -2708,3 +2660,36 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "CLAVE API"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "GESTOR BLUETOOTH NO ENCONTRADO\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "COLORIDO"
+
+msgid "CPU GRADE"
+msgstr "GRADO DE CPU"
+
+msgid "Do you want to proceed?"
+msgstr "¿Desea continuar?"
+
+msgid "FILE EXTENSIONS"
+msgstr "EXTENSIONES DE ARCHIVO"
+
+msgid "MAX FREQ"
+msgstr "FREC. MÁX"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Esto ocultará la mayoría de las opciones de menú para evitar cambios en el sistema."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "Para desbloquear y volver a la interfaz completa, introduzca este código:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "SCRIPT DE ACTUALIZACIÓN NO ENCONTRADO\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "PERSONALIZACIÓN DE VISTA"

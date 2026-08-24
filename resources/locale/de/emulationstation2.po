@@ -2259,44 +2259,8 @@ msgstr "WLAN-SYMBOL ANZEIGEN"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "BLUETOOTH-SYMBOL ANZEIGEN"
 
-msgid "WI-FI MANAGER"
-msgstr "WLAN-VERWALTUNG"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "BLUETOOTH-VERWALTUNG"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "WLAN-VERWALTUNG NICHT GEFUNDEN"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "BLUETOOTH-VERWALTUNG NICHT GEFUNDEN"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "SSH-FREIGABE (STARTEN/STOPPEN)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH BEIM START (AKTIVIEREN/DEAKTIVIEREN)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "SAMBA-FREIGABE (STARTEN/STOPPEN)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA BEIM START (AKTIVIEREN/DEAKTIVIEREN)"
-
-msgid "SAMBA SHARING"
-msgstr "SAMBA-FREIGABE"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA BEIM START"
-
-msgid "SSH SHARING"
-msgstr "SSH-FREIGABE"
-
-msgid "SSH ON BOOT"
-msgstr "SSH BEIM START"
-
-msgid "BATTERY SETTINGS"
-msgstr "AKKUEINSTELLUNGEN"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "BATTERYPLUS-STATUS"
@@ -2319,9 +2283,6 @@ msgstr "NICHT KALIBRIERT"
 msgid "BATTERY LEVEL"
 msgstr "AKKUSTAND"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "BATTERYPLUS-DAEMON"
-
 msgid "BATTERYPLUS MODE"
 msgstr "BATTERYPLUS-MODUS"
 
@@ -2342,12 +2303,6 @@ msgstr "AKKUSYMBOL"
 
 msgid "DEFAULT"
 msgstr "STANDARD"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTIERT"
 
 msgid "HEARTS"
 msgstr "HERZEN"
@@ -2505,9 +2460,6 @@ msgstr "ZRAM KOMPRESSION"
 msgid "COMP ALGO"
 msgstr "KOMPRESSIONSALGO"
 
-msgid "UPDATE DARKOSEN"
-msgstr "DARKOSEN AKTUALISIEREN"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -2546,3 +2498,42 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "API-SCHLÜSSEL"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "BLUETOOTH-VERWALTUNG NICHT GEFUNDEN\n/usr/local/bin/BT Manager.sh"
+
+msgid "CPU GRADE"
+msgstr "CPU-KLASSE"
+
+msgid "Do you want to proceed?"
+msgstr "Möchtest du fortfahren?"
+
+msgid "FILE EXTENSIONS"
+msgstr "DATEIERWEITERUNGEN"
+
+msgid "MAX FREQ"
+msgstr "MAX FREQ"
+
+msgid "REGION SOURCE"
+msgstr "REGIONSQUELLE"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "DATEIERWEITERUNGEN ZURÜCKSETZEN"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Dadurch werden die meisten Menüoptionen ausgeblendet, um Änderungen am System zu verhindern."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "Um zu entsperren und zur vollständigen Oberfläche zurückzukehren, gib diesen Code ein:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "UPDATE-SKRIPT NICHT GEFUNDEN\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "ANSICHT ANPASSEN"
+
+msgid "COLORFUL"
+msgstr "BUNT"

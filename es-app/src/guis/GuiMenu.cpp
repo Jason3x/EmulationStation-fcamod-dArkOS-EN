@@ -1117,7 +1117,7 @@ void GuiMenu::openBatterySettings()
 
 	// --- Statut calibration ---
 	{
-		bool calibrated = (access("/userdata/system/configs/batteryplus/batteryplus-calibrated", F_OK) == 0);
+		bool calibrated = (access("/home/ark/.config/batteryplus/batteryplus-calibrated", F_OK) == 0);
 		std::string calLabel = calibrated ? _("CALIBRATED") : _("NOT CALIBRATED");
 		s->addEntry(_("CALIBRATION") + ": " + calLabel, false, nullptr);
 	}
@@ -1167,7 +1167,7 @@ void GuiMenu::openBatterySettings()
 		mWindow->pushGui(new GuiMsgBox(mWindow,
 			_("RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."),
 			_("YES"), [] {
-				runSystemCommand("sudo -n rm -f /userdata/system/configs/batteryplus/batteryplus-calibrated /userdata/system/configs/batteryplus/batteryplus-voltage.map 2>/dev/null", "", nullptr);
+				runSystemCommand("sudo -n rm -f /home/ark/.config/batteryplus/batteryplus-calibrated /home/ark/.config/batteryplus/batteryplus-voltage.map 2>/dev/null", "", nullptr);
 				runSystemCommand("sudo -n systemctl restart batteryplus 2>/dev/null", "", nullptr);
 			},
 			_("NO"), nullptr));
@@ -2882,11 +2882,11 @@ void GuiMenu::openUISettings()
 	auto batteryIconPack = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BATTERY ICON"), false);
 	std::string currentPack = Settings::getInstance()->getString("BatteryIconPack");
 	if (currentPack.empty()) currentPack = "Default";
-	batteryIconPack->add(_("DEFAULT"),          "Default",          currentPack == "Default");
-	batteryIconPack->add(_("POWER PULSE"),      "Power-Pulse-Icons", currentPack == "Power-Pulse-Icons");
-	batteryIconPack->add(_("SEGMENTED"),        "segmented-battery", currentPack == "segmented-battery");
-	batteryIconPack->add(_("HEARTS"),           "hearts-battery",   currentPack == "hearts-battery");
+	batteryIconPack->add(_("DEFAULT"),          "default",          currentPack == "default");
+	batteryIconPack->add(_("COLORFUL"),      "colorful", currentPack == "colorful");
+	// batteryIconPack->add(_("SEGMENTED"),        "segmented-battery", currentPack == "segmented-battery");
 	batteryIconPack->add(_("STOCK"),            "stock",            currentPack == "stock");
+	batteryIconPack->add(_("HEARTS"),           "hearts",   currentPack == "hearts");
 	s->addWithLabel(_("BATTERY ICON"), batteryIconPack);
 	s->addSaveFunc([s, batteryIconPack] {
 		std::string pack = batteryIconPack->getSelected();

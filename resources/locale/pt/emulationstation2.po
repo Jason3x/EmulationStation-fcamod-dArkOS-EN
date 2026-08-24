@@ -1477,50 +1477,14 @@ msgstr "MOSTRAR ÍCONE BLUETOOTH"
 msgid "NETWORK SETTINGS"
 msgstr "DEFINIÇÕES DE REDE"
 
-msgid "WI-FI MANAGER"
-msgstr "GESTOR WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "GESTOR BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "GESTOR WI-FI NÃO ENCONTRADO"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "GESTOR BLUETOOTH NÃO ENCONTRADO"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "PARTILHA SSH (INICIAR/PARAR)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH NO ARRANQUE (ATIVAR/DESATIVAR)"
 
 msgid "IP ADDRESS"
 msgstr "ENDEREÇO IP"
 
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "PARTILHA SAMBA (INICIAR/PARAR)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA NO ARRANQUE (ATIVAR/DESATIVAR)"
-
 msgid "HOSTNAME"
 msgstr "NOME DO HOST"
-
-msgid "SAMBA SHARING"
-msgstr "PARTILHA SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA NO ARRANQUE"
-
-msgid "SSH SHARING"
-msgstr "PARTILHA SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH NO ARRANQUE"
-
-msgid "BATTERY SETTINGS"
-msgstr "DEFINIÇÕES DE BATERIA"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "ESTADO BATTERYPLUS"
@@ -1543,9 +1507,6 @@ msgstr "NÃO CALIBRADO"
 msgid "BATTERY LEVEL"
 msgstr "NÍVEL DE BATERIA"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "DAEMON BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "MODO BATTERYPLUS"
 
@@ -1563,12 +1524,6 @@ msgstr "REPOR CALIBRAÇÃO?\nIsso eliminará os dados aprendidos."
 
 msgid "BATTERY ICON"
 msgstr "ÍCONE DE BATERIA"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTADO"
 
 msgid "HEARTS"
 msgstr "CORAÇÕES"
@@ -1735,9 +1690,6 @@ msgstr "COMPRESSÃO ZRAM"
 msgid "COMP ALGO"
 msgstr "ALGORITMO COMPRESSÃO"
 
-msgid "UPDATE DARKOSEN"
-msgstr "ATUALIZAR DARKOSEN"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -1776,3 +1728,42 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "CHAVE API"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "GESTOR BLUETOOTH NÃO ENCONTRADO\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "COLORIDO"
+
+msgid "CPU GRADE"
+msgstr "GRAU DA CPU"
+
+msgid "Do you want to proceed?"
+msgstr "Deseja continuar?"
+
+msgid "FILE EXTENSIONS"
+msgstr "EXTENSÕES DE FICHEIRO"
+
+msgid "MAX FREQ"
+msgstr "FREQ. MÁX"
+
+msgid "REGION SOURCE"
+msgstr "FONTE DA REGIÃO"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "REPOR EXTENSÕES DE FICHEIRO"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Isto irá ocultar a maioria das opções de menu para evitar alterações ao sistema."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "Para desbloquear e voltar à interface completa, introduza este código:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "SCRIPT DE ATUALIZAÇÃO NÃO ENCONTRADO\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "PERSONALIZAÇÃO DE VISUALIZAÇÃO"

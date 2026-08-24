@@ -2160,44 +2160,8 @@ msgstr "MOSTRAR ÍCONE WI-FI"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "MOSTRAR ÍCONE BLUETOOTH"
 
-msgid "WI-FI MANAGER"
-msgstr "GERENCIADOR WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "GERENCIADOR BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "GERENCIADOR WI-FI NÃO ENCONTRADO"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "GERENCIADOR BLUETOOTH NÃO ENCONTRADO"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "COMPARTILHAMENTO SSH (INICIAR/PARAR)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH NA INICIALIZAÇÃO (ATIVAR/DESATIVAR)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "COMPARTILHAMENTO SAMBA (INICIAR/PARAR)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA NA INICIALIZAÇÃO (ATIVAR/DESATIVAR)"
-
-msgid "SAMBA SHARING"
-msgstr "COMPARTILHAMENTO SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA NA INICIALIZAÇÃO"
-
-msgid "SSH SHARING"
-msgstr "COMPARTILHAMENTO SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH NA INICIALIZAÇÃO"
-
-msgid "BATTERY SETTINGS"
-msgstr "CONFIGURAÇÕES DE BATERIA"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "STATUS BATTERYPLUS"
@@ -2220,9 +2184,6 @@ msgstr "NÃO CALIBRADO"
 msgid "BATTERY LEVEL"
 msgstr "NÍVEL DE BATERIA"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "DAEMON BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "MODO BATTERYPLUS"
 
@@ -2243,12 +2204,6 @@ msgstr "ÍCONE DE BATERIA"
 
 msgid "DEFAULT"
 msgstr "PADRÃO"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTADO"
 
 msgid "HEARTS"
 msgstr "CORAÇÕES"
@@ -2406,9 +2361,6 @@ msgstr "COMPRESSÃO ZRAM"
 msgid "COMP ALGO"
 msgstr "ALGORITMO DE COMPRESSÃO"
 
-msgid "UPDATE DARKOSEN"
-msgstr "ATUALIZAR DARKOSEN"
-
 msgid "N/A"
 msgstr "N/D"
 
@@ -2447,3 +2399,42 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "CHAVE DE API"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "GERENCIADOR BLUETOOTH NÃO ENCONTRADO\n/usr/local/bin/BT Manager.sh"
+
+msgid "CPU GRADE"
+msgstr "GRAU DA CPU"
+
+msgid "Do you want to proceed?"
+msgstr "Deseja continuar?"
+
+msgid "FILE EXTENSIONS"
+msgstr "EXTENSÕES DE ARQUIVO"
+
+msgid "MAX FREQ"
+msgstr "FREQ. MÁX"
+
+msgid "REGION SOURCE"
+msgstr "FONTE DA REGIÃO"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "REDEFINIR EXTENSÕES DE ARQUIVO"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Isso ocultará a maioria das opções de menu para evitar alterações no sistema."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "Para desbloquear e retornar à interface completa, digite este código:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "SCRIPT DE ATUALIZAÇÃO NÃO ENCONTRADO\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "PERSONALIZAÇÃO DA VISUALIZAÇÃO"
+
+msgid "COLORFUL"
+msgstr "COLORIDO"

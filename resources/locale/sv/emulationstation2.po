@@ -3233,50 +3233,14 @@ msgstr "VISA BLUETOOTH-IKON"
 msgid "NETWORK SETTINGS"
 msgstr "NÄTVERKSINSTÄLLNINGAR"
 
-msgid "WI-FI MANAGER"
-msgstr "WI-FI-HANTERARE"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "BLUETOOTH-HANTERARE"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "WI-FI-HANTERARE HITTADES INTE"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "BLUETOOTH-HANTERARE HITTADES INTE"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "SSH-DELNING (STARTA/STOPPA)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH VID START (AKTIVERA/INAKTIVERA)"
 
 msgid "IP ADDRESS"
 msgstr "IP-ADRESS"
 
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "SAMBA-DELNING (STARTA/STOPPA)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA VID START (AKTIVERA/INAKTIVERA)"
-
 msgid "HOSTNAME"
 msgstr "VÄRDNAMN"
-
-msgid "SAMBA SHARING"
-msgstr "SAMBA-DELNING"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA VID START"
-
-msgid "SSH SHARING"
-msgstr "SSH-DELNING"
-
-msgid "SSH ON BOOT"
-msgstr "SSH VID START"
-
-msgid "BATTERY SETTINGS"
-msgstr "BATTERIINSTÄLLNINGAR"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "BATTERYPLUS-STATUS"
@@ -3299,9 +3263,6 @@ msgstr "EJ KALIBRERAD"
 msgid "BATTERY LEVEL"
 msgstr "BATTERINIVÅ"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "BATTERYPLUS-DAEMON"
-
 msgid "BATTERYPLUS MODE"
 msgstr "BATTERYPLUS-LÄGE"
 
@@ -3319,12 +3280,6 @@ msgstr "ÅTERSTÄLL KALIBRERING?\nDetta tar bort inlärda data."
 
 msgid "BATTERY ICON"
 msgstr "BATTERIIKON"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTERAD"
 
 msgid "HEARTS"
 msgstr "HJÄRTAN"
@@ -3491,9 +3446,6 @@ msgstr "ZRAM-KOMPRIMERING"
 msgid "COMP ALGO"
 msgstr "KOMPRIMERINGSALGORITM"
 
-msgid "UPDATE DARKOSEN"
-msgstr "UPPDATERA DARKOSEN"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -3532,3 +3484,42 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "API-NYCKEL"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "BLUETOOTH-HANTERARE HITTADES INTE\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "FÄRGGLAD"
+
+msgid "CPU GRADE"
+msgstr "CPU-KLASS"
+
+msgid "Do you want to proceed?"
+msgstr "Vill du fortsätta?"
+
+msgid "FILE EXTENSIONS"
+msgstr "FILÄNDELSER"
+
+msgid "MAX FREQ"
+msgstr "MAX FREKVENS"
+
+msgid "REGION SOURCE"
+msgstr "REGIONSKÄLLA"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "ÅTERSTÄLL FILÄNDELSER"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Detta döljer de flesta menyalternativ för att förhindra ändringar i systemet."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "För att låsa upp och återgå till det fullständiga gränssnittet, ange denna kod:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "UPPDATERINGSSKRIPT HITTADES INTE\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "ANPASSA VY"
