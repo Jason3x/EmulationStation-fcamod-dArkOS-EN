@@ -2806,44 +2806,8 @@ msgstr "MOSTRA ICONA WI-FI"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "MOSTRA ICONA BLUETOOTH"
 
-msgid "WI-FI MANAGER"
-msgstr "GESTORE WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "GESTORE BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "GESTORE WI-FI NON TROVATO"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "GESTORE BLUETOOTH NON TROVATO"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "CONDIVISIONE SSH (AVVIA/FERMA)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH ALL'AVVIO (ABILITA/DISABILITA)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "CONDIVISIONE SAMBA (AVVIA/FERMA)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA ALL'AVVIO (ABILITA/DISABILITA)"
-
-msgid "SAMBA SHARING"
-msgstr "CONDIVISIONE SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA ALL'AVVIO"
-
-msgid "SSH SHARING"
-msgstr "CONDIVISIONE SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH ALL'AVVIO"
-
-msgid "BATTERY SETTINGS"
-msgstr "IMPOSTAZIONI BATTERIA"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "STATO BATTERYPLUS"
@@ -2866,9 +2830,6 @@ msgstr "NON CALIBRATO"
 msgid "BATTERY LEVEL"
 msgstr "LIVELLO BATTERIA"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "DAEMON BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "MODALITÀ BATTERYPLUS"
 
@@ -2886,12 +2847,6 @@ msgstr "REIMPOSTA CALIBRAZIONE?\nQuesto eliminerà i dati appresi."
 
 msgid "BATTERY ICON"
 msgstr "ICONA BATTERIA"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTATO"
 
 msgid "HEARTS"
 msgstr "CUORI"
@@ -3043,9 +2998,6 @@ msgstr "COMPRESSIONE ZRAM"
 msgid "COMP ALGO"
 msgstr "ALGORITMO COMPRESSIONE"
 
-msgid "UPDATE DARKOSEN"
-msgstr "AGGIORNA DARKOSEN"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -3069,3 +3021,21 @@ msgstr "GIF"
 
 msgid "VID"
 msgstr "VIDEO"
+
+msgid "API KEY"
+msgstr "CHIAVE API"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "GESTORE BLUETOOTH NON TROVATO\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "COLORATO"
+
+msgid "CPU GRADE"
+msgstr "GRADO CPU"
+
+msgid "MAX FREQ"
+msgstr "FREQ. MAX"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "SCRIPT DI AGGIORNAMENTO NON TROVATO\n/usr/local/bin/Update.sh"

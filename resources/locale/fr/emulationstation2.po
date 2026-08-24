@@ -1448,50 +1448,14 @@ msgstr "AFFICHER L'ICÔNE BLUETOOTH"
 msgid "NETWORK SETTINGS"
 msgstr "PARAMÈTRES RÉSEAU"
 
-msgid "WI-FI MANAGER"
-msgstr "GESTIONNAIRE WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "GESTIONNAIRE BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "GESTIONNAIRE WI-FI INTROUVABLE"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "GESTIONNAIRE BLUETOOTH INTROUVABLE"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "PARTAGE SSH (DÉMARRER/ARRÊTER)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH AU DÉMARRAGE (ACTIVER/DÉSACTIVER)"
 
 msgid "IP ADDRESS"
 msgstr "ADRESSE IP"
 
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "PARTAGE SAMBA (DÉMARRER/ARRÊTER)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA AU DÉMARRAGE (ACTIVER/DÉSACTIVER)"
-
 msgid "HOSTNAME"
 msgstr "NOM D'HÔTE"
-
-msgid "SAMBA SHARING"
-msgstr "PARTAGE SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA AU DÉMARRAGE"
-
-msgid "SSH SHARING"
-msgstr "PARTAGE SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH AU DÉMARRAGE"
-
-msgid "BATTERY SETTINGS"
-msgstr "PARAMÈTRES BATTERIE"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "ÉTAT BATTERYPLUS"
@@ -1514,9 +1478,6 @@ msgstr "NON CALIBRÉ"
 msgid "BATTERY LEVEL"
 msgstr "NIVEAU DE BATTERIE"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "DAEMON BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "MODE BATTERYPLUS"
 
@@ -1534,12 +1495,6 @@ msgstr "RÉINITIALISER LA CALIBRATION?\nCela supprimera les données d'apprentis
 
 msgid "BATTERY ICON"
 msgstr "ICÔNE BATTERIE"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTÉ"
 
 msgid "HEARTS"
 msgstr "CŒURS"
@@ -1712,9 +1667,6 @@ msgstr "COMPRESSION ZRAM"
 msgid "COMP ALGO"
 msgstr "ALGO DE COMPRESSION"
 
-msgid "UPDATE DARKOSEN"
-msgstr "METTRE À JOUR DARKOSEN"
-
 msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
 msgstr "SCRIPT DE MAJ INTROUVABLE\n/usr/local/bin/Update.sh"
 
@@ -1783,3 +1735,6 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "COLORFUL"
+msgstr "COLORÉ"

@@ -3493,44 +3493,8 @@ msgstr "ПОКАЗАТЬ ЗНАЧОК WI-FI"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "ПОКАЗАТЬ ЗНАЧОК BLUETOOTH"
 
-msgid "WI-FI MANAGER"
-msgstr "МЕНЕДЖЕР WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "МЕНЕДЖЕР BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "МЕНЕДЖЕР WI-FI НЕ НАЙДЕН"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "МЕНЕДЖЕР BLUETOOTH НЕ НАЙДЕН"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "ОБЩИЙ ДОСТУП SSH (ЗАПУСК/ОСТАНОВКА)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH ПРИ ЗАГРУЗКЕ (ВКЛЮЧИТЬ/ВЫКЛЮЧИТЬ)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "ОБЩИЙ ДОСТУП SAMBA (ЗАПУСК/ОСТАНОВКА)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA ПРИ ЗАГРУЗКЕ (ВКЛЮЧИТЬ/ВЫКЛЮЧИТЬ)"
-
-msgid "SAMBA SHARING"
-msgstr "ОБЩИЙ ДОСТУП SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA ПРИ ЗАГРУЗКЕ"
-
-msgid "SSH SHARING"
-msgstr "ОБЩИЙ ДОСТУП SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH ПРИ ЗАГРУЗКЕ"
-
-msgid "BATTERY SETTINGS"
-msgstr "НАСТРОЙКИ БАТАРЕИ"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "СТАТУС BATTERYPLUS"
@@ -3553,9 +3517,6 @@ msgstr "НЕ ОТКАЛИБРОВАН"
 msgid "BATTERY LEVEL"
 msgstr "УРОВЕНЬ БАТАРЕИ"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "ДЕМОН BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "РЕЖИМ BATTERYPLUS"
 
@@ -3573,12 +3534,6 @@ msgstr "СБРОСИТЬ КАЛИБРОВКУ?\nЭто удалит изучен
 
 msgid "BATTERY ICON"
 msgstr "ЗНАЧОК БАТАРЕИ"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "СЕГМЕНТИРОВАННЫЙ"
 
 msgid "HEARTS"
 msgstr "СЕРДЦА"
@@ -3730,9 +3685,6 @@ msgstr "СЖАТИЕ ZRAM"
 msgid "COMP ALGO"
 msgstr "АЛГОРИТМ СЖАТИЯ"
 
-msgid "UPDATE DARKOSEN"
-msgstr "ОБНОВИТЬ DARKOSEN"
-
 msgid "N/A"
 msgstr "Н/Д"
 
@@ -3771,3 +3723,33 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "API-КЛЮЧ"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "МЕНЕДЖЕР BLUETOOTH НЕ НАЙДЕН\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "ЦВЕТНОЙ"
+
+msgid "CPU GRADE"
+msgstr "КЛАСС ЦП"
+
+msgid "Do you want to proceed?"
+msgstr "Продолжить?"
+
+msgid "MAX FREQ"
+msgstr "МАКС. ЧАСТОТА"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Это скроет большинство пунктов меню, чтобы предотвратить изменения в системе."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "Чтобы разблокировать и вернуться к полному интерфейсу, введите этот код:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "СКРИПТ ОБНОВЛЕНИЯ НЕ НАЙДЕН\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "НАСТРОЙКА ОТОБРАЖЕНИЯ"

@@ -1325,50 +1325,14 @@ msgstr "Bluetoothアイコンを表示"
 msgid "NETWORK SETTINGS"
 msgstr "ネットワーク設定"
 
-msgid "WI-FI MANAGER"
-msgstr "Wi-Fi管理"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "Bluetooth管理"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "Wi-Fi管理が見つかりません"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "Bluetooth管理が見つかりません"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "SSH共有 (開始/停止)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "起動時SSH (有効/無効)"
 
 msgid "IP ADDRESS"
 msgstr "IPアドレス"
 
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "Samba共有 (開始/停止)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "起動時Samba (有効/無効)"
-
 msgid "HOSTNAME"
 msgstr "ホスト名"
-
-msgid "SAMBA SHARING"
-msgstr "Samba共有"
-
-msgid "SAMBA ON BOOT"
-msgstr "起動時Samba"
-
-msgid "SSH SHARING"
-msgstr "SSH共有"
-
-msgid "SSH ON BOOT"
-msgstr "起動時SSH"
-
-msgid "BATTERY SETTINGS"
-msgstr "バッテリー設定"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "BatteryPlusステータス"
@@ -1391,9 +1355,6 @@ msgstr "未キャリブレーション"
 msgid "BATTERY LEVEL"
 msgstr "バッテリーレベル"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "BatteryPlusデーモン"
-
 msgid "BATTERYPLUS MODE"
 msgstr "BatteryPlusモード"
 
@@ -1411,12 +1372,6 @@ msgstr "キャリブレーションをリセットしますか?\n学習データ
 
 msgid "BATTERY ICON"
 msgstr "バッテリーアイコン"
-
-msgid "POWER PULSE"
-msgstr "パワーパルス"
-
-msgid "SEGMENTED"
-msgstr "セグメント"
 
 msgid "HEARTS"
 msgstr "ハート"
@@ -1583,9 +1538,6 @@ msgstr "ZRAM圧縮"
 msgid "COMP ALGO"
 msgstr "圧縮アルゴリズム"
 
-msgid "UPDATE DARKOSEN"
-msgstr "DarkOSen更新"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -1624,3 +1576,42 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "APIキー"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "Bluetooth管理が見つかりません\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "カラフル"
+
+msgid "CPU GRADE"
+msgstr "CPUグレード"
+
+msgid "Do you want to proceed?"
+msgstr "続行しますか?"
+
+msgid "FILE EXTENSIONS"
+msgstr "ファイル拡張子"
+
+msgid "MAX FREQ"
+msgstr "最大周波数"
+
+msgid "REGION SOURCE"
+msgstr "リージョンソース"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "ファイル拡張子をリセット"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "システムへの変更を防ぐため、ほとんどのメニュー項目が非表示になります。"
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "ロックを解除して完全なUIに戻るには、このコードを入力してください:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "更新スクリプトが見つかりません\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "表示のカスタマイズ"

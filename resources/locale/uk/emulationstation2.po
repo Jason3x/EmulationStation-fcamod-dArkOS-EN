@@ -3604,44 +3604,8 @@ msgstr "ПОКАЗАТИ ЗНАЧОК WI-FI"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "ПОКАЗАТИ ЗНАЧОК BLUETOOTH"
 
-msgid "WI-FI MANAGER"
-msgstr "МЕНЕДЖЕР WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "МЕНЕДЖЕР BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "МЕНЕДЖЕР WI-FI НЕ ЗНАЙДЕНО"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "МЕНЕДЖЕР BLUETOOTH НЕ ЗНАЙДЕНО"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "СПІЛЬНИЙ ДОСТУП SSH (ЗАПУСК/ЗУПИНКА)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH ПРИ ЗАВАНТАЖЕННІ (УВІМКНУТИ/ВИМКНУТИ)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "СПІЛЬНИЙ ДОСТУП SAMBA (ЗАПУСК/ЗУПИНКА)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA ПРИ ЗАВАНТАЖЕННІ (УВІМКНУТИ/ВИМКНУТИ)"
-
-msgid "SAMBA SHARING"
-msgstr "СПІЛЬНИЙ ДОСТУП SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA ПРИ ЗАВАНТАЖЕННІ"
-
-msgid "SSH SHARING"
-msgstr "СПІЛЬНИЙ ДОСТУП SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH ПРИ ЗАВАНТАЖЕННІ"
-
-msgid "BATTERY SETTINGS"
-msgstr "НАЛАШТУВАННЯ БАТАРЕЇ"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "СТАТУС BATTERYPLUS"
@@ -3664,9 +3628,6 @@ msgstr "НЕ ВІДКАЛІБРОВАНО"
 msgid "BATTERY LEVEL"
 msgstr "РІВЕНЬ БАТАРЕЇ"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "ДЕМОН BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "РЕЖИМ BATTERYPLUS"
 
@@ -3684,12 +3645,6 @@ msgstr "СКИНУТИ КАЛІБРУВАННЯ?\nЦе видалить вивч
 
 msgid "BATTERY ICON"
 msgstr "ЗНАЧОК БАТАРЕЇ"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "СЕГМЕНТОВАНИЙ"
 
 msgid "HEARTS"
 msgstr "СЕРЦЯ"
@@ -3841,9 +3796,6 @@ msgstr "СТИСНЕННЯ ZRAM"
 msgid "COMP ALGO"
 msgstr "АЛГОРИТМ СТИСНЕННЯ"
 
-msgid "UPDATE DARKOSEN"
-msgstr "ОНОВИТИ DARKOSEN"
-
 msgid "N/A"
 msgstr "Н/Д"
 
@@ -3879,3 +3831,24 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "API-КЛЮЧ"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "МЕНЕДЖЕР BLUETOOTH НЕ ЗНАЙДЕНО\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "БАРВИСТИЙ"
+
+msgid "CPU GRADE"
+msgstr "КЛАС ЦП"
+
+msgid "MAX FREQ"
+msgstr "МАКС. ЧАСТОТА"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "СКРИПТ ОНОВЛЕННЯ НЕ ЗНАЙДЕНО\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "НАЛАШТУВАННЯ ВІДОБРАЖЕННЯ"

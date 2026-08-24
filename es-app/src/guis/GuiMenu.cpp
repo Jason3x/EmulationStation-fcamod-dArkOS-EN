@@ -1167,7 +1167,7 @@ void GuiMenu::openBatterySettings()
 		mWindow->pushGui(new GuiMsgBox(mWindow,
 			_("RESET BATTERYPLUS CALIBRATION?\nThis will delete learned voltage anchors."),
 			_("YES"), [] {
-				runSystemCommand("sudo -n rm -f /userdata/system/configs/batteryplus/batteryplus-calibrated /userdata/system/configs/batteryplus/batteryplus-voltage.map 2>/dev/null", "", nullptr);
+				runSystemCommand("sudo -n rm -f /home/ark/.config/batteryplus/batteryplus-calibrated /home/ark/.config/batteryplus/batteryplus-voltage.map 2>/dev/null", "", nullptr);
 				runSystemCommand("sudo -n systemctl restart batteryplus 2>/dev/null", "", nullptr);
 			},
 			_("NO"), nullptr));

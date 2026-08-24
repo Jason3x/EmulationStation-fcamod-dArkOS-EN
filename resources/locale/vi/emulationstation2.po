@@ -1555,44 +1555,8 @@ msgstr "HIỂN THỊ BIỂU TƯỢNG WI-FI"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "HIỂN THỊ BIỂU TƯỢNG BLUETOOTH"
 
-msgid "WI-FI MANAGER"
-msgstr "QUẢN LÝ WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "QUẢN LÝ BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "KHÔNG TÌM THẤY QUẢN LÝ WI-FI"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "KHÔNG TÌM THẤY QUẢN LÝ BLUETOOTH"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "CHIA SẺ SSH (BẮT ĐẦU/DỪNG)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH KHI KHỞI ĐỘNG (BẬT/TẮT)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "CHIA SẺ SAMBA (BẮT ĐẦU/DỪNG)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA KHI KHỞI ĐỘNG (BẬT/TẮT)"
-
-msgid "SAMBA SHARING"
-msgstr "CHIA SẺ SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA KHI KHỞI ĐỘNG"
-
-msgid "SSH SHARING"
-msgstr "CHIA SẺ SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH KHI KHỞI ĐỘNG"
-
-msgid "BATTERY SETTINGS"
-msgstr "CÀI ĐẶT PIN"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "TRẠNG THÁI BATTERYPLUS"
@@ -1615,9 +1579,6 @@ msgstr "CHƯA HIỆU CHỈNH"
 msgid "BATTERY LEVEL"
 msgstr "MỨC PIN"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "DAEMON BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "CHẾ ĐỘ BATTERYPLUS"
 
@@ -1638,12 +1599,6 @@ msgstr "BIỂU TƯỢNG PIN"
 
 msgid "DEFAULT"
 msgstr "MẶC ĐỊNH"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "PHÂN ĐOẠN"
 
 msgid "HEARTS"
 msgstr "TRÁI TIM"
@@ -1801,9 +1756,6 @@ msgstr "NÉN ZRAM"
 msgid "COMP ALGO"
 msgstr "THUẬT TOÁN NÉN"
 
-msgid "UPDATE DARKOSEN"
-msgstr "CẬP NHẬT DARKOSEN"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -1842,3 +1794,42 @@ msgstr "JP"
 
 msgid "FR"
 msgstr "FR"
+
+msgid "API KEY"
+msgstr "KHÓA API"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "KHÔNG TÌM THẤY QUẢN LÝ BLUETOOTH\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "NHIỀU MÀU"
+
+msgid "CPU GRADE"
+msgstr "CẤP ĐỘ CPU"
+
+msgid "Do you want to proceed?"
+msgstr "Bạn có muốn tiếp tục không?"
+
+msgid "FILE EXTENSIONS"
+msgstr "PHẦN MỞ RỘNG TỆP"
+
+msgid "MAX FREQ"
+msgstr "TẦN SỐ TỐI ĐA"
+
+msgid "REGION SOURCE"
+msgstr "NGUỒN KHU VỰC"
+
+msgid "RESET FILE EXTENSIONS"
+msgstr "ĐẶT LẠI PHẦN MỞ RỘNG TỆP"
+
+msgid "This will hide most menu-options to prevent changes to the system."
+msgstr "Thao tác này sẽ ẩn hầu hết các tùy chọn menu để ngăn thay đổi hệ thống."
+
+msgid "To unlock and return to the full UI, enter this code:"
+msgstr "Để mở khóa và quay lại giao diện đầy đủ, hãy nhập mã này:"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "KHÔNG TÌM THẤY SCRIPT CẬP NHẬT\n/usr/local/bin/Update.sh"
+
+msgid "VIEW CUSTOMIZATION"
+msgstr "TÙY CHỈNH XEM"

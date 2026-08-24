@@ -1699,44 +1699,8 @@ msgstr "Wi-Fi 아이콘 표시"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "블루투스 아이콘 표시"
 
-msgid "WI-FI MANAGER"
-msgstr "Wi-Fi 관리자"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "블루투스 관리자"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "Wi-Fi 관리자를 찾을 수 없음"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "블루투스 관리자를 찾을 수 없음"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "SSH 공유 (시작/중지)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "부팅 시 SSH (활성화/비활성화)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "삼바 공유 (시작/중지)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "부팅 시 삼바 (활성화/비활성화)"
-
-msgid "SAMBA SHARING"
-msgstr "삼바 공유"
-
-msgid "SAMBA ON BOOT"
-msgstr "부팅 시 삼바"
-
-msgid "SSH SHARING"
-msgstr "SSH 공유"
-
-msgid "SSH ON BOOT"
-msgstr "부팅 시 SSH"
-
-msgid "BATTERY SETTINGS"
-msgstr "배터리 설정"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "BatteryPlus 상태"
@@ -1759,9 +1723,6 @@ msgstr "보정 안 됨"
 msgid "BATTERY LEVEL"
 msgstr "배터리 수준"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "BatteryPlus 데몬"
-
 msgid "BATTERYPLUS MODE"
 msgstr "BatteryPlus 모드"
 
@@ -1779,12 +1740,6 @@ msgstr "보정을 초기화하시겠습니까?\n학습된 데이터가 삭제됩
 
 msgid "BATTERY ICON"
 msgstr "배터리 아이콘"
-
-msgid "POWER PULSE"
-msgstr "파워 펄스"
-
-msgid "SEGMENTED"
-msgstr "분할형"
 
 msgid "HEARTS"
 msgstr "하트"
@@ -1939,9 +1894,6 @@ msgstr "ZRAM 압축"
 msgid "COMP ALGO"
 msgstr "압축 알고리즘"
 
-msgid "UPDATE DARKOSEN"
-msgstr "DarkOSen 업데이트"
-
 msgid "N/A"
 msgstr "N/A"
 
@@ -1965,3 +1917,24 @@ msgstr "GIF"
 
 msgid "VID"
 msgstr "비디오"
+
+msgid "API KEY"
+msgstr "API 키"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "블루투스 관리자를 찾을 수 없음\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "컬러풀"
+
+msgid "CPU GRADE"
+msgstr "CPU 등급"
+
+msgid "MAX FREQ"
+msgstr "최대 주파수"
+
+msgid "STOCK"
+msgstr "기본"
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "업데이트 스크립트를 찾을 수 없음\n/usr/local/bin/Update.sh"

@@ -2901,44 +2901,8 @@ msgstr "POKAŻ IKONĘ WI-FI"
 msgid "SHOW BLUETOOTH ICON"
 msgstr "POKAŻ IKONĘ BLUETOOTH"
 
-msgid "WI-FI MANAGER"
-msgstr "MENEDŻER WI-FI"
-
 msgid "BLUETOOTH MANAGER"
 msgstr "MENEDŻER BLUETOOTH"
-
-msgid "WI-FI MANAGER NOT FOUND"
-msgstr "MENEDŻER WI-FI NIE ZNALEZIONY"
-
-msgid "BLUETOOTH MANAGER NOT FOUND"
-msgstr "MENEDŻER BLUETOOTH NIE ZNALEZIONY"
-
-msgid "SSH SHARING (START/STOP)"
-msgstr "UDOSTĘPNIANIE SSH (URUCHOM/ZATRZYMAJ)"
-
-msgid "SSH ON BOOT (ENABLE/DISABLE)"
-msgstr "SSH PRZY STARCIE (WŁĄCZ/WYŁĄCZ)"
-
-msgid "SAMBA SHARING (START/STOP)"
-msgstr "UDOSTĘPNIANIE SAMBA (URUCHOM/ZATRZYMAJ)"
-
-msgid "SAMBA ON BOOT (ENABLE/DISABLE)"
-msgstr "SAMBA PRZY STARCIE (WŁĄCZ/WYŁĄCZ)"
-
-msgid "SAMBA SHARING"
-msgstr "UDOSTĘPNIANIE SAMBA"
-
-msgid "SAMBA ON BOOT"
-msgstr "SAMBA PRZY STARCIE"
-
-msgid "SSH SHARING"
-msgstr "UDOSTĘPNIANIE SSH"
-
-msgid "SSH ON BOOT"
-msgstr "SSH PRZY STARCIE"
-
-msgid "BATTERY SETTINGS"
-msgstr "USTAWIENIA BATERII"
 
 msgid "BATTERYPLUS STATUS"
 msgstr "STATUS BATTERYPLUS"
@@ -2961,9 +2925,6 @@ msgstr "NIE SKALIBROWANY"
 msgid "BATTERY LEVEL"
 msgstr "POZIOM BATERII"
 
-msgid "BATTERYPLUS DAEMON"
-msgstr "DEMON BATTERYPLUS"
-
 msgid "BATTERYPLUS MODE"
 msgstr "TRYB BATTERYPLUS"
 
@@ -2981,12 +2942,6 @@ msgstr "RESETOWAĆ KALIBRACJĘ?\nSpowoduje to usunięcie nauczonych danych."
 
 msgid "BATTERY ICON"
 msgstr "IKONA BATERII"
-
-msgid "POWER PULSE"
-msgstr "POWER PULSE"
-
-msgid "SEGMENTED"
-msgstr "SEGMENTOWANY"
 
 msgid "HEARTS"
 msgstr "SERCA"
@@ -3138,9 +3093,6 @@ msgstr "KOMPRESJA ZRAM"
 msgid "COMP ALGO"
 msgstr "ALGORYTM KOMPRESJI"
 
-msgid "UPDATE DARKOSEN"
-msgstr "AKTUALIZUJ DARKOSEN"
-
 msgid "N/A"
 msgstr "N/D"
 
@@ -3164,3 +3116,21 @@ msgstr "GIF"
 
 msgid "VID"
 msgstr "WIDEO"
+
+msgid "API KEY"
+msgstr "KLUCZ API"
+
+msgid "BLUETOOTH MANAGER NOT FOUND\n/usr/local/bin/BT Manager.sh"
+msgstr "MENEDŻER BLUETOOTH NIE ZNALEZIONY\n/usr/local/bin/BT Manager.sh"
+
+msgid "COLORFUL"
+msgstr "KOLOROWY"
+
+msgid "CPU GRADE"
+msgstr "KLASA CPU"
+
+msgid "MAX FREQ"
+msgstr "MAKS. CZĘSTOT."
+
+msgid "UPDATE SCRIPT NOT FOUND\n/usr/local/bin/Update.sh"
+msgstr "SKRYPT AKTUALIZACJI NIE ZNALEZIONY\n/usr/local/bin/Update.sh"
