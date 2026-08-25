@@ -363,10 +363,6 @@ void GuiMenu::openDisplaySettings()
 			}
 		);
 
-	s->addEntry(_("DATE & TIME"), true, [this] {
-		openDateTimeSettings();
-	}, "");
-
 	mWindow->pushGui(s);
 }
 
@@ -375,18 +371,20 @@ void GuiMenu::openDateTimeSettings()
 	auto s = new GuiSettings(mWindow, _("DATE & TIME"));
 
 	// --- CURRENT TIME (display only, no clicks, right-aligned) ---
-	{
+	auto timeText = std::make_shared<TextComponent>(mWindow, "", ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color, ALIGN_RIGHT);
+	auto refreshTimeText = [timeText] {
 		time_t now = time(nullptr);
 		struct tm* t = localtime(&now);
 		bool clock12 = Settings::getInstance()->getBool("ClockMode12");
 		char buf[32] = {0};
 		strftime(buf, sizeof(buf), clock12 ? "%I:%M %p, %m-%d-%Y" : "%H:%M, %m-%d-%Y", t);
-		auto timeText = std::make_shared<TextComponent>(mWindow, std::string(buf), ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color, ALIGN_RIGHT);
-		s->addWithLabel(_("CURRENT TIME"), timeText);
-	}
+		timeText->setText(std::string(buf));
+	};
+	refreshTimeText();
+	s->addWithLabel(_("CURRENT TIME"), timeText);
 
 	// --- NETWORK SYNC ---
-	s->addEntry(_("NETWORK SYNC"), true, [this] {
+	s->addEntry(_("NETWORK SYNC"), true, [this, refreshTimeText] {
 		std::string gateway = executeCommand("ip route | awk '/default/ { print $3; exit }' 2>/dev/null");
 		if (Utils::String::trim(gateway).empty())
 		{
@@ -394,18 +392,19 @@ void GuiMenu::openDateTimeSettings()
 			return;
 		}
 		executeCommand("sudo timedatectl set-ntp 1 2>/dev/null");
+		refreshTimeText();
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("TIME SYNCED"), _("OK")));
 	}, "");
 
 	// --- SET MANUALLY ---
-	s->addEntry(_("SET MANUALLY"), true, [this] {
-		openManualDateTimeSettings();
+	s->addEntry(_("SET MANUALLY"), true, [this, refreshTimeText] {
+		openManualDateTimeSettings(refreshTimeText);
 	}, "");
 
 	mWindow->pushGui(s);
 }
 
-void GuiMenu::openManualDateTimeSettings()
+void GuiMenu::openManualDateTimeSettings(std::function<void()> onApplied)
 {
 	auto s = new GuiSettings(mWindow, _("SET MANUALLY"));
 
@@ -450,7 +449,7 @@ void GuiMenu::openManualDateTimeSettings()
 
 	// --- Apply only on close, only if changed ---
 	s->addSaveFunc([this, yearList, monthList, dayList, hourList, minList,
-		initYear, initMonth, initDay, initHour, initMin]
+		initYear, initMonth, initDay, initHour, initMin, onApplied]
 	{
 		int year  = yearList->getSelected();
 		int month = monthList->getSelected();
@@ -478,6 +477,9 @@ void GuiMenu::openManualDateTimeSettings()
 			"sudo timedatectl set-ntp 0 2>/dev/null && sudo date -s \"%04d-%02d-%02d %02d:%02d:00\" 2>/dev/null",
 			year, month, day, hour24, min60);
 		executeCommand(cmd);
+
+		if (onApplied)
+			onApplied();
 
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("TIME SET"), _("OK")));
 	});
@@ -3413,6 +3415,10 @@ void GuiMenu::openOtherSettings()
 		break;
 	}
 	*/
+
+	s->addEntry(_("DATE & TIME"), true, [this] {
+		openDateTimeSettings();
+	}, "");
 
 	//Timezone - Adapted from emuelec
 
