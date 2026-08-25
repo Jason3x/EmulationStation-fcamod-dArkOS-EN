@@ -29,6 +29,13 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
   - `Hearts` — heart-shaped icons
   - `Stock` — original white icons from christianhaitian
 
+- **Network Icon Pack selector** in **START > UI SETTINGS > NETWORK ICON**:
+  - `Default` — standard WiFi & Bluetooth icons
+  - `Mario` — Mario themed icons
+  - `Pokemon` — Pokémon themed icons
+  - `Solstice` — Solstice themed icons
+  - `Zelda` — Zelda themed icons
+
 ### 📶 5-state WiFi icon
 - <img src="https://img.shields.io/badge/-WiFi-red?style=flat-square&logo=wifi&logoColor=white"> → Disabled / rfkill blocked
 - <img src="https://img.shields.io/badge/-WiFi-orange?style=flat-square&logo=wifi&logoColor=white"> → Interface up, no IP
