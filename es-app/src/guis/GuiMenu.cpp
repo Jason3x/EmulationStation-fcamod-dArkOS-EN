@@ -3008,10 +3008,10 @@ void GuiMenu::openUISettings()
 	batteryIconPack->add(_("DEFAULT"),          "default",          currentPack == "default");
 	batteryIconPack->add(_("COLORFUL"),      "colorful", currentPack == "colorful");
 	// batteryIconPack->add(_("SEGMENTED"),        "segmented-battery", currentPack == "segmented-battery");
-	batteryIconPack->add(_("LIFELINE"),         "LifeLine",         currentPack == "LifeLine");
-	batteryIconPack->add(_("LIFELINE"),         "LifeLine",         currentPack == "LifeLine");
 	batteryIconPack->add(_("STOCK"),            "stock",            currentPack == "stock");
 	batteryIconPack->add(_("HEARTS"),           "hearts",   currentPack == "hearts");
+	if (!batteryIconPack->hasSelection())
+		batteryIconPack->selectFirstItem();
 	s->addWithLabel(_("BATTERY ICON"), batteryIconPack);
 	s->addSaveFunc([s, batteryIconPack] {
 		std::string pack = batteryIconPack->getSelected();

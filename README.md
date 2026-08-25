@@ -26,7 +26,6 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
   - `Default` — colored icons (green/orange/red/cyan)
   - `Power Pulse` — power-style icons
   - `Hearts` — heart-shaped icons
-  - `LifeLine` — life bar style icons
   - `Stock` — original white icons from christianhaitian
 
 - **Network Icon Pack selector** in **START > UI SETTINGS > NETWORK ICON**:
