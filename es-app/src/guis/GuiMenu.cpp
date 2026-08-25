@@ -3044,10 +3044,9 @@ void GuiMenu::openUISettings()
 			runSystemCommand("sudo -n cp -f " + src + "/bluetooth*.svg /usr/bin/emulationstation/resources/ 2>/dev/null", "", nullptr);
 			runSystemCommand("sudo -n cp -f " + src + "/network*.svg /usr/bin/emulationstation/resources/ 2>/dev/null", "", nullptr);
 			Settings::getInstance()->saveFile();
-			mWindow->pushGui(new GuiMsgBox(mWindow,
-				_("RESTART EMULATIONSTATION") + "\n" + _("REBOOT REQUIRED FOR FULL EFFECT"),
-				_("YES"), [] { quitES(QuitMode::RESTART); },
-				_("NO"), nullptr));
+			if (mWindow->getBatteryIndicator() != nullptr)
+				mWindow->getBatteryIndicator()->reloadNetworkIcons();
+			s->setVariable("reloadAll", true);
 		}
 	});
 
