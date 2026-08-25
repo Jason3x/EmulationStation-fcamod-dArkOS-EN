@@ -2291,3 +2291,5 @@ msgstr "SOLSTICE"
 
 msgid "ZELDA"
 msgstr "ZELDA"
+msgid "LIFELINE"
+msgstr "ΓΡΑΜΜΉ ΖΩΉΣ"

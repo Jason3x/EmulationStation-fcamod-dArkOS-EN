@@ -3906,3 +3906,5 @@ msgstr "СОНЦЕСТОЯННЯ"
 
 msgid "ZELDA"
 msgstr "ЗЕЛЬДА"
+msgid "LIFELINE"
+msgstr "ЛІНІЯ ЖИТТЯ"

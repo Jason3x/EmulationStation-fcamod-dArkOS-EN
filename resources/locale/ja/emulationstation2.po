@@ -1669,3 +1669,5 @@ msgstr "ソルスティス"
 
 msgid "ZELDA"
 msgstr "ゼルダ"
+msgid "LIFELINE"
+msgstr "ライフライン"

@@ -2747,3 +2747,5 @@ msgstr "SOLSTICE"
 
 msgid "ZELDA"
 msgstr "ZELDA"
+msgid "LIFELINE"
+msgstr "LÍNEA DE VIDA"

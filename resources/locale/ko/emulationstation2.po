@@ -1992,3 +1992,5 @@ msgstr "솔스티스"
 
 msgid "ZELDA"
 msgstr "젤다"
+msgid "LIFELINE"
+msgstr "생명선"

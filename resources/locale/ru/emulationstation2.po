@@ -3807,3 +3807,5 @@ msgstr "СОЛНЦЕСТОЯНИЕ"
 
 msgid "ZELDA"
 msgstr "ЗЕЛЬДА"
+msgid "LIFELINE"
+msgstr "ЛИНИЯ ЖИЗНИ"

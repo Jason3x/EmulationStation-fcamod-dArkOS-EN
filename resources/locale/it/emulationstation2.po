@@ -3093,3 +3093,5 @@ msgstr "SOLSTICE"
 
 msgid "ZELDA"
 msgstr "ZELDA"
+msgid "LIFELINE"
+msgstr "LINEA VITALE"

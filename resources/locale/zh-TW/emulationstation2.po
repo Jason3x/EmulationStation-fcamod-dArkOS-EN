@@ -3805,3 +3805,5 @@ msgstr "至日"
 
 msgid "ZELDA"
 msgstr "薩爾達"
+msgid "LIFELINE"
+msgstr "生命線"
