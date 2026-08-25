@@ -29,7 +29,10 @@ void BatteryIndicatorComponent::init()
 
 	// Use the same gap between icons (network/bluetooth/battery) as the one used
 	// between the battery icon and its percentage text, for a consistent look.
-	mSpacing = mSize.y() * 0.125f;
+	// Reproduce the exact original battery-icon-to-percentage gap
+	// (old mSpacing + old batteryTextPad) and apply it uniformly to every
+	// icon in the row (network/bluetooth/battery/text).
+	mSpacing = (Renderer::getScreenHeight() / 200.0f) + (mSize.y() * 0.125f);
 
 	mView = ActivityView::BATTERY;
 
