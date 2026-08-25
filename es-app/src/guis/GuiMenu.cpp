@@ -27,6 +27,8 @@
 #include <thread>
 #include <mutex>
 #include <cstdlib>
+#include <ctime>
+#include <cstdio>
 #include "utils/StringUtil.h"
 #include "AudioManager.h"
 #include "resources/TextureData.h"
@@ -360,6 +362,123 @@ void GuiMenu::openDisplaySettings()
 					Settings::getInstance()->setBool("BrightnessPopup", brightnessPopup->getState());
 			}
 		);
+
+	s->addEntry(_("DATE & TIME"), true, [this] {
+		openDateTimeSettings();
+	}, "");
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::openDateTimeSettings()
+{
+	auto s = new GuiSettings(mWindow, _("DATE & TIME"));
+
+	// --- CURRENT TIME (display only, no clicks) ---
+	{
+		time_t now = time(nullptr);
+		struct tm* t = localtime(&now);
+		char buf[32] = {0};
+		strftime(buf, sizeof(buf), "%Hh:%M, %m-%d-%Y", t);
+		s->addEntry(_("CURRENT TIME") + ": " + std::string(buf), false, nullptr);
+	}
+
+	// --- NETWORK SYNC ---
+	s->addEntry(_("NETWORK SYNC"), true, [this] {
+		std::string gateway = executeCommand("ip route | awk '/default/ { print $3; exit }' 2>/dev/null");
+		if (Utils::String::trim(gateway).empty())
+		{
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("NO NETWORK CONNECTION"), _("OK")));
+			return;
+		}
+		executeCommand("sudo timedatectl set-ntp 1 2>/dev/null");
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("TIME SYNCED"), _("OK")));
+	}, "");
+
+	// --- SET MANUALLY ---
+	s->addEntry(_("SET MANUALLY"), true, [this] {
+		openManualDateTimeSettings();
+	}, "");
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::openManualDateTimeSettings()
+{
+	auto s = new GuiSettings(mWindow, _("SET MANUALLY"));
+
+	time_t now = time(nullptr);
+	struct tm t = *localtime(&now);
+
+	int initYear  = t.tm_year + 1900;
+	int initMonth = t.tm_mon + 1;
+	int initDay   = t.tm_mday;
+	int initHour  = (t.tm_hour == 0) ? 24 : t.tm_hour;
+	int initMin   = (t.tm_min == 0) ? 60 : t.tm_min;
+
+	// --- SET YEAR (2026 +/- 50) ---
+	auto yearList = std::make_shared<OptionListComponent<int>>(mWindow, _("SET YEAR"), false);
+	for (int y = 2026 - 50; y <= 2026 + 50; y++)
+		yearList->add(std::to_string(y), y, y == initYear);
+	s->addWithLabel(_("SET YEAR"), yearList);
+
+	// --- SET MONTH ---
+	auto monthList = std::make_shared<OptionListComponent<int>>(mWindow, _("SET MONTH"), false);
+	for (int m = 1; m <= 12; m++)
+		monthList->add(std::to_string(m), m, m == initMonth);
+	s->addWithLabel(_("SET MONTH"), monthList);
+
+	// --- SET DATE (1-31, validated on close) ---
+	auto dayList = std::make_shared<OptionListComponent<int>>(mWindow, _("SET DATE"), false);
+	for (int d = 1; d <= 31; d++)
+		dayList->add(std::to_string(d), d, d == initDay);
+	s->addWithLabel(_("SET DATE"), dayList);
+
+	// --- SET HOURS (1-24) ---
+	auto hourList = std::make_shared<OptionListComponent<int>>(mWindow, _("SET HOURS"), false);
+	for (int h = 1; h <= 24; h++)
+		hourList->add(std::to_string(h), h, h == initHour);
+	s->addWithLabel(_("SET HOURS"), hourList);
+
+	// --- SET MINUTES (1-60) ---
+	auto minList = std::make_shared<OptionListComponent<int>>(mWindow, _("SET MINUTES"), false);
+	for (int mi = 1; mi <= 60; mi++)
+		minList->add(std::to_string(mi), mi, mi == initMin);
+	s->addWithLabel(_("SET MINUTES"), minList);
+
+	// --- Apply only on close, only if changed ---
+	s->addSaveFunc([this, yearList, monthList, dayList, hourList, minList,
+		initYear, initMonth, initDay, initHour, initMin]
+	{
+		int year  = yearList->getSelected();
+		int month = monthList->getSelected();
+		int day   = dayList->getSelected();
+		int hour  = hourList->getSelected();
+		int min   = minList->getSelected();
+
+		if (year == initYear && month == initMonth && day == initDay &&
+			hour == initHour && min == initMin)
+			return; // nothing changed, do nothing
+
+		// Static table (Feb always allows 29, no leap-year math per spec)
+		static const int daysInMonth[12] = {31,29,31,30,31,30,31,31,30,31,30,31};
+		if (day > daysInMonth[month - 1])
+		{
+			mWindow->pushGui(new GuiMsgBox(mWindow, _("INVALID DATE SET"), _("OK")));
+			return; // reverts by simply not applying; system clock untouched
+		}
+
+		int hour24 = (hour == 24) ? 0 : hour;
+		int min60  = (min == 60) ? 0 : min;
+
+		char cmd[160];
+		snprintf(cmd, sizeof(cmd),
+			"sudo timedatectl set-ntp 0 2>/dev/null && sudo date -s \"%04d-%02d-%02d %02d:%02d:00\" 2>/dev/null",
+			year, month, day, hour24, min60);
+		executeCommand(cmd);
+
+		mWindow->pushGui(new GuiMsgBox(mWindow, _("TIME SET"), _("OK")));
+	});
 
 	mWindow->pushGui(s);
 }
