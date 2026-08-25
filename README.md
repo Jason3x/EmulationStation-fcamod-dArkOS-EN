@@ -24,8 +24,7 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
 
 - **Battery Icon Pack selector** in **START > UI SETTINGS > BATTERY ICON**:
   - `Default` — colored icons (green/orange/red/cyan)
-  - `Power Pulse` — animated power-style icons
-  - `Segmented` — segmented bar style
+  - `Power Pulse` — power-style icons
   - `Hearts` — heart-shaped icons
   - `Stock` — original white icons from christianhaitian
 
@@ -56,6 +55,13 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
 
 ### 🖥️ Display Settings
 - **Gamma slider** — adjust screen gamma (0.4 → 1.8) in real time via **START > DISPLAY SETTINGS**
+- **Mipmap rendering fix** — battery and network icons are now sharp at all sizes
+- **Distro Version** — click to check for updates directly from the main menu
+- **BatteryPlus calibration** — detection path fixed for dArkOS EN (`/home/ark/.config`)
+
+### 📅 Date & Time (by djparentx)
+- Real-time clock display in **START > ADVANCED SETTINGS > DATE & TIME**
+- Set date, time and timezone directly from ES
 
 ### ⚡ Performance Settings (by djparentx)
 New menu — **START > PERFORMANCE SETTINGS**:
@@ -125,6 +131,9 @@ Full remote access management integrated directly in ES:
 - PSK flags fix for persistent WiFi connections
 
 **Gamma slider** — adjust screen gamma (0.4 → 1.8) in real time via **START > DISPLAY SETTINGS**
+- **Mipmap rendering fix** — battery and network icons are now sharp at all sizes
+- **Distro Version** — click to check for updates directly from the main menu
+- **BatteryPlus calibration** — detection path fixed for dArkOS EN (`/home/ark/.config`)
 
 ---
 
