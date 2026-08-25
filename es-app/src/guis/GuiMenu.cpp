@@ -3037,7 +3037,7 @@ void GuiMenu::openUISettings()
 	networkIconPack->add(_("SOLSTICE"), "Solstice", currentNetPack == "Solstice");
 	networkIconPack->add(_("ZELDA"),    "Zelda",    currentNetPack == "Zelda");
 	s->addWithLabel(_("NETWORK ICON"), networkIconPack);
-	s->addSaveFunc([s, networkIconPack] {
+	s->addSaveFunc([this, s, networkIconPack] {
 		std::string pack = networkIconPack->getSelected();
 		if (Settings::getInstance()->setString("NetworkIconPack", pack)) {
 			std::string src = "/usr/bin/emulationstation/resources/network-packs/" + pack;
