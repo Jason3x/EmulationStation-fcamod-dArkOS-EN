@@ -374,13 +374,15 @@ void GuiMenu::openDateTimeSettings()
 {
 	auto s = new GuiSettings(mWindow, _("DATE & TIME"));
 
-	// --- CURRENT TIME (display only, no clicks) ---
+	// --- CURRENT TIME (display only, no clicks, right-aligned) ---
 	{
 		time_t now = time(nullptr);
 		struct tm* t = localtime(&now);
+		bool clock12 = Settings::getInstance()->getBool("ClockMode12");
 		char buf[32] = {0};
-		strftime(buf, sizeof(buf), "%Hh:%M, %m-%d-%Y", t);
-		s->addEntry(_("CURRENT TIME") + ": " + std::string(buf), false, nullptr);
+		strftime(buf, sizeof(buf), clock12 ? "%I:%M %p, %m-%d-%Y" : "%H:%M, %m-%d-%Y", t);
+		auto timeText = std::make_shared<TextComponent>(mWindow, std::string(buf), ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color, ALIGN_RIGHT);
+		s->addWithLabel(_("CURRENT TIME"), timeText);
 	}
 
 	// --- NETWORK SYNC ---
