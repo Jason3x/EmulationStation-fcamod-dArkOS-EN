@@ -27,6 +27,10 @@ void BatteryIndicatorComponent::init()
 		setSize(Renderer::getScreenWidth() * 0.033, Renderer::getScreenHeight() *0.033);
 	}
 
+	// Use the same gap between icons (network/bluetooth/battery) as the one used
+	// between the battery icon and its percentage text, for a consistent look.
+	mSpacing = mSize.y() * 0.125f;
+
 	mView = ActivityView::BATTERY;
 
 	if (ResourceManager::getInstance()->fileExists(":/battery/incharge.svg"))
