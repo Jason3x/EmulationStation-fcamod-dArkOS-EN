@@ -3790,3 +3790,18 @@ msgstr "日期無效"
 
 msgid "TIME SET"
 msgstr "時間已設定"
+
+msgid "NETWORK ICON"
+msgstr "網路圖示"
+
+msgid "MARIO"
+msgstr "瑪利歐"
+
+msgid "POKEMON"
+msgstr "寶可夢"
+
+msgid "SOLSTICE"
+msgstr "至日"
+
+msgid "ZELDA"
+msgstr "薩爾達"

@@ -2732,3 +2732,18 @@ msgstr "FECHA NO VÁLIDA"
 
 msgid "TIME SET"
 msgstr "HORA ESTABLECIDA"
+
+msgid "NETWORK ICON"
+msgstr "ICONO DE RED"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"

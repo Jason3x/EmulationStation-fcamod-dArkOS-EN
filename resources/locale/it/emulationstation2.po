@@ -3078,3 +3078,18 @@ msgstr "DATA NON VALIDA"
 
 msgid "TIME SET"
 msgstr "ORA IMPOSTATA"
+
+msgid "NETWORK ICON"
+msgstr "ICONA RETE"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"

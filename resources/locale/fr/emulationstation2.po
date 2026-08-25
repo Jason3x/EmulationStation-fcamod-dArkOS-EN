@@ -1777,3 +1777,18 @@ msgstr "DATE INVALIDE"
 
 msgid "TIME SET"
 msgstr "HEURE DÉFINIE"
+
+msgid "NETWORK ICON"
+msgstr "ICÔNE RÉSEAU"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"

@@ -4003,3 +4003,18 @@ msgstr "НЕВІРНА ДАТА"
 
 msgid "TIME SET"
 msgstr "ЧАС ВСТАНОВЛЕНО"
+
+msgid "NETWORK ICON"
+msgstr "ЗНАЧОК МЕРЕЖІ"
+
+msgid "MARIO"
+msgstr "МАРІО"
+
+msgid "POKEMON"
+msgstr "ПОКЕМОН"
+
+msgid "SOLSTICE"
+msgstr "СОНЦЕСТОЯННЯ"
+
+msgid "ZELDA"
+msgstr "ЗЕЛЬДА"

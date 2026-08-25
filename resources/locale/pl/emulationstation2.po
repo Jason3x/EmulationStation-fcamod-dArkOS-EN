@@ -3173,3 +3173,18 @@ msgstr "NIEPRAWIDŁOWA DATA"
 
 msgid "TIME SET"
 msgstr "GODZINA USTAWIONA"
+
+msgid "NETWORK ICON"
+msgstr "IKONA SIECI"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"

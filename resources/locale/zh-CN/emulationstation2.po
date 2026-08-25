@@ -3786,3 +3786,18 @@ msgstr "日期无效"
 
 msgid "TIME SET"
 msgstr "时间已设置"
+
+msgid "NETWORK ICON"
+msgstr "网络图标"
+
+msgid "MARIO"
+msgstr "马里奥"
+
+msgid "POKEMON"
+msgstr "宝可梦"
+
+msgid "SOLSTICE"
+msgstr "至日"
+
+msgid "ZELDA"
+msgstr "塞尔达"

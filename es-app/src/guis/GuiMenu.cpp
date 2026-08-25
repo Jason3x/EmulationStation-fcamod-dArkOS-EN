@@ -3023,6 +3023,50 @@ void GuiMenu::openUISettings()
 		}
 	});
 
+
+	// --- Network Icon Pack ---
+	auto networkIconPack = std::make_shared<OptionListComponent<std::string>>(mWindow, _("NETWORK ICON"), false);
+	std::string currentNetPack = Settings::getInstance()->getString("NetworkIconPack");
+	if (currentNetPack.empty()) currentNetPack = "Default";
+	networkIconPack->add(_("DEFAULT"),  "Default",  currentNetPack == "Default");
+	networkIconPack->add(_("MARIO"),    "Mario",    currentNetPack == "Mario");
+	networkIconPack->add(_("POKEMON"),  "Pokemon",  currentNetPack == "Pokemon");
+	networkIconPack->add(_("SOLSTICE"), "Solstice", currentNetPack == "Solstice");
+	networkIconPack->add(_("ZELDA"),    "Zelda",    currentNetPack == "Zelda");
+	s->addWithLabel(_("NETWORK ICON"), networkIconPack);
+	s->addSaveFunc([s, networkIconPack] {
+		std::string pack = networkIconPack->getSelected();
+		if (Settings::getInstance()->setString("NetworkIconPack", pack)) {
+			std::string src = "/usr/bin/emulationstation/resources/network-packs/" + pack;
+			runSystemCommand("sudo -n cp -f " + src + "/bluetooth*.svg /usr/bin/emulationstation/resources/ 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n cp -f " + src + "/network*.svg /usr/bin/emulationstation/resources/ 2>/dev/null", "", nullptr);
+			Settings::getInstance()->saveFile();
+			s->setVariable("reloadAll", true);
+		}
+	});
+
+
+	// --- Network Icon Pack ---
+	auto networkIconPack = std::make_shared<OptionListComponent<std::string>>(mWindow, _("NETWORK ICON"), false);
+	std::string currentNetPack = Settings::getInstance()->getString("NetworkIconPack");
+	if (currentNetPack.empty()) currentNetPack = "Default";
+	networkIconPack->add(_("DEFAULT"),  "Default",  currentNetPack == "Default");
+	networkIconPack->add(_("MARIO"),    "Mario",    currentNetPack == "Mario");
+	networkIconPack->add(_("POKEMON"),  "Pokemon",  currentNetPack == "Pokemon");
+	networkIconPack->add(_("SOLSTICE"), "Solstice", currentNetPack == "Solstice");
+	networkIconPack->add(_("ZELDA"),    "Zelda",    currentNetPack == "Zelda");
+	s->addWithLabel(_("NETWORK ICON"), networkIconPack);
+	s->addSaveFunc([s, networkIconPack] {
+		std::string pack = networkIconPack->getSelected();
+		if (Settings::getInstance()->setString("NetworkIconPack", pack)) {
+			std::string src = "/usr/bin/emulationstation/resources/network-packs/" + pack;
+			runSystemCommand("sudo -n cp -f " + src + "/bluetooth*.svg /usr/bin/emulationstation/resources/ 2>/dev/null", "", nullptr);
+			runSystemCommand("sudo -n cp -f " + src + "/network*.svg /usr/bin/emulationstation/resources/ 2>/dev/null", "", nullptr);
+			Settings::getInstance()->saveFile();
+			s->setVariable("reloadAll", true);
+		}
+	});
+
 	// Network indicator
 	auto networkIndicator = std::make_shared<SwitchComponent>(mWindow);
 	networkIndicator->setState(Settings::getInstance()->getBool("ShowNetworkIndicator"));

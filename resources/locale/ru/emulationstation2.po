@@ -3792,3 +3792,18 @@ msgstr "НЕВЕРНАЯ ДАТА"
 
 msgid "TIME SET"
 msgstr "ВРЕМЯ УСТАНОВЛЕНО"
+
+msgid "NETWORK ICON"
+msgstr "ЗНАЧОК СЕТИ"
+
+msgid "MARIO"
+msgstr "МАРИО"
+
+msgid "POKEMON"
+msgstr "ПОКЕМОН"
+
+msgid "SOLSTICE"
+msgstr "СОЛНЦЕСТОЯНИЕ"
+
+msgid "ZELDA"
+msgstr "ЗЕЛЬДА"

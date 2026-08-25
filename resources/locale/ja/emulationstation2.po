@@ -1654,3 +1654,18 @@ msgstr "無効な日付です"
 
 msgid "TIME SET"
 msgstr "時刻を設定しました"
+
+msgid "NETWORK ICON"
+msgstr "ネットワークアイコン"
+
+msgid "MARIO"
+msgstr "マリオ"
+
+msgid "POKEMON"
+msgstr "ポケモン"
+
+msgid "SOLSTICE"
+msgstr "ソルスティス"
+
+msgid "ZELDA"
+msgstr "ゼルダ"

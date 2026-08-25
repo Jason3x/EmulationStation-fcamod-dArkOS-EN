@@ -2276,3 +2276,18 @@ msgstr "ΜΗ ΈΓΚΥΡΗ ΗΜΕΡΟΜΗΝΊΑ"
 
 msgid "TIME SET"
 msgstr "Η ΏΡΑ ΟΡΊΣΤΗΚΕ"
+
+msgid "NETWORK ICON"
+msgstr "ΕΙΚΟΝΊΔΙΟ ΔΙΚΤΎΟΥ"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"

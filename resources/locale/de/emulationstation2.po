@@ -2576,3 +2576,18 @@ msgstr "UNGÜLTIGES DATUM"
 
 msgid "TIME SET"
 msgstr "UHRZEIT EINGESTELLT"
+
+msgid "NETWORK ICON"
+msgstr "NETZWERKSYMBOL"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"

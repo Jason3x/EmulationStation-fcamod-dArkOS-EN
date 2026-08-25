@@ -1872,3 +1872,18 @@ msgstr "NGÀY KHÔNG HỢP LỆ"
 
 msgid "TIME SET"
 msgstr "ĐÃ ĐẶT GIỜ"
+
+msgid "NETWORK ICON"
+msgstr "BIỂU TƯỢNG MẠNG"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"

@@ -3562,3 +3562,18 @@ msgstr "OGILTIGT DATUM"
 
 msgid "TIME SET"
 msgstr "TID INSTÄLLD"
+
+msgid "NETWORK ICON"
+msgstr "NÄTVERKSIKON"
+
+msgid "MARIO"
+msgstr "MARIO"
+
+msgid "POKEMON"
+msgstr "POKÉMON"
+
+msgid "SOLSTICE"
+msgstr "SOLSTICE"
+
+msgid "ZELDA"
+msgstr "ZELDA"
