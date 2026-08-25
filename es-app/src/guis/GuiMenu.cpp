@@ -3009,6 +3009,7 @@ void GuiMenu::openUISettings()
 	batteryIconPack->add(_("COLORFUL"),      "colorful", currentPack == "colorful");
 	// batteryIconPack->add(_("SEGMENTED"),        "segmented-battery", currentPack == "segmented-battery");
 	batteryIconPack->add(_("LIFELINE"),         "LifeLine",         currentPack == "LifeLine");
+	batteryIconPack->add(_("LIFELINE"),         "LifeLine",         currentPack == "LifeLine");
 	batteryIconPack->add(_("STOCK"),            "stock",            currentPack == "stock");
 	batteryIconPack->add(_("HEARTS"),           "hearts",   currentPack == "hearts");
 	s->addWithLabel(_("BATTERY ICON"), batteryIconPack);
