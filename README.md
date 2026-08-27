@@ -16,18 +16,16 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
 ### 🔋 Battery icon
 
 - Battery level and charging state shown as a small icon in the status bar, with an optional percentage readout.
-- **Colored by charge level** (`Colorful` pack):
-  - <img src="https://img.shields.io/badge/-Full-28a745?style=flat-square"> `> 75%`
-  - <img src="https://img.shields.io/badge/-Good-7cb518?style=flat-square"> `> 50%`
-  - <img src="https://img.shields.io/badge/-Medium-FFA000?style=flat-square"> `> 25%`
-  - <img src="https://img.shields.io/badge/-Low-dc3545?style=flat-square"> `≤ 25%`
-  - <img src="https://img.shields.io/badge/-Charging-00bcd4?style=flat-square"> while plugged in
+- **Colored by charge level** (`Default` pack):
+  - <img src="https://img.shields.io/badge/-Full%20%2F%20Good%20%2F%20Medium-66c166?style=flat-square"> `> 25%`
+  - <img src="https://img.shields.io/badge/-Low-ff4848?style=flat-square"> `≤ 25%`
+  - <img src="https://img.shields.io/badge/-Charging-f7ec26?style=flat-square"> while plugged in
 - **Icon pack selector** — **START > UI SETTINGS > BATTERY ICON**:
 
   | Pack | Look |
   |------|------|
   | `Default` | Simple green / red / yellow (charging) icons |
-  | `Colorful` | Graduated colors by level (see above) |
+  | `Colorful` | Graduated colors by level (full → good → medium → low → charging) |
   | `Hearts` | Heart-shaped icons |
   | `Stock` | Original monochrome icons from christianhaitian |
 
