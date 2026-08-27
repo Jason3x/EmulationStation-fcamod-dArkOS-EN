@@ -2983,6 +2983,7 @@ void GuiMenu::openUISettings()
 	networkIconPack->add(_("POKEMON"),  "Pokemon",  currentNetPack == "Pokemon");
 	networkIconPack->add(_("SOLSTICE"), "Solstice", currentNetPack == "Solstice");
 	networkIconPack->add(_("ZELDA"),    "Zelda",    currentNetPack == "Zelda");
+	networkIconPack->add(_("STOCK"),    "Stock",    currentNetPack == "Stock");
 	s->addWithLabel(_("NETWORK ICON"), networkIconPack);
 	s->addSaveFunc([this, s, networkIconPack] {
 		std::string pack = networkIconPack->getSelected();
@@ -3028,11 +3029,11 @@ void GuiMenu::openUISettings()
 	auto batteryIconPack = std::make_shared<OptionListComponent<std::string>>(mWindow, _("BATTERY ICON"), false);
 	std::string currentPack = Settings::getInstance()->getString("BatteryIconPack");
 	if (currentPack.empty()) currentPack = "Default";
-	batteryIconPack->add(_("DEFAULT"),          "default",          currentPack == "default");
-	batteryIconPack->add(_("COLORFUL"),      "colorful", currentPack == "colorful");
-	// batteryIconPack->add(_("SEGMENTED"),        "segmented-battery", currentPack == "segmented-battery");
-	batteryIconPack->add(_("STOCK"),            "stock",            currentPack == "stock");
-	batteryIconPack->add(_("HEARTS"),           "hearts",   currentPack == "hearts");
+	batteryIconPack->add(_("DEFAULT"),       "default",    currentPack == "default");
+	batteryIconPack->add(_("COLORFUL"),      "colorful",   currentPack == "colorful");
+	batteryIconPack->add(_("VERTICAL"),      "vertical",   currentPack == "vertical");
+	batteryIconPack->add(_("STOCK"),         "stock",      currentPack == "stock");
+	batteryIconPack->add(_("HEARTS"),        "hearts",     currentPack == "hearts");
 	if (!batteryIconPack->hasSelection())
 		batteryIconPack->selectFirstItem();
 	s->addWithLabel(_("BATTERY ICON"), batteryIconPack);
