@@ -25,7 +25,7 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
   | Pack | Look |
   |------|------|
   | `Default` | Simple green battery icons |
-  | `Colorful` | Simple green / red / yellow (charging) icons |
+  | `Colorful` | Graduated colors by level (full → good → medium → low → charging) |
   | `Hearts` | Heart-shaped icons |
   | `Stock` | Original monochrome icons from christianhaitian |
 
