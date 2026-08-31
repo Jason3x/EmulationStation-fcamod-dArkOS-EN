@@ -97,7 +97,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 	
 	addEntry(_("QUIT"), !Settings::getInstance()->getBool("ShowOnlyExit"), [this] {openQuitMenu(); }, "iconQuit");
 
-	addEntry(_("BAT") + ": " + std::string(getShOutput(R"(cat /sys/class/power_supply/battery/capacity)")) + "%" + " | " + _("SND") + ": " + std::string(getShOutput(R"(current_volume)")) + " | " + _("BRT") + ": " + std::to_string(ApiSystem::getInstance()->getBrightnessLevel()) + "% | " + _("WIFI") + ": " + std::string(getShOutput(R"(if [ -z $(cat /sys/class/net/wlan0/operstate) ]; then echo "Off"; else cat /sys/class/net/wlan0/operstate; fi)")), false, [this] {  });
+	addEntry(_("BAT") + ": " + std::string(getShOutput(R"(cat /sys/class/power_supply/battery/capacity)")) + "%" + " | " + _("SND") + ": " + std::string(getShOutput(R"(current_volume)")) + " | " + _("BRT") + ": " + std::to_string(ApiSystem::getInstance()->getBrightnessLevel()) + "% | " + _("WIFI") + ": " + std::string(getShOutput(R"(if [ -z $(cat /sys/class/net/wlan0/operstate) ]; then echo "Off"; else cat /sys/class/net/wlan0/operstate; fi)")), true, [this] { openQuickStatusMenu(); });
 
 	addEntry(_("Distro Version") + ": " + std::string(getShOutput(R"(cat /usr/share/plymouth/themes/text.plymouth | grep title | cut -c 7-50)")), false, [this] {
 		if (access("/usr/local/bin/Update.sh", F_OK) == 0)
@@ -4013,6 +4013,41 @@ void GuiMenu::onSizeChanged()
 
 	mVersion.setSize(mSize.x(), h);
 	mVersion.setPosition(0, mSize.y() - h); //  mVersion.getSize().y()
+}
+
+void GuiMenu::openQuickStatusMenu()
+{
+	auto s = new GuiSettings(mWindow, _("QUICK SETTINGS"));
+	auto theme = ThemeData::getMenuTheme();
+
+	ComponentListRow row;
+
+	row.elements.clear();
+	row.makeAcceptInputHandler([this] { openBatterySettings(); });
+	row.addElement(std::make_shared<TextComponent>(mWindow, _("BATTERY PLUS"), theme->Text.font, theme->Text.color), true);
+	row.addElement(makeArrow(mWindow), false);
+	s->addRow(row);
+
+	row.elements.clear();
+	row.makeAcceptInputHandler([this] { openSoundSettings(); });
+	row.addElement(std::make_shared<TextComponent>(mWindow, _("SOUND"), theme->Text.font, theme->Text.color), true);
+	row.addElement(makeArrow(mWindow), false);
+	s->addRow(row);
+
+	row.elements.clear();
+	row.makeAcceptInputHandler([this] { openDisplaySettings(); });
+	row.addElement(std::make_shared<TextComponent>(mWindow, _("BRIGHTNESS"), theme->Text.font, theme->Text.color), true);
+	row.addElement(makeArrow(mWindow), false);
+	s->addRow(row);
+
+	row.elements.clear();
+	row.makeAcceptInputHandler([this] { openNetworkSettings(); });
+	row.addElement(std::make_shared<TextComponent>(mWindow, _("WI-FI"), theme->Text.font, theme->Text.color), true);
+	row.addElement(makeArrow(mWindow), false);
+	s->addRow(row);
+
+	s->updatePosition();
+	mWindow->pushGui(s);
 }
 
 void GuiMenu::addEntry(std::string name, bool add_arrow, const std::function<void()>& func, const std::string iconName)
