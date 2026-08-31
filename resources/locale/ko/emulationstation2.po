@@ -1992,5 +1992,15 @@ msgstr "솔스티스"
 
 msgid "ZELDA"
 msgstr "젤다"
-msgid "LIFELINE"
-msgstr "생명선"
+
+msgid "QUICK SETTINGS"
+msgstr "빠른 설정"
+
+msgid "BATTERY PLUS"
+msgstr "BatteryPlus"
+
+msgid "SOUND"
+msgstr "사운드"
+
+msgid "WI-FI"
+msgstr "와이파이"

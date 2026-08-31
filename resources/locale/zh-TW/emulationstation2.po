@@ -3805,5 +3805,15 @@ msgstr "至日"
 
 msgid "ZELDA"
 msgstr "薩爾達"
-msgid "LIFELINE"
-msgstr "生命線"
+
+msgid "QUICK SETTINGS"
+msgstr "快速設定"
+
+msgid "BATTERY PLUS"
+msgstr "BatteryPlus"
+
+msgid "SOUND"
+msgstr "聲音"
+
+msgid "WI-FI"
+msgstr "WI-FI"

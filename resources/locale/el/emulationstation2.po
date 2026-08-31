@@ -2291,5 +2291,15 @@ msgstr "SOLSTICE"
 
 msgid "ZELDA"
 msgstr "ZELDA"
-msgid "LIFELINE"
-msgstr "ΓΡΑΜΜΉ ΖΩΉΣ"
+
+msgid "QUICK SETTINGS"
+msgstr "ΓΡΗΓΟΡΕΣ ΡΥΘΜΙΣΕΙΣ"
+
+msgid "BATTERY PLUS"
+msgstr "BATTERYPLUS"
+
+msgid "SOUND"
+msgstr "ΗΧΟΣ"
+
+msgid "WI-FI"
+msgstr "WI-FI"

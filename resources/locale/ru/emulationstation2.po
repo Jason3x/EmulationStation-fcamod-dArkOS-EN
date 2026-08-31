@@ -3807,5 +3807,15 @@ msgstr "СОЛНЦЕСТОЯНИЕ"
 
 msgid "ZELDA"
 msgstr "ЗЕЛЬДА"
-msgid "LIFELINE"
-msgstr "ЛИНИЯ ЖИЗНИ"
+
+msgid "QUICK SETTINGS"
+msgstr "БЫСТРЫЕ НАСТРОЙКИ"
+
+msgid "BATTERY PLUS"
+msgstr "BATTERYPLUS"
+
+msgid "SOUND"
+msgstr "ЗВУК"
+
+msgid "WI-FI"
+msgstr "WI-FI"

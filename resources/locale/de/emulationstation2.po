@@ -2591,5 +2591,15 @@ msgstr "SOLSTICE"
 
 msgid "ZELDA"
 msgstr "ZELDA"
-msgid "LIFELINE"
-msgstr "LEBENSLINIE"
+
+msgid "QUICK SETTINGS"
+msgstr "SCHNELLEINSTELLUNGEN"
+
+msgid "BATTERY PLUS"
+msgstr "BATTERYPLUS"
+
+msgid "SOUND"
+msgstr "TON"
+
+msgid "WI-FI"
+msgstr "WLAN"
