@@ -1836,25 +1836,22 @@ void GuiMenu::writeCpuBootConfig()
 {
     std::string gov = getCpuGovernor();
     std::string freq = getCpuMaxFreq();
-    std::string cmd = "echo -e 'GOV=" + gov + "\\nFREQ=" + freq +
-                       "' | sudo tee /etc/cpu-settings.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "GOV=" + gov + "\nFREQ=" + freq + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/cpu-settings.conf >/dev/null 2>&1");
 }
 
 void GuiMenu::writeGpuBootConfig()
 {
     std::string freq = getGpuMaxFreq();
-    std::string cmd = "echo -e 'FREQ=" + freq +
-                       "' | sudo tee /etc/gpu-settings.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "FREQ=" + freq + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/gpu-settings.conf >/dev/null 2>&1");
 }
 
 void GuiMenu::writeDmcBootConfig()
 {
     std::string freq = getDmcMaxFreq();
-    std::string cmd = "echo -e 'FREQ=" + freq +
-                       "' | sudo tee /etc/dmc-settings.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "FREQ=" + freq + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/dmc-settings.conf >/dev/null 2>&1");
 }
 
 bool GuiMenu::isDmcBootApplyEnabled()
@@ -1996,10 +1993,8 @@ void GuiMenu::saveZramConfig(const std::string& size, const std::string& compAlg
     else if (size == "512M") bytes = 536870912;
     else if (size == "1024M") bytes = 1073741824;
 
-    std::string cmd = "echo -e 'ENABLED=1\\nALGORITHM=" + compAlgo +
-                      "\\nSIZE=" + std::to_string(bytes) +
-                      "' | sudo tee /etc/zram.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "ENABLED=1\nALGORITHM=" + compAlgo + "\nSIZE=" + std::to_string(bytes) + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/zram.conf >/dev/null 2>&1");
 }
 
 bool GuiMenu::isZramAutoStart()
