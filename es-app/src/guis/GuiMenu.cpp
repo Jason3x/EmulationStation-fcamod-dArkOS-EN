@@ -97,7 +97,7 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 	
 	addEntry(_("QUIT"), !Settings::getInstance()->getBool("ShowOnlyExit"), [this] {openQuitMenu(); }, "iconQuit");
 
-	addEntry(_("BAT") + ": " + std::string(getShOutput(R"(cat /sys/class/power_supply/battery/capacity)")) + "%" + " | " + _("SND") + ": " + std::string(getShOutput(R"(current_volume)")) + " | " + _("BRT") + ": " + std::to_string(ApiSystem::getInstance()->getBrightnessLevel()) + "% | " + _("WIFI") + ": " + std::string(getShOutput(R"(if [ -z $(cat /sys/class/net/wlan0/operstate) ]; then echo "Off"; else cat /sys/class/net/wlan0/operstate; fi)")), true, [this] { openQuickStatusMenu(); });
+	addEntry(_("BAT") + ": " + std::string(getShOutput(R"(cat /sys/class/power_supply/battery/capacity)")) + "%" + " | " + _("SND") + ": " + std::string(getShOutput(R"(current_volume)")) + " | " + _("BRT") + ": " + std::to_string(ApiSystem::getInstance()->getBrightnessLevel()) + "% | " + _("WIFI") + ": " + std::string(getShOutput(R"(if [ -z $(cat /sys/class/net/wlan0/operstate) ]; then echo "Off"; else cat /sys/class/net/wlan0/operstate; fi)")), true, [this] {  });
 
 	addEntry(_("Distro Version") + ": " + std::string(getShOutput(R"(cat /usr/share/plymouth/themes/text.plymouth | grep title | cut -c 7-50)")), false, [this] {
 		if (access("/usr/local/bin/Update.sh", F_OK) == 0)
@@ -1836,25 +1836,22 @@ void GuiMenu::writeCpuBootConfig()
 {
     std::string gov = getCpuGovernor();
     std::string freq = getCpuMaxFreq();
-    std::string cmd = "echo -e 'GOV=" + gov + "\\nFREQ=" + freq +
-                       "' | sudo tee /etc/cpu-settings.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "GOV=" + gov + "\nFREQ=" + freq + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/cpu-settings.conf >/dev/null 2>&1");
 }
 
 void GuiMenu::writeGpuBootConfig()
 {
     std::string freq = getGpuMaxFreq();
-    std::string cmd = "echo -e 'FREQ=" + freq +
-                       "' | sudo tee /etc/gpu-settings.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "FREQ=" + freq + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/gpu-settings.conf >/dev/null 2>&1");
 }
 
 void GuiMenu::writeDmcBootConfig()
 {
     std::string freq = getDmcMaxFreq();
-    std::string cmd = "echo -e 'FREQ=" + freq +
-                       "' | sudo tee /etc/dmc-settings.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "FREQ=" + freq + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/dmc-settings.conf >/dev/null 2>&1");
 }
 
 bool GuiMenu::isDmcBootApplyEnabled()
@@ -1996,10 +1993,8 @@ void GuiMenu::saveZramConfig(const std::string& size, const std::string& compAlg
     else if (size == "512M") bytes = 536870912;
     else if (size == "1024M") bytes = 1073741824;
 
-    std::string cmd = "echo -e 'ENABLED=1\\nALGORITHM=" + compAlgo +
-                      "\\nSIZE=" + std::to_string(bytes) +
-                      "' | sudo tee /etc/zram.conf >/dev/null 2>&1";
-    executeCommand(cmd);
+    std::string content = "ENABLED=1\nALGORITHM=" + compAlgo + "\nSIZE=" + std::to_string(bytes) + "\n";
+    executeCommand("echo '" + content + "' | sudo tee /etc/zram.conf >/dev/null 2>&1");
 }
 
 bool GuiMenu::isZramAutoStart()
@@ -4070,6 +4065,7 @@ void GuiMenu::onSizeChanged()
 	mVersion.setPosition(0, mSize.y() - h); //  mVersion.getSize().y()
 }
 
+/*
 void GuiMenu::openQuickStatusMenu()
 {
 	auto s = new GuiSettings(mWindow, _("QUICK SETTINGS"));
@@ -4104,6 +4100,7 @@ void GuiMenu::openQuickStatusMenu()
 	s->updatePosition();
 	mWindow->pushGui(s);
 }
+*/
 
 void GuiMenu::addEntry(std::string name, bool add_arrow, const std::function<void()>& func, const std::string iconName)
 {
