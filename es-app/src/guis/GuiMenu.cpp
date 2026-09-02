@@ -1832,6 +1832,47 @@ void GuiMenu::toggleGpuBootApply(bool enable)
     }
 }
 
+void GuiMenu::writeCpuBootConfig()
+{
+    std::string gov = getCpuGovernor();
+    std::string freq = getCpuMaxFreq();
+    std::string cmd = "echo -e 'GOV=" + gov + "\\nFREQ=" + freq +
+                       "' | sudo tee /etc/cpu-settings.conf >/dev/null 2>&1";
+    executeCommand(cmd);
+}
+
+void GuiMenu::writeGpuBootConfig()
+{
+    std::string freq = getGpuMaxFreq();
+    std::string cmd = "echo -e 'FREQ=" + freq +
+                       "' | sudo tee /etc/gpu-settings.conf >/dev/null 2>&1";
+    executeCommand(cmd);
+}
+
+void GuiMenu::writeDmcBootConfig()
+{
+    std::string freq = getDmcMaxFreq();
+    std::string cmd = "echo -e 'FREQ=" + freq +
+                       "' | sudo tee /etc/dmc-settings.conf >/dev/null 2>&1";
+    executeCommand(cmd);
+}
+
+bool GuiMenu::isDmcBootApplyEnabled()
+{
+    std::string result = executeCommand("systemctl is-enabled dmc-governor.service 2>/dev/null");
+    result.erase(std::remove_if(result.begin(), result.end(), ::isspace), result.end());
+    return result == "enabled";
+}
+
+void GuiMenu::toggleDmcBootApply(bool enable)
+{
+    if (enable) {
+        executeCommand("sudo systemctl enable dmc-governor.service 2>/dev/null || true");
+    } else {
+        executeCommand("sudo systemctl disable dmc-governor.service 2>/dev/null || true");
+    }
+}
+
 bool GuiMenu::hasDmcFreqControl()
 {
     std::string result = executeCommand("ls /sys/class/devfreq/dmc/available_frequencies 2>/dev/null");
@@ -2127,6 +2168,14 @@ void GuiMenu::openPerformanceSettings()
         });
     }	
 
+	// --- RAM Persistence ---
+    auto dmcBootApplySwitch = std::make_shared<SwitchComponent>(mWindow);
+    dmcBootApplySwitch->setState(isDmcBootApplyEnabled());
+    s->addWithLabel(_("RAM APPLY ON BOOT"), dmcBootApplySwitch);
+    dmcBootApplySwitch->setOnChangedCallback([this, dmcBootApplySwitch] {
+        toggleDmcBootApply(dmcBootApplySwitch->getState());
+    });
+
     // ZRAM Enable/Disable
     bool zramEnabled = isZramEnabled();
     auto zramSwitch = std::make_shared<SwitchComponent>(mWindow);
@@ -2195,6 +2244,12 @@ void GuiMenu::openPerformanceSettings()
             toggleZramAutoStart(true, val, selectedAlgo);
         }
     });
+
+	s->addSaveFunc([this] {
+		writeCpuBootConfig();
+		writeGpuBootConfig();
+		writeDmcBootConfig();
+	});
 
 	mWindow->pushGui(s);
 }
@@ -3731,7 +3786,7 @@ void GuiMenu::openOtherSettings()
 	s->addWithLabel(_("THREADED LOADING"), threadedLoading);
 	s->addSaveFunc([threadedLoading] { Settings::getInstance()->setBool("ThreadedLoading", threadedLoading->getState()); });
 
-	// global default emualtor performance governor
+	// global default emulator performance governor
 	auto gdepg = std::make_shared< OptionListComponent<std::string> >(mWindow, _("Default Emulator Governor"), false);
 
 	EmulatorData GOVs;
