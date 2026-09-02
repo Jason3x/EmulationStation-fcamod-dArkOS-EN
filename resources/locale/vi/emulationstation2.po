@@ -1887,5 +1887,15 @@ msgstr "SOLSTICE"
 
 msgid "ZELDA"
 msgstr "ZELDA"
-msgid "LIFELINE"
-msgstr "ĐƯỜNG SỐNG"
+
+msgid "QUICK SETTINGS"
+msgstr "CÀI ĐẶT NHANH"
+
+msgid "BATTERY PLUS"
+msgstr "BATTERYPLUS"
+
+msgid "SOUND"
+msgstr "ÂM THANH"
+
+msgid "WI-FI"
+msgstr "WI-FI"

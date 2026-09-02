@@ -3801,5 +3801,15 @@ msgstr "至日"
 
 msgid "ZELDA"
 msgstr "塞尔达"
-msgid "LIFELINE"
-msgstr "生命线"
+
+msgid "QUICK SETTINGS"
+msgstr "快速设置"
+
+msgid "BATTERY PLUS"
+msgstr "BatteryPlus"
+
+msgid "SOUND"
+msgstr "声音"
+
+msgid "WI-FI"
+msgstr "WI-FI"

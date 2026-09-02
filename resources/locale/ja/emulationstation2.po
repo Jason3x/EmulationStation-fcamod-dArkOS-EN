@@ -1669,5 +1669,15 @@ msgstr "ソルスティス"
 
 msgid "ZELDA"
 msgstr "ゼルダ"
-msgid "LIFELINE"
-msgstr "ライフライン"
+
+msgid "QUICK SETTINGS"
+msgstr "クイック設定"
+
+msgid "BATTERY PLUS"
+msgstr "BatteryPlus"
+
+msgid "SOUND"
+msgstr "サウンド"
+
+msgid "WI-FI"
+msgstr "Wi-Fi"

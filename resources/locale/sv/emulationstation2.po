@@ -3577,5 +3577,15 @@ msgstr "SOLSTICE"
 
 msgid "ZELDA"
 msgstr "ZELDA"
-msgid "LIFELINE"
-msgstr "LIVSLINJE"
+
+msgid "QUICK SETTINGS"
+msgstr "SNABBINSTÄLLNINGAR"
+
+msgid "BATTERY PLUS"
+msgstr "BATTERYPLUS"
+
+msgid "SOUND"
+msgstr "LJUD"
+
+msgid "WI-FI"
+msgstr "WIFI"

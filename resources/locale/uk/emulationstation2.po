@@ -3906,5 +3906,15 @@ msgstr "СОНЦЕСТОЯННЯ"
 
 msgid "ZELDA"
 msgstr "ЗЕЛЬДА"
-msgid "LIFELINE"
-msgstr "ЛІНІЯ ЖИТТЯ"
+
+msgid "QUICK SETTINGS"
+msgstr "ШВИДКІ НАЛАШТУВАННЯ"
+
+msgid "BATTERY PLUS"
+msgstr "BATTERYPLUS"
+
+msgid "SOUND"
+msgstr "ЗВУК"
+
+msgid "WI-FI"
+msgstr "WI-FI"
