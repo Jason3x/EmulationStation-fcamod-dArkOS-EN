@@ -759,7 +759,7 @@ msgstr "AUTO"
 
 #: 
 msgid "NETWORK SETTINGS"
-msgstr "OPÇÕES DE RED"
+msgstr "OPÇÕES DE REDE"
 
 #: 
 msgid "CONNECTED"
