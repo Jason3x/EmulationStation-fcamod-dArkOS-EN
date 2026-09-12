@@ -4245,15 +4245,23 @@ static std::string esFormatPlayTime(int seconds)
 
 	int hours = seconds / 3600;
 	int minutes = (seconds % 3600) / 60;
+	int secs = seconds % 60;
 
 	if (hours > 0)
 	{
 		char buf[32];
-		snprintf(buf, sizeof(buf), "%dh%02d", hours, minutes);
+		snprintf(buf, sizeof(buf), "%dh%02dm%02ds", hours, minutes, secs);
 		return std::string(buf);
 	}
 
-	return std::to_string(minutes) + "m";
+	if (minutes > 0)
+	{
+		char buf2[32];
+		snprintf(buf2, sizeof(buf2), "%dm%02ds", minutes, secs);
+		return std::string(buf2);
+	}
+
+	return std::to_string(secs) + "s";
 }
 
 // Parcours recursif d'un dossier, collecte les chemins des fichiers
@@ -4398,6 +4406,18 @@ void GuiMenu::openLastPlayedGames()
 	}
 
 	Window* window = mWindow;
+
+	// en-tete indiquant la signification des deux colonnes
+	{
+		ComponentListRow header;
+		auto hLeft = std::make_shared<TextComponent>(window, _("GAME"),
+			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+		auto hRight = std::make_shared<TextComponent>(window, _("SESSION | TOTAL"),
+			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+		header.addElement(hLeft, true);
+		header.addElement(hRight, false);
+		s->addRow(header);
+	}
 
 	for (auto game : games)
 	{

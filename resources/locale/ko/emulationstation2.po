@@ -2028,3 +2028,6 @@ msgstr "최근 플레이한 게임 20개"
 
 msgid "NO GAME PLAYED YET"
 msgstr "아직 플레이한 게임이 없습니다"
+
+msgid "SESSION | TOTAL"
+msgstr "세션 | 총계"

@@ -4148,3 +4148,6 @@ msgstr "ОСТАННІ 20 ІГОР"
 
 msgid "NO GAME PLAYED YET"
 msgstr "ЩЕ НЕМАЄ ЗІГРАНИХ ІГОР"
+
+msgid "SESSION | TOTAL"
+msgstr "СЕАНС | ВСЬОГО"

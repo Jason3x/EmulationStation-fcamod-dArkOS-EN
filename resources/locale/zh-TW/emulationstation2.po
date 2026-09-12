@@ -3935,3 +3935,6 @@ msgstr "最近玩過的20個遊戲"
 
 msgid "NO GAME PLAYED YET"
 msgstr "尚未玩過任何遊戲"
+
+msgid "SESSION | TOTAL"
+msgstr "本次 | 總計"

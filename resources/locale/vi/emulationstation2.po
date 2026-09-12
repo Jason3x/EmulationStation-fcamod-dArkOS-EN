@@ -2238,3 +2238,6 @@ msgstr "20 TRO CHOI CHOI GAN DAY"
 
 msgid "NO GAME PLAYED YET"
 msgstr "CHUA CHOI TRO CHOI NAO"
+
+msgid "SESSION | TOTAL"
+msgstr "PHIEN | TONG"

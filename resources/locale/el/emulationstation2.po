@@ -2712,3 +2712,6 @@ msgstr "ΤΑ 20 ΤΕΛΕΥΤΑΙΑ ΠΑΙΧΝΙΔΙΑ"
 
 msgid "NO GAME PLAYED YET"
 msgstr "ΔΕΝ ΕΧΕΙ ΠΑΙΧΤΕΙ ΚΑΝΕΝΑ ΠΑΙΧΝΙΔΙ"
+
+msgid "SESSION | TOTAL"
+msgstr "ΣΥΝΕΔΡΙΑ | ΣΥΝΟΛΟ"

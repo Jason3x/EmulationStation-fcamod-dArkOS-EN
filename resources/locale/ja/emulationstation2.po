@@ -1773,3 +1773,6 @@ msgstr "最近プレイした20本"
 
 msgid "NO GAME PLAYED YET"
 msgstr "まだプレイしたゲームがありません"
+
+msgid "SESSION | TOTAL"
+msgstr "今回 | 合計"

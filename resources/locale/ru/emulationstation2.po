@@ -3937,3 +3937,6 @@ msgstr "ПОСЛЕДНИЕ 20 ИГР"
 
 msgid "NO GAME PLAYED YET"
 msgstr "ПОКА НЕТ СЫГРАННЫХ ИГР"
+
+msgid "SESSION | TOTAL"
+msgstr "СЕАНС | ВСЕГО"
