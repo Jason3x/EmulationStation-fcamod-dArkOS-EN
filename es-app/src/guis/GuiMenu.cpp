@@ -1259,7 +1259,7 @@ void GuiMenu::manualSaveSync()
 
 static std::string ssCrdGet(const std::string& key)
 {
-	return executeCommand("sed -n 's/^" + key + "=//p' /home/ark/.config/savesync.crd 2>/dev/null");
+	return executeCommand("sudo sed -n 's/^" + key + "=//p' /home/ark/.config/savesync.crd 2>/dev/null");
 }
 
 static void ssCrdSet(const std::string& key, const std::string& value)
