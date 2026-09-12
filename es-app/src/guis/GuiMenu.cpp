@@ -4367,9 +4367,11 @@ static std::vector<FileData*> esGetLastPlayedGames(size_t maxCount)
 
 		for (auto game : system->getRootFolder()->getFilesRecursive(GAME))
 		{
-			// les lanceurs .sh (retroarch, outils de config) ne sont pas des jeux
-			std::string ext = Utils::String::toLower(Utils::FileSystem::getExtension(game->getPath()));
-			if (ext == ".sh")
+			// exclusion des lanceurs de configuration (retroarch, retroarch32...)
+			// les vrais ports en .sh restent visibles
+			std::string stemLower = Utils::String::toLower(Utils::FileSystem::getStem(game->getPath()));
+			std::string nameLower = Utils::String::toLower(game->getName());
+			if (stemLower.compare(0, 9, "retroarch") == 0 || nameLower.compare(0, 9, "retroarch") == 0)
 				continue;
 
 			std::string lastPlayed = game->getMetadata().get("lastplayed");
