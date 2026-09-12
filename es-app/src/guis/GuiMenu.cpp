@@ -4483,8 +4483,10 @@ void GuiMenu::openLastPlayedGames()
 
 			window->postToUiThread([esGame, esSlot](Window* w)
 			{
+				// s'arreter au ViewController : il est le fond de mGuiStack,
+				// le detruire rend le launch() ci-dessous invalide.
 				GuiComponent* gui;
-				while ((gui = w->peekGui()) != NULL)
+				while ((gui = w->peekGui()) != NULL && gui != ViewController::get())
 				{
 					w->removeGui(gui);
 					delete gui;
