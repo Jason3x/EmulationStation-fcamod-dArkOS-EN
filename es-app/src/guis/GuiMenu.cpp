@@ -4468,17 +4468,13 @@ void GuiMenu::openLastPlayedGames()
 			// fermer le menu AVANT de lancer : sinon la ligne reste selectionnee
 			// et l'appui qui quitte l'emulateur relance le jeu au retour.
 			// close() fait delete this : ne plus toucher a s apres cet appel.
-			s->close();
-
-			// le lancement passe par une animation du ViewController, qui ne progresse
-			// que s'il est la vue active : on differe au cycle de rendu suivant,
-			// une fois le menu reellement retire de la pile.
+			// lancer d'abord, fermer ensuite : close() fait delete this,
+			// donc plus aucune reference a s apres cette ligne.
 			// slot -2 = auto-state : rien a passer, RetroArch le charge seul
-			window->postToUiThread([src, slot](Window* w)
-			{
-				ViewController::get()->launch(src, Vector3f(Renderer::getScreenWidth() / 2.0f,
-					Renderer::getScreenHeight() / 2.0f, 0), slot >= 0 ? slot : -1);
-			});
+			ViewController::get()->launch(src, Vector3f(Renderer::getScreenWidth() / 2.0f,
+				Renderer::getScreenHeight() / 2.0f, 0), slot >= 0 ? slot : -1);
+
+			s->close();
 		});
 
 		s->addRow(row);
