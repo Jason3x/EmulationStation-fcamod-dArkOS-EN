@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include "guis/GuiMenu.h"
+#include <sys/stat.h>
+#include <dirent.h>
 #include "guis/GuiTools.h"
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
@@ -70,6 +72,8 @@ GuiMenu::GuiMenu(Window* window, bool animate) : GuiComponent(window), mMenu(win
 	if (isFullUI)
 	{
 		addEntry(_("GAME COLLECTION SETTINGS"), true, [this] { openCollectionSystemSettings(); }, "iconGames");
+
+		addEntry(_("LAST 20 PLAYED GAMES"), true, [this] { openLastPlayedGames(); }, "iconGames");
 
 		// Emulator settings 
 		for (auto system : SystemData::sSystemVector)
@@ -4226,4 +4230,213 @@ void GuiMenu::createInputTextRow(GuiSettings *gui, std::string title, const char
 	});
 
 	gui->addRow(row);
+}
+
+
+// ---------------------------------------------------------------------------
+// Menu "LAST 20 PLAYED GAMES"
+// ---------------------------------------------------------------------------
+
+// Formate une duree en secondes -> "12h30" ou "42m"
+static std::string esFormatPlayTime(int seconds)
+{
+	if (seconds <= 0)
+		return "-";
+
+	int hours = seconds / 3600;
+	int minutes = (seconds % 3600) / 60;
+
+	if (hours > 0)
+	{
+		char buf[32];
+		snprintf(buf, sizeof(buf), "%dh%02d", hours, minutes);
+		return std::string(buf);
+	}
+
+	return std::to_string(minutes) + "m";
+}
+
+// Parcours recursif d'un dossier, collecte les chemins des fichiers
+static void esScanDir(const std::string& dir, std::vector<std::string>& out, int depth)
+{
+	if (depth > 4)
+		return;
+
+	DIR* d = opendir(dir.c_str());
+	if (d == NULL)
+		return;
+
+	struct dirent* ent;
+	while ((ent = readdir(d)) != NULL)
+	{
+		std::string name = ent->d_name;
+		if (name == "." || name == "..")
+			continue;
+
+		std::string full = dir + "/" + name;
+
+		struct stat st;
+		if (stat(full.c_str(), &st) != 0)
+			continue;
+
+		if (S_ISDIR(st.st_mode))
+			esScanDir(full, out, depth + 1);
+		else
+			out.push_back(full);
+	}
+
+	closedir(d);
+}
+
+// Cherche la savestate la plus recente pour une rom.
+// Retourne le numero de slot (0-9), -1 si aucune, -2 si c'est l'auto-state.
+static int esFindLatestSaveSlot(FileData* game)
+{
+	const std::string statesDir = Utils::FileSystem::getHomePath() + "/.config/retroarch/states";
+	if (!Utils::FileSystem::exists(statesDir))
+		return -1;
+
+	const std::string stem = Utils::FileSystem::getStem(game->getPath());
+	if (stem.empty())
+		return -1;
+
+	std::vector<std::string> files;
+	esScanDir(statesDir, files, 0);
+
+	int bestSlot = -1;
+	time_t bestTime = 0;
+
+	for (auto& f : files)
+	{
+		std::string fname = Utils::FileSystem::getFileName(f);
+
+		// le fichier doit commencer par le nom de la rom suivi de ".state"
+		const std::string prefix = stem + ".state";
+		if (fname.compare(0, prefix.length(), prefix) != 0)
+			continue;
+
+		std::string suffix = fname.substr(prefix.length());
+
+		int slot;
+		if (suffix.empty())
+			slot = 0;                       // rom.state    -> slot 0
+		else if (suffix == ".auto")
+			slot = -2;                      // auto-state
+		else if (suffix.length() == 1 && suffix[0] >= '1' && suffix[0] <= '9')
+			slot = suffix[0] - '0';         // rom.state3   -> slot 3
+		else
+			continue;                       // .state.bak, miniatures, etc.
+
+		struct stat st;
+		if (stat(f.c_str(), &st) != 0)
+			continue;
+
+		if (st.st_mtime > bestTime)
+		{
+			bestTime = st.st_mtime;
+			bestSlot = slot;
+		}
+	}
+
+	return bestSlot;
+}
+
+// Collecte les jeux deja joues, tries du plus recent au plus ancien.
+// lastplayed est stocke au format %Y%m%dT%H%M%S : le tri lexicographique
+// decroissant sur la chaine brute donne directement l'ordre chronologique.
+static std::vector<FileData*> esGetLastPlayedGames(size_t maxCount)
+{
+	std::vector<std::pair<std::string, FileData*>> entries;
+
+	for (auto system : SystemData::sSystemVector)
+	{
+		if (system->isCollection())
+			continue;
+
+		if (system->getRootFolder() == NULL)
+			continue;
+
+		for (auto game : system->getRootFolder()->getFilesRecursive(GAME))
+		{
+			std::string lastPlayed = game->getMetadata().get("lastplayed");
+
+			if (lastPlayed.empty() || lastPlayed == "0" || lastPlayed == "not-a-date-time")
+				continue;
+
+			entries.push_back(std::make_pair(lastPlayed, game));
+		}
+	}
+
+	std::sort(entries.begin(), entries.end(),
+		[](const std::pair<std::string, FileData*>& a, const std::pair<std::string, FileData*>& b)
+		{
+			return a.first > b.first;
+		});
+
+	std::vector<FileData*> result;
+	for (auto& e : entries)
+	{
+		if (result.size() >= maxCount)
+			break;
+		result.push_back(e.second);
+	}
+
+	return result;
+}
+
+void GuiMenu::openLastPlayedGames()
+{
+	auto s = new GuiSettings(mWindow, _("LAST 20 PLAYED GAMES").c_str());
+
+	std::vector<FileData*> games = esGetLastPlayedGames(20);
+
+	if (games.empty())
+	{
+		s->addEntry(_("NO GAME PLAYED YET"), false, nullptr);
+		mWindow->pushGui(s);
+		return;
+	}
+
+	Window* window = mWindow;
+
+	for (auto game : games)
+	{
+		FileData* src = game->getSourceFileData();
+
+		int lastSession = src->getMetadata().getInt("lastsession");
+		int totalTime   = src->getMetadata().getInt("gametime");
+		int slot        = esFindLatestSaveSlot(src);
+
+		// colonne de droite : "0h42 | 12h30" (+ marqueur si reprise possible)
+		std::string info = esFormatPlayTime(lastSession) + " | " + esFormatPlayTime(totalTime);
+		if (slot != -1)
+			info += " *";
+
+		auto infoText = std::make_shared<TextComponent>(window, info,
+			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+
+		ComponentListRow row;
+
+		auto nameText = std::make_shared<TextComponent>(window, game->getName(),
+			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+
+		row.addElement(nameText, true);
+		row.addElement(infoText, false);
+
+		row.makeAcceptInputHandler([window, src, slot]
+		{
+			// vider la pile de GUI avant de lancer, sinon le menu reste
+			// affiche par dessus le jeu au retour
+			while (window->peekGui() != NULL && window->peekGui() != ViewController::get())
+				delete window->peekGui();
+
+			// slot -2 = auto-state : rien a passer, RetroArch le charge seul
+			ViewController::get()->launch(src, Vector3f(Renderer::getScreenWidth() / 2.0f,
+				Renderer::getScreenHeight() / 2.0f, 0), slot >= 0 ? slot : -1);
+		});
+
+		s->addRow(row);
+	}
+
+	mWindow->pushGui(s);
 }

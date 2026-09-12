@@ -273,7 +273,7 @@ FileData* FileData::getSourceFileData()
 	return this;
 }
 
-void FileData::launchGame(Window* window)
+void FileData::launchGame(Window* window, int entrySlot)
 {
 	LOG(LogInfo) << "Attempting to launch game...";
 
@@ -324,6 +324,17 @@ void FileData::launchGame(Window* window)
 	command = Utils::String::replace(command, "%ROM_RAW%", rom_raw);		
 	command = Utils::String::replace(command, "%SYSTEM%", getSystemName());
 	command = Utils::String::replace(command, "%HOME%", Utils::FileSystem::getHomePath());
+
+	// injection du slot de savestate demande depuis le menu des derniers joues
+	if (entrySlot >= 0)
+	{
+		const std::string raBin = "/usr/local/bin/retroarch";
+		size_t pos = command.find(raBin);
+		if (pos != std::string::npos)
+			command.insert(pos + raBin.length(), " --entryslot " + std::to_string(entrySlot));
+		else
+			command = "ENTRYSLOT=" + std::to_string(entrySlot) + " " + command;
+	}
 
 	if (Utils::FileSystem::exists("/usr/local/bin/quickmode.sh"))
 	{
