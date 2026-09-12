@@ -328,11 +328,22 @@ void FileData::launchGame(Window* window, int entrySlot)
 	// injection du slot de savestate demande depuis le menu des derniers joues
 	if (entrySlot >= 0)
 	{
-		const std::string raBin = "/usr/local/bin/retroarch";
-		size_t pos = command.find(raBin);
-		if (pos != std::string::npos)
-			command.insert(pos + raBin.length(), " --entryslot " + std::to_string(entrySlot));
-		else
+		// le plus long d'abord : retroarch32 contient retroarch
+		const std::string bins[2] = { "/usr/local/bin/retroarch32", "/usr/local/bin/retroarch" };
+		bool injected = false;
+		for (int i = 0; i < 2 && !injected; i++)
+		{
+			size_t pos = command.find(bins[i]);
+			if (pos == std::string::npos)
+				continue;
+			size_t end = pos + bins[i].length();
+			// le nom doit se terminer la (espace ou fin), sinon c'est un prefixe
+			if (end < command.length() && command[end] != ' ')
+				continue;
+			command.insert(end, " --entryslot " + std::to_string(entrySlot));
+			injected = true;
+		}
+		if (!injected)
 			command = "ENTRYSLOT=" + std::to_string(entrySlot) + " " + command;
 	}
 
