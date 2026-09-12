@@ -4471,22 +4471,28 @@ void GuiMenu::openLastPlayedGames()
 			// vider toute la pile de GUI avant de lancer, sinon l'animation du
 			// ViewController n'avance pas et l'appui de sortie de l'emulateur
 			// revient sur la ligne selectionnee. Meme motif que reloadAllGames().
-			// copier les captures sur la pile : la boucle detruit le GuiSettings
-			// qui porte cette lambda, donc window/src/slot deviennent invalides.
-			Window* esWin = window;
+			// Ne rien detruire ici : on est dans la pile d'appel de
+			// Window::input -> GuiSettings::input -> ComponentList, qui
+			// continue de s'executer apres ce handler. Detruire les GUI
+			// maintenant fait planter ES.
+			// processPostedFunctions() tourne au debut de Window::update(),
+			// hors de toute dispatch d'entree : on y ferme les menus puis on
+			// lance. slot -2 = auto-state, rien a passer a RetroArch.
 			FileData* esGame = src;
 			int esSlot = slot >= 0 ? slot : -1;
 
-			GuiComponent* gui;
-			while ((gui = esWin->peekGui()) != NULL)
+			window->postToUiThread([esGame, esSlot](Window* w)
 			{
-				esWin->removeGui(gui);
-				delete gui;
-			}
+				GuiComponent* gui;
+				while ((gui = w->peekGui()) != NULL)
+				{
+					w->removeGui(gui);
+					delete gui;
+				}
 
-			// slot -2 = auto-state : rien a passer, RetroArch le charge seul
-			ViewController::get()->launch(esGame, Vector3f(Renderer::getScreenWidth() / 2.0f,
-				Renderer::getScreenHeight() / 2.0f, 0), esSlot);
+				ViewController::get()->launch(esGame, Vector3f(Renderer::getScreenWidth() / 2.0f,
+					Renderer::getScreenHeight() / 2.0f, 0), esSlot);
+			});
 		});
 
 		s->addRow(row);
