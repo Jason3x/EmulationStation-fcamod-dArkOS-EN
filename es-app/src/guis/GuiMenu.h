@@ -48,8 +48,6 @@ private:
 	void openSaveSyncProtocol();
 	void openSaveSyncLog();
 	void manualSaveSync();
-	void openSaveSyncCredentials();
-	void openSaveSyncLog();
 	void openSoundSettings();
 	void openUISettings();
 
