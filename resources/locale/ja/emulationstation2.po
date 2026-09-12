@@ -1767,3 +1767,9 @@ msgid "VERTICAL"
 msgstr "縦向き"
 msgid "RAM APPLY ON BOOT"
 msgstr "起動時にRAM設定を適用"
+
+msgid "LAST 20 PLAYED GAMES"
+msgstr "最近プレイした20本"
+
+msgid "NO GAME PLAYED YET"
+msgstr "まだプレイしたゲームがありません"

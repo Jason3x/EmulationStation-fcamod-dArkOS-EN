@@ -3925,3 +3925,9 @@ msgid "  Game Loading Image delay (secs)"
 msgstr "  加载图片延迟(秒)"
 msgid "RAM APPLY ON BOOT"
 msgstr "启动时应用RAM设置"
+
+msgid "LAST 20 PLAYED GAMES"
+msgstr "最近玩过的20个游戏"
+
+msgid "NO GAME PLAYED YET"
+msgstr "尚未玩过任何游戏"

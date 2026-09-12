@@ -3931,3 +3931,9 @@ msgid "  Game Loading Image delay (secs)"
 msgstr "  Задержка изображения загрузки (сек)"
 msgid "RAM APPLY ON BOOT"
 msgstr "ПРИМЕНЯТЬ RAM ПРИ ЗАГРУЗКЕ"
+
+msgid "LAST 20 PLAYED GAMES"
+msgstr "ПОСЛЕДНИЕ 20 ИГР"
+
+msgid "NO GAME PLAYED YET"
+msgstr "ПОКА НЕТ СЫГРАННЫХ ИГР"

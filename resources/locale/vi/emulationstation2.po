@@ -2232,3 +2232,9 @@ msgid "VERTICAL"
 msgstr "DỌC"
 msgid "RAM APPLY ON BOOT"
 msgstr "ÁP DỤNG RAM KHI KHỞI ĐỘNG"
+
+msgid "LAST 20 PLAYED GAMES"
+msgstr "20 TRO CHOI CHOI GAN DAY"
+
+msgid "NO GAME PLAYED YET"
+msgstr "CHUA CHOI TRO CHOI NAO"
