@@ -4463,8 +4463,13 @@ void GuiMenu::openLastPlayedGames()
 		row.addElement(nameText, true);
 		row.addElement(infoText, false);
 
-		row.makeAcceptInputHandler([window, src, slot]
+		row.makeAcceptInputHandler([window, src, slot, s]
 		{
+			// fermer le menu AVANT de lancer : sinon la ligne reste selectionnee
+			// et l'appui qui quitte l'emulateur relance le jeu au retour.
+			// close() fait delete this : ne plus toucher a s apres cet appel.
+			s->close();
+
 			// slot -2 = auto-state : rien a passer, RetroArch le charge seul
 			ViewController::get()->launch(src, Vector3f(Renderer::getScreenWidth() / 2.0f,
 				Renderer::getScreenHeight() / 2.0f, 0), slot >= 0 ? slot : -1);
