@@ -343,6 +343,7 @@ void FileData::launchGame(Window* window)
 
 	LOG(LogInfo) << "	" << command;
 
+	time_t esSessionStart = Utils::Time::now();
 	int exitCode = runSystemCommand(command, getDisplayName(), hideWindow ? NULL : window);
 	if (exitCode != 0)
 	{
@@ -373,6 +374,17 @@ void FileData::launchGame(Window* window)
 	}
 
 	// music
+	// mise a jour du temps de jeu, commune aux deux branches de lancement
+	int esSessionTime = (int)(Utils::Time::now() - esSessionStart);
+	if (esSessionTime > 0 && esSessionTime < 86400)
+	{
+		FileData* gameToTime = getSourceFileData();
+		int totalTime = gameToTime->getMetadata().getInt("gametime") + esSessionTime;
+		gameToTime->getMetadata().set("gametime", std::to_string(static_cast<long long>(totalTime)));
+		gameToTime->getMetadata().set("lastsession", std::to_string(static_cast<long long>(esSessionTime)));
+		saveToGamelistRecovery(gameToTime);
+	}
+
 	if (Settings::getInstance()->getBool("audio.bgmusic"))
 		AudioManager::getInstance()->playRandomMusic();
 }
