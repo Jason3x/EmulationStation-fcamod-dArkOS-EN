@@ -43,6 +43,13 @@ private:
 	void deleteConnections();
 	void openNetworkSettings();
 	void openBatterySettings();
+	void openSaveSyncSettings();
+	void openSaveSyncCredentials();
+	void openSaveSyncProtocol();
+	void openSaveSyncLog();
+	void manualSaveSync();
+	void openSaveSyncCredentials();
+	void openSaveSyncLog();
 	void openSoundSettings();
 	void openUISettings();
 
