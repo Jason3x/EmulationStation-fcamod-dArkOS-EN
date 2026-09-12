@@ -4311,8 +4311,11 @@ static int esFindLatestSaveSlot(FileData* game)
 	std::vector<std::string> files;
 	esScanDir(statesDir, files, 0);
 
-	int bestSlot = -1;
-	time_t bestTime = 0;
+	// les slots numerotes (sauvegardes manuelles) priment sur l'auto-state,
+	// qui est reecrit a chaque sortie de jeu et gagnerait donc toujours au tri par date
+	int bestManualSlot = -1;
+	time_t bestManualTime = 0;
+	bool hasAuto = false;
 
 	for (auto& f : files)
 	{
@@ -4339,14 +4342,23 @@ static int esFindLatestSaveSlot(FileData* game)
 		if (stat(f.c_str(), &st) != 0)
 			continue;
 
-		if (st.st_mtime > bestTime)
+		if (slot == -2)
 		{
-			bestTime = st.st_mtime;
-			bestSlot = slot;
+			hasAuto = true;
+			continue;
+		}
+
+		if (st.st_mtime > bestManualTime)
+		{
+			bestManualTime = st.st_mtime;
+			bestManualSlot = slot;
 		}
 	}
 
-	return bestSlot;
+	if (bestManualSlot >= 0)
+		return bestManualSlot;
+
+	return hasAuto ? -2 : -1;
 }
 
 // Collecte les jeux deja joues, tries du plus recent au plus ancien.
@@ -4453,11 +4465,6 @@ void GuiMenu::openLastPlayedGames()
 
 		row.makeAcceptInputHandler([window, src, slot]
 		{
-			// vider la pile de GUI avant de lancer, sinon le menu reste
-			// affiche par dessus le jeu au retour
-			while (window->peekGui() != NULL && window->peekGui() != ViewController::get())
-				delete window->peekGui();
-
 			// slot -2 = auto-state : rien a passer, RetroArch le charge seul
 			ViewController::get()->launch(src, Vector3f(Renderer::getScreenWidth() / 2.0f,
 				Renderer::getScreenHeight() / 2.0f, 0), slot >= 0 ? slot : -1);
