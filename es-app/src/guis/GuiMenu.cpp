@@ -4300,6 +4300,13 @@ static void esScanDir(const std::string& dir, std::vector<std::string>& out, int
 // Retourne le numero de slot (0-9), -1 si aucune, -2 si c'est l'auto-state.
 static int esFindLatestSaveSlot(FileData* game)
 {
+	// MAME ne sait pas charger un etat en ligne de commande : injecter un
+	// slot fait planter mame2003 / mame2003_plus au lancement.
+	const std::string esSys = Utils::String::toLower(game->getSystemName());
+	if (esSys.compare(0, 4, "mame") == 0 || esSys == "arcade" ||
+		esSys == "neogeo" || esSys == "fbneo")
+		return -1;
+
 	const std::string statesDir = Utils::FileSystem::getHomePath() + "/.config/retroarch/states";
 	if (!Utils::FileSystem::exists(statesDir))
 		return -1;
@@ -4436,6 +4443,7 @@ void GuiMenu::openLastPlayedGames()
 			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
 		header.addElement(hLeft, true);
 		header.addElement(hRight, false);
+		header.selectable = false;
 		s->addRow(header);
 	}
 
