@@ -343,8 +343,9 @@ void FileData::launchGame(Window* window, int entrySlot)
 			command.insert(end, " --entryslot " + std::to_string(entrySlot));
 			injected = true;
 		}
-		if (!injected)
-			command = "ENTRYSLOT=" + std::to_string(entrySlot) + " " + command;
+		// hors RetroArch (pico8, ppsspp, drastic...) : aucune injection,
+		// ces emulateurs ont leur propre format de sauvegarde
+		(void)injected;
 	}
 
 	if (Utils::FileSystem::exists("/usr/local/bin/quickmode.sh"))
