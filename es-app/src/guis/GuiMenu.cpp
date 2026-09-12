@@ -4439,7 +4439,10 @@ void GuiMenu::openLastPlayedGames()
 			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
 		auto hRight = std::make_shared<TextComponent>(window, _("SESSION | TOTAL"),
 			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+		auto hMid = std::make_shared<TextComponent>(window, _("SYSTEM"),
+			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
 		header.addElement(hLeft, true);
+		header.addElement(hMid, false);
 		header.addElement(hRight, false);
 		header.selectable = false;
 		s->addRow(header);
@@ -4466,7 +4469,11 @@ void GuiMenu::openLastPlayedGames()
 		auto nameText = std::make_shared<TextComponent>(window, game->getName(),
 			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
 
+		auto sysText = std::make_shared<TextComponent>(window, src->getSystemName(),
+			ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
+
 		row.addElement(nameText, true);
+		row.addElement(sysText, false);
 		row.addElement(infoText, false);
 
 		row.makeAcceptInputHandler([window, src, slot, s]
