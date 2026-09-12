@@ -4352,6 +4352,7 @@ static int esFindLatestSaveSlot(FileData* game)
 // Collecte les jeux deja joues, tries du plus recent au plus ancien.
 // lastplayed est stocke au format %Y%m%dT%H%M%S : le tri lexicographique
 // decroissant sur la chaine brute donne directement l'ordre chronologique.
+// esIsLauncherScript : marqueur de patch
 static std::vector<FileData*> esGetLastPlayedGames(size_t maxCount)
 {
 	std::vector<std::pair<std::string, FileData*>> entries;
@@ -4366,6 +4367,11 @@ static std::vector<FileData*> esGetLastPlayedGames(size_t maxCount)
 
 		for (auto game : system->getRootFolder()->getFilesRecursive(GAME))
 		{
+			// les lanceurs .sh (retroarch, outils de config) ne sont pas des jeux
+			std::string ext = Utils::String::toLower(Utils::FileSystem::getExtension(game->getPath()));
+			if (ext == ".sh")
+				continue;
+
 			std::string lastPlayed = game->getMetadata().get("lastplayed");
 
 			if (lastPlayed.empty() || lastPlayed == "0" || lastPlayed == "not-a-date-time")
