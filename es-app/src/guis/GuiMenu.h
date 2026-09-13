@@ -28,7 +28,6 @@ private:
 
 	void addVersionInfo();
 	void openCollectionSystemSettings();
-	void openLastPlayedGames();
 	void openConfigInput();
 	void openOtherSettings();
 	void openQuitMenu();
