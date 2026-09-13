@@ -1776,3 +1776,53 @@ msgstr "まだプレイしたゲームがありません"
 
 msgid "SESSION | TOTAL"
 msgstr "今回 | 合計"
+msgid "SAVESYNC SETTINGS"
+msgstr "SAVESYNC設定"
+
+msgid "ENABLE SAVESYNC"
+msgstr "SAVESYNCを有効にする"
+
+msgid "SYNCHRONIZE NOW"
+msgstr "今すぐ同期"
+
+msgid "REBUILD FOLDER CACHE"
+msgstr "フォルダキャッシュを再構築"
+
+msgid "CREDENTIALS"
+msgstr "認証情報"
+
+msgid "PROTOCOL"
+msgstr "プロトコル"
+
+msgid "LOG"
+msgstr "ログ"
+
+msgid "SYNCING"
+msgstr "同期中"
+
+msgid "SUCCESS!"
+msgstr "成功しました！"
+
+msgid "FAILED."
+msgstr "失敗しました。"
+
+msgid "NO ERROR DETAILS WERE RECORDED."
+msgstr "エラーの詳細は記録されていません。"
+
+msgid "HOST"
+msgstr "ホスト"
+
+msgid "PATH"
+msgstr "パス"
+
+msgid "SMB (WINDOWS / SAMBA SHARE)"
+msgstr "SMB（Windows / Sambaの共有）"
+
+msgid "NFS (LINUX / NAS EXPORT)"
+msgstr "NFS（Linux / NASエクスポート）"
+
+msgid "SSHFS (SSH / SFTP SERVER)"
+msgstr "SSHFS（SSH / SFTPサーバー）"
+
+msgid "WEBDAV (NEXTCLOUD / OWNCLOUD / DAV)"
+msgstr "WebDAV（Nextcloud /

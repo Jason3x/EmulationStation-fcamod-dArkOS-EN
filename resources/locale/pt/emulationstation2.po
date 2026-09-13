@@ -1916,3 +1916,50 @@ msgstr "NENHUM JOGO JOGADO AINDA"
 
 msgid "SESSION | TOTAL"
 msgstr "SESSAO | TOTAL"
+msgid "SAVESYNC SETTINGS"
+msgstr "DEFINIÇÕES SAVESYNC"
+
+msgid "ENABLE SAVESYNC"
+msgstr "ATIVAR SAVESYNC"
+
+msgid "SYNCHRONIZE NOW"
+msgstr "SINCRONIZAR AGORA"
+
+msgid "REBUILD FOLDER CACHE"
+msgstr "RECONSTRUIR CACHE DE PASTAS"
+
+msgid "CREDENTIALS"
+msgstr "CREDENCIAIS"
+
+msgid "PROTOCOL"
+msgstr "PROTOCOLO"
+
+msgid "LOG"
+msgstr "REGISTO"
+
+msgid "SYNCING"
+msgstr "A SINCRONIZAR"
+
+msgid "SUCCESS!"
+msgstr "SUCESSO!"
+
+msgid "FAILED."
+msgstr "FALHOU."
+
+msgid "NO ERROR DETAILS WERE RECORDED."
+msgstr "NÃO FORAM REGISTADOS DETALHES DO ERRO."
+
+msgid "HOST"
+msgstr "ANFITRIÃO"
+
+msgid "PATH"
+msgstr "CAMINHO"
+
+msgid "SMB (WINDOWS / SAMBA SHARE)"
+msgstr "SMB (PARTILHA WINDOWS / SAMBA)"
+
+msgid "NFS (LINUX / NAS EXPORT)"
+msgstr "NFS (EXPORTAÇÃO LINUX / NAS)"
+
+msgid "SSHFS (SSH / SFTP SERVER)"
+m

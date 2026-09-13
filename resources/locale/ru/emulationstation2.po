@@ -3940,3 +3940,59 @@ msgstr "ПОКА НЕТ СЫГРАННЫХ ИГР"
 
 msgid "SESSION | TOTAL"
 msgstr "СЕАНС | ВСЕГО"
+msgid "SAVESYNC SETTINGS"
+msgstr "НАСТРОЙКИ SAVESYNC"
+
+msgid "ENABLE SAVESYNC"
+msgstr "ВКЛЮЧИТЬ SAVESYNC"
+
+msgid "SYNCHRONIZE NOW"
+msgstr "СИНХРОНИЗИРОВАТЬ СЕЙЧАС"
+
+msgid "REBUILD FOLDER CACHE"
+msgstr "ПЕРЕСТРОИТЬ КЭШ ПАПОК"
+
+msgid "CREDENTIALS"
+msgstr "УЧЁТНЫЕ ДАННЫЕ"
+
+msgid "PROTOCOL"
+msgstr "ПРОТОКОЛ"
+
+msgid "LOG"
+msgstr "ЖУРНАЛ"
+
+msgid "SYNCING"
+msgstr "СИНХРОНИЗАЦИЯ"
+
+msgid "SUCCESS!"
+msgstr "УСПЕШНО!"
+
+msgid "FAILED."
+msgstr "ОШИБКА."
+
+msgid "NO ERROR DETAILS WERE RECORDED."
+msgstr "ПОДРОБНОСТИ ОШИБКИ НЕ ЗАПИСАНЫ."
+
+msgid "HOST"
+msgstr "ХОСТ"
+
+msgid "PATH"
+msgstr "ПУТЬ"
+
+msgid "SMB (WINDOWS / SAMBA SHARE)"
+msgstr "SMB (ОБЩИЙ РЕСУРС WINDOWS / SAMBA)"
+
+msgid "NFS (LINUX / NAS EXPORT)"
+msgstr "NFS (ЭКСПОРТ LINUX / NAS)"
+
+msgid "SSHFS (SSH / SFTP SERVER)"
+msgstr "SSHFS (СЕРВЕР SSH / SFTP)"
+
+msgid "WEBDAV (NEXTCLOUD / OWNCLOUD / DAV)"
+msgstr "WEBDAV (NEXTCLOUD / OWNCLOUD / DAV)"
+
+msgid "INSTALLING DEPENDENCIES"
+msgstr "УСТАНОВКА ЗАВИСИМОСТЕЙ"
+
+msgid "UNABLE TO INSTALL REQUIRED NETWORK SUPPORT."
+msgstr "НЕ УДАЛОСЬ УСТАНОВИТЬ
