@@ -2251,12 +2251,12 @@ void GuiMenu::openPerformanceSettings()
 	auto s = new GuiSettings(mWindow, _("PERFORMANCE SETTINGS"));
 	
 	// --- CPU Grade ---
-    /* std::string cpuBinning = getCpuBinning();
+    std::string cpuBinning = getCpuBinning();
     auto cpuText = std::make_shared<TextComponent>(mWindow,
         cpuBinning,
         ThemeData::getMenuTheme()->Text.font, ThemeData::getMenuTheme()->Text.color);
     s->addWithLabel(_("CPU GRADE"), cpuText);
-	*/
+
 	
 	// --- CPU Temp ---
     auto cpuTempText = std::make_shared<TextComponent>(mWindow,
