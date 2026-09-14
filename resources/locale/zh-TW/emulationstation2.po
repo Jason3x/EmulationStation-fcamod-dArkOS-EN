@@ -3930,14 +3930,6 @@ msgstr "  載入圖片延遲(秒)"
 msgid "RAM APPLY ON BOOT"
 msgstr "啟動時套用RAM設定"
 
-msgid "LAST 20 PLAYED GAMES"
-msgstr "最近玩過的20個遊戲"
-
-msgid "NO GAME PLAYED YET"
-msgstr "尚未玩過任何遊戲"
-
-msgid "SESSION | TOTAL"
-msgstr "本次 | 總計"
 msgid "SAVESYNC SETTINGS"
 msgstr "SAVESYNC 設定"
 
@@ -4006,3 +3998,6 @@ msgstr "找不到日誌檔案。"
 
 msgid "LOG CLEARED."
 msgstr "日誌已清除。"
+
+msgid "ENABLE FAST SYNC"
+msgstr "啟用快速同步"

@@ -2023,14 +2023,6 @@ msgstr "세로"
 msgid "RAM APPLY ON BOOT"
 msgstr "부팅 시 RAM 설정 적용"
 
-msgid "LAST 20 PLAYED GAMES"
-msgstr "최근 플레이한 게임 20개"
-
-msgid "NO GAME PLAYED YET"
-msgstr "아직 플레이한 게임이 없습니다"
-
-msgid "SESSION | TOTAL"
-msgstr "세션 | 총계"
 msgid "SAVESYNC SETTINGS"
 msgstr "SAVESYNC 설정"
 
@@ -2099,3 +2091,6 @@ msgstr "로그 파일을 찾을 수 없습니다."
 
 msgid "LOG CLEARED."
 msgstr "로그가 지워졌습니다."
+
+msgid "ENABLE FAST SYNC"
+msgstr "빠른 동기화 활성화"

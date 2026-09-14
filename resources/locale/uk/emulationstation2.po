@@ -4005,14 +4005,6 @@ msgstr "СЕГМЕНТОВАНИЙ"
 msgid "RAM APPLY ON BOOT"
 msgstr "ЗАСТОСОВУВАТИ RAM ПІД ЧАС ЗАВАНТАЖЕННЯ"
 
-msgid "LAST 20 PLAYED GAMES"
-msgstr "ОСТАННІ 20 ІГОР"
-
-msgid "NO GAME PLAYED YET"
-msgstr "ЩЕ НЕМАЄ ЗІГРАНИХ ІГОР"
-
-msgid "SESSION | TOTAL"
-msgstr "СЕАНС | ВСЬОГО"
 msgid "SAVESYNC SETTINGS"
 msgstr "НАЛАШТУВАННЯ SAVESYNC"
 
@@ -4081,3 +4073,6 @@ msgstr "ФАЙЛ ЖУРНАЛУ НЕ ЗНАЙДЕНО."
 
 msgid "LOG CLEARED."
 msgstr "ЖУРНАЛ ОЧИЩЕНО."
+
+msgid "ENABLE FAST SYNC"
+msgstr "УВІМКНУТИ ШВИДКУ СИНХРОНІЗАЦІЮ"

@@ -1768,14 +1768,6 @@ msgstr "縦向き"
 msgid "RAM APPLY ON BOOT"
 msgstr "起動時にRAM設定を適用"
 
-msgid "LAST 20 PLAYED GAMES"
-msgstr "最近プレイした20本"
-
-msgid "NO GAME PLAYED YET"
-msgstr "まだプレイしたゲームがありません"
-
-msgid "SESSION | TOTAL"
-msgstr "今回 | 合計"
 msgid "SAVESYNC SETTINGS"
 msgstr "SAVESYNC設定"
 
@@ -1825,4 +1817,25 @@ msgid "SSHFS (SSH / SFTP SERVER)"
 msgstr "SSHFS（SSH / SFTPサーバー）"
 
 msgid "WEBDAV (NEXTCLOUD / OWNCLOUD / DAV)"
-msgstr "WebDAV（Nextcloud /
+msgstr "WebDAV（Nextcloud / ownCloud / DAV）"
+
+msgid "INSTALLING DEPENDENCIES"
+msgstr "依存関係をインストール中"
+
+msgid "UNABLE TO INSTALL REQUIRED NETWORK SUPPORT."
+msgstr "必要なネットワークサポートをインストールできませんでした。"
+
+msgid "VIEW LOG"
+msgstr "ログを表示"
+
+msgid "CLEAR LOG"
+msgstr "ログを消去"
+
+msgid "NO LOG FILE FOUND."
+msgstr "ログファイルが見つかりません。"
+
+msgid "LOG CLEARED."
+msgstr "ログを消去しました。"
+
+msgid "ENABLE FAST SYNC"
+msgstr "高速同期を有効にする"
