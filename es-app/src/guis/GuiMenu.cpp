@@ -1413,12 +1413,15 @@ void GuiMenu::openSaveSyncSettings()
 	auto ssSwitch = std::make_shared<SwitchComponent>(mWindow);
 	ssSwitch->setState(ssEnabled);
 	s->addWithLabel(_("ENABLE SAVESYNC"), ssSwitch);
-	ssSwitch->setOnChangedCallback([ssSwitch] {
-		if (ssSwitch->getState())
-			executeCommand("sudo systemctl enable savesync.service 2>/dev/null");
-		else {
-			executeCommand("sudo systemctl disable savesync.service 2>/dev/null");
-			executeCommand("sudo sed -i '\\#^/mnt/savesync #d' /etc/davfs2/secrets 2>/dev/null");
+	s->addSaveFunc([s, ssSwitch, ssEnabled] {
+		if (ssSwitch->getState() != ssEnabled) {
+			if (ssSwitch->getState())
+				executeCommand("sudo systemctl enable savesync.service 2>/dev/null");
+			else {
+				executeCommand("sudo systemctl disable savesync.service 2>/dev/null");
+				executeCommand("sudo sed -i '\\#^/mnt/savesync #d' /etc/davfs2/secrets 2>/dev/null");
+			}
+			s->setVariable("reopenSaveSync", true);
 		}
 	});
 
