@@ -1410,7 +1410,6 @@ void GuiMenu::openSaveSyncSettings()
 	// --- Enable SaveSync toggle ---
 	std::string ssState = executeCommand("systemctl is-enabled savesync.service 2>/dev/null");
 	bool ssEnabled = ssState.find("enabled") != std::string::npos;
-
 	auto ssSwitch = std::make_shared<SwitchComponent>(mWindow);
 	ssSwitch->setState(ssEnabled);
 	s->addWithLabel(_("ENABLE SAVESYNC"), ssSwitch);
