@@ -1428,19 +1428,20 @@ void GuiMenu::openSaveSyncSettings()
 	// --- Remaining entries only shown while SaveSync is enabled ---
 	if (ssEnabled)
 	{
+		
 		// --- Enable Fast Sync toggle ---
 		bool fsEnabled = Utils::FileSystem::exists("/home/ark/.config/.fastsync");
 		auto fsSwitch = std::make_shared<SwitchComponent>(mWindow);
 		fsSwitch->setState(fsEnabled);
-		s->addWithLabel(_("ENABLE FAST SYNC"), fsSwitch);
-		s->addSaveFunc([s, fsSwitch] {
+		fsSwitch->setChangedColor();
+		fsSwitch->setCallback([fsSwitch] {
 			if (fsSwitch->getState())
 				executeCommand("sudo touch /home/ark/.config/.fastsync");
 			else
 				executeCommand("sudo rm -f /home/ark/.config/.fastsync");
-
-			s->setVariable("reopenSaveSync", true);
 		});
+		s->addWithLabel(_("ENABLE FAST SYNC"), fsSwitch);
+
 		s->addEntry(_("SYNCHRONIZE NOW"), true, [this] { manualSaveSync(); }, "");
 		s->addEntry(_("REBUILD FOLDER CACHE"), true, [this] { executeCommand("sudo /usr/local/bin/savesync.sh --scan"); }, "");
 		s->addEntry(_("CREDENTIALS"), true, [this] { openSaveSyncCredentials(); }, "");
