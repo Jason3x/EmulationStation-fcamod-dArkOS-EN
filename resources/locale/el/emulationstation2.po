@@ -2707,6 +2707,14 @@ msgstr "ΚΑΤΑΚΟΡΥΦΟ"
 msgid "RAM APPLY ON BOOT"
 msgstr "ΕΦΑΡΜΟΓΉ RAM ΚΑΤΆ ΤΗΝ ΕΚΚΊΝΗΣΗ"
 
+msgid "LAST 20 PLAYED GAMES"
+msgstr "ΤΑ 20 ΤΕΛΕΥΤΑΙΑ ΠΑΙΧΝΙΔΙΑ"
+
+msgid "NO GAME PLAYED YET"
+msgstr "ΔΕΝ ΕΧΕΙ ΠΑΙΧΤΕΙ ΚΑΝΕΝΑ ΠΑΙΧΝΙΔΙ"
+
+msgid "SESSION | TOTAL"
+msgstr "ΣΥΝΕΔΡΙΑ | ΣΥΝΟΛΟ"
 msgid "SAVESYNC SETTINGS"
 msgstr "ΡΥΘΜΙΣΕΙΣ SAVESYNC"
 

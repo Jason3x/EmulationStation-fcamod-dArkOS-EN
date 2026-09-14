@@ -78,7 +78,7 @@ public:
 	// As above, but also remove parenthesis
 	std::string getCleanName() const;
 
-	void launchGame(Window* window);
+	void launchGame(Window* window, int entrySlot = -1);
 
 	static void resetSettings();
 	
