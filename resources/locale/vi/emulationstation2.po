@@ -2301,3 +2301,6 @@ msgstr "KHÔNG TÌM THẤY TỆP NHẬT KÝ."
 
 msgid "LOG CLEARED."
 msgstr "ĐÃ XÓA NHẬT KÝ."
+
+msgid "ENABLE FAST SYNC"
+msgstr "BẬT ĐỒNG BỘ NHANH"

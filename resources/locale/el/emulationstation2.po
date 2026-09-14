@@ -2771,4 +2771,10 @@ msgid "CLEAR LOG"
 msgstr "ΕΚΚΑΘΑΡΙΣΗ ΚΑΤΑΓΡΑΦΗΣ"
 
 msgid "NO LOG FILE FOUND."
-msgstr "ΔΕΝ ΒΡΕΘΗΚΕ
+msgstr "ΔΕΝ ΒΡΕΘΗΚΕ ΑΡΧΕΙΟ ΚΑΤΑΓΡΑΦΗΣ."
+
+msgid "LOG CLEARED."
+msgstr "Η ΚΑΤΑΓΡΑΦΗ ΕΚΚΑΘΑΡΙΣΤΗΚΕ."
+
+msgid "ENABLE FAST SYNC"
+msgstr "ΕΝΕΡΓΟΠΟΙΗΣΗ ΓΡΗΓΟΡΟΥ ΣΥΓΧΡΟΝΙΣΜΟΥ"

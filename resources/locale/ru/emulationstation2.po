@@ -3987,4 +3987,19 @@ msgid "INSTALLING DEPENDENCIES"
 msgstr "УСТАНОВКА ЗАВИСИМОСТЕЙ"
 
 msgid "UNABLE TO INSTALL REQUIRED NETWORK SUPPORT."
-msgstr "НЕ УДАЛОСЬ УСТАНОВИТЬ
+msgstr "НЕ УДАЛОСЬ УСТАНОВИТЬ НЕОБХОДИМУЮ СЕТЕВУЮ ПОДДЕРЖКУ."
+
+msgid "VIEW LOG"
+msgstr "ПРОСМОТР ЖУРНАЛА"
+
+msgid "CLEAR LOG"
+msgstr "ОЧИСТИТЬ ЖУРНАЛ"
+
+msgid "NO LOG FILE FOUND."
+msgstr "ФАЙЛ ЖУРНАЛА НЕ НАЙДЕН."
+
+msgid "LOG CLEARED."
+msgstr "ЖУРНАЛ ОЧИЩЕН."
+
+msgid "ENABLE FAST SYNC"
+msgstr "ВКЛЮЧИТЬ БЫСТРУЮ СИНХРОНИЗАЦИЮ"

@@ -4144,70 +4144,73 @@ msgid "RAM APPLY ON BOOT"
 msgstr "ЗАСТОСОВУВАТИ RAM ПІД ЧАС ЗАВАНТАЖЕННЯ"
 
 msgid "SAVESYNC SETTINGS"
-msgstr "SAVESYNC-INSTÄLLNINGAR"
+msgstr "НАЛАШТУВАННЯ SAVESYNC"
 
 msgid "ENABLE SAVESYNC"
-msgstr "AKTIVERA SAVESYNC"
+msgstr "УВІМКНУТИ SAVESYNC"
 
 msgid "SYNCHRONIZE NOW"
-msgstr "SYNKRONISERA NU"
+msgstr "СИНХРОНІЗУВАТИ ЗАРАЗ"
 
 msgid "REBUILD FOLDER CACHE"
-msgstr "ÅTERSKAPA MAPPCACHE"
+msgstr "ПЕРЕБУДУВАТИ КЕШ ПАПОК"
 
 msgid "CREDENTIALS"
-msgstr "INLOGGNINGSUPPGIFTER"
+msgstr "ОБЛІКОВІ ДАНІ"
 
 msgid "PROTOCOL"
-msgstr "PROTOKOLL"
+msgstr "ПРОТОКОЛ"
 
 msgid "LOG"
-msgstr "LOGG"
+msgstr "ЖУРНАЛ"
 
 msgid "SYNCING"
-msgstr "SYNKRONISERAR"
+msgstr "СИНХРОНІЗАЦІЯ"
 
 msgid "SUCCESS!"
-msgstr "LYCKADES!"
+msgstr "УСПІШНО!"
 
 msgid "FAILED."
-msgstr "MISSLYCKADES."
+msgstr "ПОМИЛКА."
 
 msgid "NO ERROR DETAILS WERE RECORDED."
-msgstr "INGA FELDETALJER REGISTRERADES."
+msgstr "ДЕТАЛІ ПОМИЛКИ НЕ ЗАФІКСОВАНО."
 
 msgid "HOST"
-msgstr "VÄRD"
+msgstr "ХОСТ"
 
 msgid "PATH"
-msgstr "SÖKVÄG"
+msgstr "ШЛЯХ"
 
 msgid "SMB (WINDOWS / SAMBA SHARE)"
-msgstr "SMB (WINDOWS-/SAMBA-DELNING)"
+msgstr "SMB (СПІЛЬНИЙ РЕСУРС WINDOWS / SAMBA)"
 
 msgid "NFS (LINUX / NAS EXPORT)"
-msgstr "NFS (LINUX-/NAS-EXPORT)"
+msgstr "NFS (ЕКСПОРТ LINUX / NAS)"
 
 msgid "SSHFS (SSH / SFTP SERVER)"
-msgstr "SSHFS (SSH-/SFTP-SERVER)"
+msgstr "SSHFS (СЕРВЕР SSH / SFTP)"
 
 msgid "WEBDAV (NEXTCLOUD / OWNCLOUD / DAV)"
 msgstr "WEBDAV (NEXTCLOUD / OWNCLOUD / DAV)"
 
 msgid "INSTALLING DEPENDENCIES"
-msgstr "INSTALLERAR BEROENDEN"
+msgstr "ВСТАНОВЛЕННЯ ЗАЛЕЖНОСТЕЙ"
 
 msgid "UNABLE TO INSTALL REQUIRED NETWORK SUPPORT."
-msgstr "KUNDE INTE INSTALLERA NÖDVÄNDIGT NÄTVERKSSTÖD."
+msgstr "НЕ ВДАЛОСЯ ВСТАНОВИТИ НЕОБХІДНУ МЕРЕЖЕВУ ПІДТРИМКУ."
 
 msgid "VIEW LOG"
-msgstr "VISA LOGG"
+msgstr "ПЕРЕГЛЯНУТИ ЖУРНАЛ"
 
 msgid "CLEAR LOG"
-msgstr "RENSA LOGG"
+msgstr "ОЧИСТИТИ ЖУРНАЛ"
 
 msgid "NO LOG FILE FOUND."
-msgstr "INGEN LOGGFIL HITTADES."
+msgstr "ФАЙЛ ЖУРНАЛУ НЕ ЗНАЙДЕНО."
 
 msgid "LOG CLEARED."
-msgstr "LOGGEN RENSAD."
+msgstr "ЖУРНАЛ ОЧИЩЕНО."
+
+msgid "ENABLE FAST SYNC"
+msgstr "УВІМКНУТИ ШВИДКУ СИНХРОНІЗАЦІЮ"

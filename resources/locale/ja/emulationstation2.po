@@ -1817,4 +1817,25 @@ msgid "SSHFS (SSH / SFTP SERVER)"
 msgstr "SSHFS（SSH / SFTPサーバー）"
 
 msgid "WEBDAV (NEXTCLOUD / OWNCLOUD / DAV)"
-msgstr "WebDAV（Nextcloud /
+msgstr "WebDAV（Nextcloud / ownCloud / DAV）"
+
+msgid "INSTALLING DEPENDENCIES"
+msgstr "依存関係をインストール中"
+
+msgid "UNABLE TO INSTALL REQUIRED NETWORK SUPPORT."
+msgstr "必要なネットワークサポートをインストールできませんでした。"
+
+msgid "VIEW LOG"
+msgstr "ログを表示"
+
+msgid "CLEAR LOG"
+msgstr "ログを消去"
+
+msgid "NO LOG FILE FOUND."
+msgstr "ログファイルが見つかりません。"
+
+msgid "LOG CLEARED."
+msgstr "ログを消去しました。"
+
+msgid "ENABLE FAST SYNC"
+msgstr "高速同期を有効にする"

@@ -1401,72 +1401,6 @@ void GuiMenu::openSaveSyncCredentials()
 	mWindow->pushGui(s);
 }
 
-static bool ssNetworkUp()
-{
-	return system("ip route show default >/dev/null 2>&1") == 0;
-}
-
-static bool ssMountHost()
-{
-	std::string protocol = ssCrdGet("PROTOCOL");
-	if (protocol.empty()) protocol = "smb";
-	std::string host = ssCrdGet("HOST");
-	std::string user = ssCrdGet("USERNAME");
-	std::string pass = ssCrdGet("PASSWORD");
-	std::string path = ssCrdGet("NETWORKPATH");
-
-	executeCommand("sudo mkdir -p /mnt/savesync");
-
-	std::string cmd;
-	if (protocol == "smb")
-	{
-		cmd = "NET_IP=\"" + host + "\"; "
-			"echo \"$NET_IP\" | grep -Eq '^[0-9]{1,3}(\\.[0-9]{1,3}){3}$' || "
-			"NET_IP=$(nmblookup \"" + host + "\" 2>/dev/null | grep -Eo '([0-9]{1,3}\\.){3}[0-9]{1,3}' | head -n1); "
-			"[ -n \"$NET_IP\" ] && sudo mount -t cifs \"//$NET_IP/" + path + "\" /mnt/savesync "
-			"-o username=\"" + user + "\",password=\"" + pass + "\",vers=3.0,uid=$(id -u ark),gid=$(id -g ark)";
-	}
-	else if (protocol == "nfs")
-	{
-		cmd = "sudo mount -t nfs \"" + host + ":" + path + "\" /mnt/savesync";
-	}
-	else if (protocol == "sshfs")
-	{
-		cmd = "SSHPASS=\"" + pass + "\" sudo sshfs \"" + user + "@" + host + ":" + path + "\" /mnt/savesync "
-			"-o ssh_command=\"sshpass -e ssh\",uid=$(id -u ark),gid=$(id -g ark),StrictHostKeyChecking=no,reconnect";
-	}
-	else
-	{
-		return false; // webdav not supported here — needs secrets file, see note
-	}
-
-	int status = system(cmd.c_str());
-	return WIFEXITED(status) && WEXITSTATUS(status) == 0;
-}
-
-static void ssUnmountHost()
-{
-	executeCommand("sudo umount /mnt/savesync 2>/dev/null");
-}
-
-static bool ssFastSyncLastState()
-{
-	return executeCommand("cat /home/ark/.config/fastsync.state 2>/dev/null") == "1";
-}
-
-static bool ssFastSyncStatus()
-{
-	if (!ssNetworkUp() || !ssMountHost())
-		return ssFastSyncLastState();
-
-	bool exists = Utils::FileSystem::exists("/mnt/savesync/mtime.cache");
-	ssUnmountHost();
-
-	executeCommand(std::string("echo ") + (exists ? "1" : "0") + " | sudo tee /home/ark/.config/fastsync.state >/dev/null");
-
-	return exists;
-}
-
 void GuiMenu::openSaveSyncSettings()
 {
 	auto s = new GuiSettings(mWindow, _("SAVESYNC SETTINGS"));
@@ -1494,24 +1428,17 @@ void GuiMenu::openSaveSyncSettings()
 	if (ssEnabled)
 	{
 		// --- Enable Fast Sync toggle ---
-		bool fsEnabled = ssFastSyncStatus();
+		bool fsEnabled = Utils::FileSystem::exists("/home/ark/.config/.fastsync");
 		auto fsSwitch = std::make_shared<SwitchComponent>(mWindow);
 		fsSwitch->setState(fsEnabled);
 		s->addWithLabel(_("ENABLE FAST SYNC"), fsSwitch);
-		s->addSaveFunc([s, this, fsSwitch, fsEnabled] {
-			if (fsSwitch->getState() != fsEnabled) {
-				if (!ssNetworkUp()) {
-					mWindow->pushGui(new GuiMsgBox(mWindow, _("NO NETWORK")));
-				} else if (ssMountHost()) {
-					if (fsSwitch->getState())
-						executeCommand("sudo touch /mnt/savesync/mtime.cache");
-					else
-						executeCommand("sudo rm -f /mnt/savesync/mtime.cache");
-					executeCommand(std::string("echo ") + (fsSwitch->getState() ? "1" : "0") + " | sudo tee /home/ark/.config/fastsync.state >/dev/null");
-					ssUnmountHost();
-				}
-				s->setVariable("reopenSaveSync", true);
-			}
+		s->addSaveFunc([s, fsSwitch] {
+			if (fsSwitch->getState())
+				executeCommand("sudo touch /home/ark/.config/.fastsync");
+			else
+				executeCommand("sudo rm -f /home/ark/.config/.fastsync");
+
+			s->setVariable("reopenSaveSync", true);
 		});
 		s->addEntry(_("SYNCHRONIZE NOW"), true, [this] { manualSaveSync(); }, "");
 		s->addEntry(_("REBUILD FOLDER CACHE"), true, [this] { executeCommand("sudo /usr/local/bin/savesync.sh --scan"); }, "");

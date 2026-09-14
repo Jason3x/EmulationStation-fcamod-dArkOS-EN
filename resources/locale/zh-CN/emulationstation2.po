@@ -3994,3 +3994,6 @@ msgstr "未找到日志文件。"
 
 msgid "LOG CLEARED."
 msgstr "日志已清除。"
+
+msgid "ENABLE FAST SYNC"
+msgstr "启用快速同步"

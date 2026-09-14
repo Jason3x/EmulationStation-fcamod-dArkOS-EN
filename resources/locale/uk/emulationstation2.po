@@ -4073,3 +4073,6 @@ msgstr "ФАЙЛ ЖУРНАЛУ НЕ ЗНАЙДЕНО."
 
 msgid "LOG CLEARED."
 msgstr "ЖУРНАЛ ОЧИЩЕНО."
+
+msgid "ENABLE FAST SYNC"
+msgstr "УВІМКНУТИ ШВИДКУ СИНХРОНІЗАЦІЮ"

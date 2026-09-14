@@ -2091,3 +2091,6 @@ msgstr "로그 파일을 찾을 수 없습니다."
 
 msgid "LOG CLEARED."
 msgstr "로그가 지워졌습니다."
+
+msgid "ENABLE FAST SYNC"
+msgstr "빠른 동기화 활성화"
