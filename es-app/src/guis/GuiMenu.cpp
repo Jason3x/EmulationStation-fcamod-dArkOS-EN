@@ -1433,15 +1433,11 @@ void GuiMenu::openSaveSyncSettings()
 		auto fsSwitch = std::make_shared<SwitchComponent>(mWindow);
 		fsSwitch->setState(fsEnabled);
 		s->addWithLabel(_("ENABLE FAST SYNC"), fsSwitch);
-		s->addSaveFunc([s, fsSwitch] {
-			if (ssSwitch->getState() != ssEnabled) {
-				if (fsSwitch->getState())
-					executeCommand("sudo touch /home/ark/.config/.fastsync");
-				else
-					executeCommand("sudo rm -f /home/ark/.config/.fastsync");
-
-				s->setVariable("reopenSaveSync", true);
-			}
+		fsSwitch->setOnChangedCallback([fsSwitch] {
+			if (fsSwitch->getState())
+				executeCommand("sudo touch /home/ark/.config/.fastsync");
+			else
+				executeCommand("sudo rm -f /home/ark/.config/.fastsync");
 		});
 		s->addEntry(_("SYNCHRONIZE NOW"), true, [this] { manualSaveSync(); }, "");
 		s->addEntry(_("REBUILD FOLDER CACHE"), true, [this] { executeCommand("sudo /usr/local/bin/savesync.sh --scan"); }, "");
