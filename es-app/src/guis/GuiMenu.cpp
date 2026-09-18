@@ -857,13 +857,13 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 	mWindow->pushGui(busy);
 
 	executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
-	executeCommand("nmcli con delete \"" + ssid + "\" 2>/dev/null");
+	executeCommand("nmcli con delete \'" + ssid + "\' 2>/dev/null");
 
 	std::string result;
 	if (password.empty())
-		result = executeCommand("nmcli device wifi connect \"" + ssid + "\" 2>&1");
+		result = executeCommand("nmcli device wifi connect \'" + ssid + "\' 2>&1");
 	else
-		result = executeCommand("nmcli device wifi connect \"" + ssid + "\" password \"" + password + "\" 2>&1");
+		result = executeCommand("nmcli device wifi connect \'" + ssid + "\' password \'" + password + "\' 2>&1");
 
 	std::this_thread::sleep_for(std::chrono::seconds(3));
 
@@ -875,8 +875,8 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 
 	if (connected) {
 		if (mWifiStatusText) mWifiStatusText->setText(connectedSSID);
-		executeCommand("nmcli con modify \"" + ssid + "\" wifi-sec.psk-flags 0 2>/dev/null || true");
-		executeCommand("nmcli con modify \"" + ssid + "\" 802-11-wireless.bgscan \"\" 2>/dev/null || true");
+		executeCommand("nmcli con modify \'" + ssid + "\' wifi-sec.psk-flags 0 2>/dev/null || true");
+		executeCommand("nmcli con modify \'" + ssid + "\' 802-11-wireless.bgscan \"\" 2>/dev/null || true");
 		executeCommand("systemctl enable --now wifi_monitor.service 2>/dev/null || true");
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + ssid, _("OK")));
 	} else {
@@ -962,11 +962,11 @@ void GuiMenu::activateConnection(const std::string& connName)
 	std::string curSsid = getCurrentWifiSSID();
 	executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
 	if (!curSsid.empty() && curSsid != connName) {
-		executeCommand("nmcli con down \"" + curSsid + "\" 2>/dev/null");
+		executeCommand("nmcli con down \'" + curSsid + "\' 2>/dev/null");
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
 
-	std::string result = executeCommand("nmcli con up \"" + connName + "\" 2>&1");
+	std::string result = executeCommand("nmcli con up \'" + connName + "\' 2>&1");
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 
 	mWindow->removeGui(busy);
@@ -975,7 +975,7 @@ void GuiMenu::activateConnection(const std::string& connName)
 	std::string newSsid = getCurrentWifiSSID();
 	if (newSsid == connName) {
 		if (mWifiStatusText) mWifiStatusText->setText(newSsid);
-		executeCommand("nmcli con modify \"" + connName + "\" wifi-sec.psk-flags 0 2>/dev/null || true");
+		executeCommand("nmcli con modify \'" + connName + "\' wifi-sec.psk-flags 0 2>/dev/null || true");
 		executeCommand("systemctl enable --now wifi_monitor.service 2>/dev/null || true");
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + connName, _("OK")));
 	} else {
@@ -1016,11 +1016,11 @@ void GuiMenu::deleteConnections()
 					// if deleting the currently connected network, disconnect first
 					if (connName == curSsid) {
 						executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
-						executeCommand("nmcli con down \"" + connName + "\" >/dev/null 2>&1 || true");
+						executeCommand("nmcli con down \'" + connName + "\' >/dev/null 2>&1 || true");
 						toggleRemoteServices(false);
 					}
 
-					executeCommand("nmcli connection delete \"" + connName + "\" >/dev/null 2>&1 || true");
+					executeCommand("nmcli connection delete \'" + connName + "\' >/dev/null 2>&1 || true");
 					executeCommand("rm -f \"/etc/NetworkManager/system-connections/" + connName + ".nmconnection\"");
 
 					std::string newSsid = getCurrentWifiSSID();
