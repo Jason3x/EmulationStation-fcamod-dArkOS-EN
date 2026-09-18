@@ -2203,6 +2203,7 @@ void GuiMenu::toggleZram(bool enable, const std::string& size,
         if (size == "128M") bytes = 134217728;
         else if (size == "256M") bytes = 268435456;
         else if (size == "512M") bytes = 536870912;
+		else if (size == "768M") bytes = 805306368;
         else if (size == "1024M") bytes = 1073741824;
 
         // Set size in bytes
@@ -2222,6 +2223,7 @@ void GuiMenu::saveZramConfig(const std::string& size, const std::string& compAlg
     if (size == "128M") bytes = 134217728;
     else if (size == "256M") bytes = 268435456;
     else if (size == "512M") bytes = 536870912;
+	else if (size == "768M") bytes = 805306368;
     else if (size == "1024M") bytes = 1073741824;
 
     std::string content = "ENABLED=1\nALGORITHM=" + compAlgo + "\nSIZE=" + std::to_string(bytes) + "\n";
@@ -2413,7 +2415,7 @@ void GuiMenu::openPerformanceSettings()
 	
 	// --- ZRAM Size ---
     auto sizeList = std::make_shared<OptionListComponent<std::string>>(mWindow, _("SIZE"), false);
-    std::vector<std::string> sizes = {"256M", "512M", "768M"};
+    std::vector<std::string> sizes = {"256M", "512M", "768M", "1024M"};
     std::string currentSize = getZramSize();
     bool found = false;
     for (const auto& size : sizes) {
