@@ -12,7 +12,7 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
 
 ## ✨ What's new compared to upstream
 
-### 🔋 Battery icon
+### 🔋 Battery icon (by Jason)
 
 - Battery level and charging state shown as a small icon in the status bar, with an optional percentage readout.
 - **Colored by charge level** (`Default` pack):
@@ -30,7 +30,7 @@ Built automatically via GitHub Actions using the official Mali RK3326 libraries 
 
 - Powered by [knubat/BatteryPlus](https://github.com/Mikhailzrick/knubat.components) — a voltage-based percentage daemon for RK3326 handhelds, with its own settings menu (see below).
 
-### 📶🔵 WiFi & Bluetooth icons
+### 📶🔵 WiFi & Bluetooth icons (by Jason)
 
 - Live status icons in the status bar, each with an **off / active / connected** state (WiFi also has **sharing** and **service** states for SSH/Samba/Filebrowser).
 - Icon appearance updates automatically every 5 seconds via a background daemon (`es-status-daemon`) — no polling from ES itself.
@@ -59,7 +59,7 @@ New menu — **START > PERFORMANCE SETTINGS**:
 | **GPU Governor** | GPU frequency governor |
 | **Global Performance** | Quick preset for the whole device |
 
-### 🌐 Network Settings menu
+### 🌐 Network Settings menu (by Jason)
 New menu between **UI Settings** and **Sound Settings** — **START > NETWORK SETTINGS**:
 
 | Entry | Description |
@@ -71,7 +71,7 @@ New menu between **UI Settings** and **Sound Settings** — **START > NETWORK SE
 | **Samba Sharing** | Toggle Samba on/off instantly, plus "on boot" |
 | **SSH Sharing** | Toggle SSH on/off instantly, plus "on boot" |
 
-### ⚡ Quick Settings
+### ⚡ Quick Settings (by Jason)
 The status line at the bottom of the **Main Menu** (`BAT: | SND: | BRT: | WIFI:`) is now clickable and opens a shortcut menu:
 
 | Entry | Jumps to |
@@ -81,7 +81,7 @@ The status line at the bottom of the **Main Menu** (`BAT: | SND: | BRT: | WIFI:`
 | **Brightness** | Display Settings and Info |
 | **Wi-Fi** | Network Settings |
 
-### 🎮 Last 20 Played Games
+### 🎮 Last 20 Played Games (by Jason)
 New menu — **START > GAME COLLECTION SETTINGS > LAST 20 PLAYED GAMES**:
 
 - Lists the **20 most recently played games**, most recent first, across every system.
@@ -91,7 +91,7 @@ New menu — **START > GAME COLLECTION SETTINGS > LAST 20 PLAYED GAMES**:
 - A `*` marks entries that have a savestate available to resume from.
 - RetroArch launcher scripts are filtered out; slot injection is skipped for MAME cores and non-RetroArch emulators (PICO-8, PPSSPP standalone), which still launch normally.
 
-### 🔋 Battery Settings menu
+### 🔋 Battery Settings menu (by Jason)
 New menu — **START > BATTERY SETTINGS**:
 
 | Entry | Description |
@@ -124,11 +124,11 @@ New menu — **START > ADVANCED SETTINGS > SAVESYNC SETTINGS**. Syncs your saves
 
 Entries below the toggle appear only while SaveSync is enabled, and missing dependencies for the selected protocol are checked automatically.
 
-### 🌍 Translations
+### 🌍 Translations (by Jason)
 All new strings translated into **17 languages**:
 `br` `de` `el` `es` `fr` `it` `ja` `ko` `pl` `pt` `ru` `sv` `ua` `uk` `vi` `zh-CN` `zh-TW`
 
-### 🔄 Auto-build
+### 🔄 Auto-build (by Jason)
 Every push builds automatically via GitHub Actions:
 - `aarch64-linux-gnu-g++` cross-compiler
 - Official **Mali RK bifrost G31** libraries (not Mesa)
