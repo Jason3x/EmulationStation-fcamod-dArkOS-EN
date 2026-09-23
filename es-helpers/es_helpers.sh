@@ -54,3 +54,19 @@ done
 
 # --- update new state flag ---
 cp -f /tmp/wifi_manager_state /var/cache/wifi_manager_state
+
+# --- OTG: add usbcore.old_scheme_first=1 to boot.ini (replaces the dwc2 rebind) ---
+BOOTINI="/boot/boot.ini"
+if [[ -f "$BOOTINI" ]] && ! grep -q "usbcore.old_scheme_first" "$BOOTINI"; then
+    cp -f "$BOOTINI" "${BOOTINI}.bak"
+    sed -i '0,/^[[:space:]]*setenv bootargs "/s/"\([[:space:]]*\r\?\)$/ usbcore.old_scheme_first=1"\1/' "$BOOTINI"
+    sync
+fi
+
+# --- cleanup of the old boot-time dwc2 rebind ---
+if [[ -f /etc/systemd/system/wifi-usb-old-scheme.service ]]; then
+    systemctl disable wifi-usb-old-scheme.service >/dev/null 2>&1 || true
+    rm -f /etc/systemd/system/wifi-usb-old-scheme.service
+    systemctl daemon-reload
+fi
+rm -f /usr/local/bin/wifi-usb-old-scheme.sh
