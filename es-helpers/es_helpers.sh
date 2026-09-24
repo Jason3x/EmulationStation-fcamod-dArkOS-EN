@@ -8,7 +8,7 @@ unzip -X -o /opt/system/Tools/es-helpers.zip -d /
 
 # permissions
 chmod 644 /etc/samba/smb.conf
-chmod 644 /samba/smb.conf.default
+chmod 644 /etc/samba/smb.conf.default
 chmod 644 /etc/samba/smb.conf.root
 chmod +x "/usr/local/bin/wifi_monitor.sh"
 chmod +x "/usr/local/bin/wifi_enable.sh"
@@ -21,7 +21,8 @@ chmod +x "/usr/local/bin/fix_power_led.red"
 chmod +x "/usr/local/bin/fix_power_led.green"
 chmod +x "/usr/local/bin/fix_power_led"
 chmod +x "/usr/local/bin/savesync.sh"
-chmod +x "/home/ark/.emulationstation/scripts/savesync.sh"
+chmod +x "/usr/local/bin/BT Manager.sh"
+chmod +x "/home/ark/.emulationstation/scripts/game-end/savesync.sh"
 chmod +x "/etc/NetworkManager/dispatcher.d/99-disable-bgscan.sh"
 chmod +x "/etc/NetworkManager/dispatcher.d/99-disable-ipv6.sh"
 chown ark:ark /etc/samba/smb.conf
@@ -53,7 +54,7 @@ nmcli -t -f NAME con show | while read -r name; do
 done
 
 # --- update new state flag ---
-cp -f /tmp/wifi_manager_state /var/cache/wifi_manager_state
+[ -f /tmp/wifi_manager_state ] && cp -f /tmp/wifi_manager_state /var/cache/wifi_manager_state
 
 # --- OTG: add usbcore.old_scheme_first=1 to boot.ini (replaces the dwc2 rebind) ---
 BOOTINI="/boot/boot.ini"
