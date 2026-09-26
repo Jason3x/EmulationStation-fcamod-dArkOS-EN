@@ -1477,7 +1477,7 @@ void GuiMenu::openStorageSettings()
 
 	// --- SYSTEMS Manager, only while SD2 is enabled ---
 	if (sd2Enabled)
-		s->addEntry(_("REASSIGN TO SD1"), true, [this] { mWindow->pushGui(new Gui_dArkOSen(mWindow)); });
+		s->addEntry(_("REASSIGN SYSTEMS TO SD1"), true, [this] { mWindow->pushGui(new Gui_dArkOSen(mWindow)); });
 
 	s->onFinalize([s, this] {
 		if (s->getVariable("reopenStorage"))
