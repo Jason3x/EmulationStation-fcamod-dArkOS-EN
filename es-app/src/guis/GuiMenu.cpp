@@ -864,7 +864,7 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 	if (password.empty())
 		result = executeCommand("nmcli device wifi connect \"" + ssid + "\" 2>&1");
 	else
-		result = executeCommand("nmcli device wifi connect \"" + ssid + "\" password \"" + password + "\" 2>&1");
+		result = executeCommand("nmcli device wifi connect \'" + ssid + "\' password \'" + password + "\' 2>&1");
 
 	std::this_thread::sleep_for(std::chrono::seconds(3));
 
