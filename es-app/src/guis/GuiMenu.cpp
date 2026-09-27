@@ -1475,14 +1475,31 @@ void GuiMenu::openStorageSettings()
 	});
 	s->addWithLabel(_("ENABLE SD2"), sd2Switch);
 
-	// --- SYSTEMS Manager, only while SD2 is enabled ---
+	// --- Reassign to SD1, only while SD2 is enabled ---
 	if (sd2Enabled)
 		s->addEntry(_("REASSIGN SYSTEMS TO SD1"), true, [this] { mWindow->pushGui(new Gui_dArkOSen(mWindow)); });
+
+	// --- Scan and Repair ---
+	s->addEntry(_("SCAN AND REPAIR"), true, [this] { openScanAndRepairSettings(); });
 
 	s->onFinalize([s, this] {
 		if (s->getVariable("reopenStorage"))
 			openStorageSettings();
 	});
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::openScanAndRepairSettings()
+{
+	auto s = new GuiSettings(mWindow, _("SCAN AND REPAIR"));
+
+	s->addEntry(_("BOOT"), false, [this] { ScanRepairBoot(mWindow); });
+	s->addEntry(_("ROOTFS"), false, [this] { ScanRepairRootfs(mWindow); });
+	s->addEntry(_("SD1 GAMES"), false, [this] { ScanRepairSD1Games(mWindow); });
+
+	if (Utils::FileSystem::exists("/roms2"))
+		s->addEntry(_("SD2"), false, [this] { ScanRepairSD2(mWindow); });
 
 	mWindow->pushGui(s);
 }

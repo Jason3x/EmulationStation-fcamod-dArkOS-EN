@@ -6,16 +6,25 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "Window.h"
+#include "Log.h"
+#include "Scripting.h"
+#include "platform.h"
 
 #include <pugixml/src/pugixml.hpp>
 
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <regex>
+#include <cstdio>
+#include <ctime>
+#include <unistd.h>
+#include <sys/wait.h>
 
 static const std::string CFG = "/etc/emulationstation/es_systems.cfg";
 static const std::string FSTAB = "/etc/fstab";
 static const std::string TOOLS_MOUNT = "/opt/system/Tools";
+static const std::string SCAN_LOG = "/home/ark/sd_scan.log";
 
 Gui_dArkOSen::Gui_dArkOSen(Window* window)
 	: GuiSettings(window, _("REASSIGN SYSTEMS TO SD1").c_str())
@@ -411,4 +420,222 @@ void Gui_dArkOSen::showSummaryAndReload(const std::vector<std::string>& moved, c
 	}
 
 	mWindow->pushGui(new GuiMsgBox(mWindow, msg, _("OK"), [this] { reload(); }));
+}
+
+// =======================================================
+// Scan & Repair helpers
+// =======================================================
+static int RunCaptured(const std::string& cmd, std::string& output)
+{
+	output.clear();
+	FILE* pipe = popen(cmd.c_str(), "r");
+	if (!pipe)
+		return -1;
+
+	char buf[512];
+	while (fgets(buf, sizeof(buf), pipe) != nullptr)
+		output += buf;
+
+	return WEXITSTATUS(pclose(pipe));
+}
+
+static void AppendScanLog(const std::string& text)
+{
+	std::ofstream log(SCAN_LOG, std::ios::app);
+	if (!log.is_open())
+		return;
+
+	time_t now = time(nullptr);
+	char ts[32];
+	strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S", localtime(&now));
+	log << ts << " " << text << "\n";
+}
+
+static std::string BuildScanSummary(const std::string& result, const std::vector<std::string>& notes)
+{
+	std::string header;
+	if (result == "failed")
+		header = _("Scan failed. Repairs were not successful.");
+	else if (result == "repaired")
+		header = _("Scan failed. Repairs were successful.");
+	else
+		return _("Scan passed. No repairs were needed.");
+
+	std::string noteList;
+	int count = 0;
+	for (auto& n : notes)
+	{
+		if (n.empty() || count >= 3)
+			continue;
+		noteList += "- " + n + "\n";
+		count++;
+	}
+
+	return noteList.empty() ? header : header + "\n\n" + noteList;
+}
+
+static void CheckWifiThenRun(Window* window, const std::function<void()>& runFn)
+{
+	std::string wifiState;
+	RunCaptured("nmcli radio wifi", wifiState);
+
+	if (wifiState.find("enabled") != std::string::npos)
+	{
+		AppendScanLog("Turning off wifi");
+		system("sudo -n /usr/local/bin/toggle_wifi.sh");
+		window->pushGui(new GuiMsgBox(window,
+			_("Wi-fi has been turned off to ensure the disk is not busy."),
+			_("OK"), runFn));
+	}
+	else
+	{
+		runFn();
+	}
+}
+
+void ScanRepairBoot(Window* window)
+{
+	std::remove(SCAN_LOG.c_str());
+
+	CheckWifiThenRun(window, [window]
+	{
+		window->renderLoadingScreen(_("PLEASE WAIT..."));
+		AppendScanLog("boot scan started");
+
+		std::string result;
+		std::vector<std::string> notes;
+
+		int umountRc = system("sudo -n umount /boot 2>>/home/ark/sd_scan.log");
+		if (umountRc != 0)
+		{
+			result = "failed";
+			notes.push_back(_("Could not unmount /boot"));
+		}
+		else
+		{
+			std::string output;
+			int rc = RunCaptured("sudo -n fsck.fat -a /dev/mmcblk0p1 2>&1", output);
+			AppendScanLog(output);
+
+			std::string lower = Utils::String::toLower(output);
+			if (rc == 0)
+				result = "clean";
+			else if (rc == 1 || rc == 2)
+			{
+				result = "repaired";
+				if (lower.find("dirty bit") != std::string::npos)
+					notes.push_back(_("Dirty bit cleared"));
+				if (lower.find("differences between boot sector") != std::string::npos)
+					notes.push_back(_("Boot sector mismatch noted"));
+				if (lower.find("bad file") != std::string::npos)
+					notes.push_back(_("Bad file entries fixed"));
+			}
+			else
+				result = "failed";
+		}
+
+		// always remount, success or failure
+		system("sudo -n mount /dev/mmcblk0p1 /boot 2>>/home/ark/sd_scan.log");
+
+		AppendScanLog("boot scan result: " + result);
+		window->pushGui(new GuiMsgBox(window, BuildScanSummary(result, notes), _("OK")));
+	});
+}
+
+void ScanRepairRootfs(Window* window)
+{
+	std::remove(SCAN_LOG.c_str());
+
+	CheckWifiThenRun(window, [window]
+	{
+		window->renderLoadingScreen(_("PLEASE WAIT..."));
+		AppendScanLog("rootfs scan started");
+
+		std::string output;
+		int rc = RunCaptured("sudo -n btrfs scrub start -B /dev/mmcblk0p2 2>&1", output);
+		AppendScanLog(output);
+
+		std::string result;
+		std::vector<std::string> notes;
+		std::string lower = Utils::String::toLower(output);
+		bool p2Eject = false;
+
+		if (rc != 0)
+			result = "failed";
+		else if (std::regex_search(lower, std::regex("error summary:.*no errors found")))
+			result = "clean";
+		else if (lower.find("uncorrectable") != std::string::npos)
+		{
+			result = "failed";
+			notes.push_back(_("Uncorrectable errors found on system partition"));
+		}
+		else
+		{
+			result = "repaired";
+			std::smatch m;
+			if (std::regex_search(output, m, std::regex(R"(\d+\s+errors corrected)", std::regex::icase)))
+				notes.push_back(m.str());
+		}
+
+		if (result == "failed")
+			p2Eject = true;
+
+		AppendScanLog("rootfs scan result: " + result);
+
+		std::string msg = BuildScanSummary(result, notes);
+		if (p2Eject)
+			msg += "\n" + std::string(_("Partition 2 (system) could not be fully repaired while running. Eject the card and run 'sudo btrfs check --repair /dev/mmcblk0p2' from a Linux PC."));
+
+		window->pushGui(new GuiMsgBox(window, msg, _("OK")));
+	});
+}
+
+static void TriggerRecoveryReboot(Window* window, const std::string& helperScript, const std::string& confirmMsg)
+{
+	if (!Utils::FileSystem::exists(helperScript))
+	{
+		window->pushGui(new GuiMsgBox(window, _("HELPER SCRIPT NOT FOUND") + "\n" + helperScript, _("OK")));
+		return;
+	}
+
+	window->pushGui(new GuiMsgBox(window, confirmMsg, _("YES"),
+		[window, helperScript]
+		{
+			bool copied = false;
+			for (int i = 0; i < 5; i++)
+			{
+				system(("sudo -n cp -f \"" + helperScript + "\" /boot/recovery.sh").c_str());
+				system("sync");
+				if (Utils::FileSystem::exists("/boot/recovery.sh"))
+				{
+					copied = true;
+					break;
+				}
+				usleep(200000);
+			}
+
+			if (!copied)
+			{
+				window->pushGui(new GuiMsgBox(window, _("FAILED TO PREPARE RECOVERY SCRIPT"), _("OK")));
+				return;
+			}
+
+			Scripting::fireEvent("quit", "reboot");
+			Scripting::fireEvent("reboot");
+			if (quitES(QuitMode::REBOOT) != 0)
+				LOG(LogWarning) << "Restart terminated with non-zero result!";
+		},
+		_("NO"), nullptr));
+}
+
+void ScanRepairSD1Games(Window* window)
+{
+	TriggerRecoveryReboot(window, "/usr/local/bin/Scan_SD1p3.sh",
+		_("SCAN SD1 GAMES?\nTHE CONSOLE WILL REBOOT TO COMPLETE THE SCAN."));
+}
+
+void ScanRepairSD2(Window* window)
+{
+	TriggerRecoveryReboot(window, "/usr/local/bin/Scan_SD2.sh",
+		_("SCAN SD2?\nTHE CONSOLE WILL REBOOT TO COMPLETE THE SCAN."));
 }

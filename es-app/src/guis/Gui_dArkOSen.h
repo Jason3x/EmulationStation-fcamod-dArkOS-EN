@@ -42,4 +42,12 @@ private:
 	void showSummaryAndReload(const std::vector<std::string>& moved, const std::vector<std::string>& reverted);
 };
 
+// Scan & Repair (native replacement for SD_Card_Scan_and_Repair.sh)
+// BOOT/ROOTFS scan+repair in place; SD1 GAMES/SD2 trigger the boot-time
+// helper scripts in /usr/local/bin via /boot/recovery.sh + reboot.
+void ScanRepairBoot(Window* window);
+void ScanRepairRootfs(Window* window);
+void ScanRepairSD1Games(Window* window);
+void ScanRepairSD2(Window* window);
+
 #endif // ES_APP_GUIS_GUI_DARKOSEN_H
