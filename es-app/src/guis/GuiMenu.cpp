@@ -862,7 +862,7 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 
 	std::string result;
 	if (password.empty())
-		result = executeCommand("nmcli device wifi connect \"" + ssid + "\" 2>&1");
+		result = executeCommand("nmcli device wifi connect \'" + ssid + "\' 2>&1");
 	else
 		result = executeCommand("nmcli device wifi connect \'" + ssid + "\' password \'" + password + "\' 2>&1");
 
