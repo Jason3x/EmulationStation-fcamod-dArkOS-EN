@@ -482,8 +482,7 @@ static void CheckWifiThenRun(Window* window, const std::function<void()>& runFn)
 	if (wifiState.find("enabled") != std::string::npos)
 	{
 		AppendScanLog("Turning off wifi");
-		system("sudo -n rfkill block wifi");
-		system("sudo -n nmcli radio wifi off");
+		system("/usr/local/bin/wifi_disable.sh");
 		window->pushGui(new GuiMsgBox(window,
 			_("Wi-fi has been turned off to ensure the disk is not busy."),
 			_("OK"), runFn));
