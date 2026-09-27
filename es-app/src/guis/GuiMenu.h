@@ -46,6 +46,7 @@ private:
 	void openBatterySettings();
 	void openSaveSyncSettings();
 	void openStorageSettings();
+	void openScanAndRepairSettings();
 	void openSaveSyncCredentials();
 	void openSaveSyncProtocol();
 	void openSaveSyncLog();
