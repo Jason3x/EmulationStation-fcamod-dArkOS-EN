@@ -1,6 +1,7 @@
 #include <string>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include "guis/GuiMenu.h"
 #include <sys/stat.h>
 #include <dirent.h>
@@ -9,6 +10,7 @@
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiCollectionSystemsOptions.h"
+#include "guis/Gui_dArkOSen.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiGeneralScreensaverOptions.h"
 #include "guis/GuiMsgBox.h"
@@ -147,6 +149,65 @@ static std::string executeCommand(const std::string& cmd)
 		result += buffer;
 	}
 	pclose(pipe);
+	return Utils::String::trim(result);
+}
+
+// Executes a command via fork/execvp with an argv array instead of a shell —
+// externally-controlled arguments (e.g. an SSID) are passed as separate argv
+// entries, so no shell quoting/escaping is needed or possible to break out of.
+// captureStderr merges stderr into the returned output (like "2>&1"); pass
+// false to discard stderr (like "2>/dev/null").
+static std::string executeCommandArgv(const std::vector<std::string>& args, bool captureStderr = true)
+{
+	std::lock_guard<std::mutex> lock(g_execCommandMutex);
+
+	if (args.empty()) return "";
+
+	int pipefd[2];
+	if (pipe(pipefd) != 0) return "";
+
+	pid_t pid = fork();
+	if (pid < 0) {
+		close(pipefd[0]);
+		close(pipefd[1]);
+		return "";
+	}
+
+	if (pid == 0) {
+		close(pipefd[0]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		if (captureStderr) {
+			dup2(pipefd[1], STDERR_FILENO);
+		} else {
+			int devNull = open("/dev/null", O_WRONLY);
+			if (devNull >= 0) {
+				dup2(devNull, STDERR_FILENO);
+				close(devNull);
+			}
+		}
+		close(pipefd[1]);
+
+		std::vector<char*> argv;
+		for (auto& a : args)
+			argv.push_back(const_cast<char*>(a.c_str()));
+		argv.push_back(nullptr);
+
+		execvp(argv[0], argv.data());
+		_exit(127); // execvp failed
+	}
+
+	close(pipefd[1]);
+
+	std::string result;
+	char buffer[256];
+	ssize_t n;
+	while ((n = read(pipefd[0], buffer, sizeof(buffer))) > 0)
+		result.append(buffer, n);
+	close(pipefd[0]);
+
+	int status = 0;
+	waitpid(pid, &status, 0);
+
 	return Utils::String::trim(result);
 }
 
@@ -857,13 +918,13 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 	mWindow->pushGui(busy);
 
 	executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
-	executeCommand("nmcli con delete \'" + ssid + "\' 2>/dev/null");
+	executeCommandArgv({"nmcli", "con", "delete", ssid}, false);
 
 	std::string result;
 	if (password.empty())
-		result = executeCommand("nmcli device wifi connect \'" + ssid + "\' 2>&1");
+		result = executeCommandArgv({"nmcli", "device", "wifi", "connect", ssid});
 	else
-		result = executeCommand("nmcli device wifi connect \'" + ssid + "\' password \'" + password + "\' 2>&1");
+		result = executeCommandArgv({"nmcli", "device", "wifi", "connect", ssid, "password", password});
 
 	std::this_thread::sleep_for(std::chrono::seconds(3));
 
@@ -875,12 +936,12 @@ void GuiMenu::connectWifi(const std::string& ssid, const std::string& password)
 
 	if (connected) {
 		if (mWifiStatusText) mWifiStatusText->setText(connectedSSID);
-		executeCommand("nmcli con modify \'" + ssid + "\' wifi-sec.psk-flags 0 2>/dev/null || true");
-		executeCommand("nmcli con modify \'" + ssid + "\' 802-11-wireless.bgscan \"\" 2>/dev/null || true");
+		executeCommandArgv({"nmcli", "con", "modify", ssid, "wifi-sec.psk-flags", "0"}, false);
+		executeCommandArgv({"nmcli", "con", "modify", ssid, "802-11-wireless.bgscan", ""}, false);
 		executeCommand("systemctl enable --now wifi_monitor.service 2>/dev/null || true");
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + ssid, _("OK")));
 	} else {
-		executeCommand("sudo rm -f \"/etc/NetworkManager/system-connections/" + ssid + ".nmconnection\" 2>/dev/null");
+		executeCommandArgv({"sudo", "rm", "-f", "/etc/NetworkManager/system-connections/" + ssid + ".nmconnection"}, false);
 		if (mWifiStatusText) mWifiStatusText->setText(connectedSSID.empty() ? _("NOT CONNECTED") : connectedSSID);
 
 		std::string errorMsg = _("CONNECTION FAILED");
@@ -962,11 +1023,11 @@ void GuiMenu::activateConnection(const std::string& connName)
 	std::string curSsid = getCurrentWifiSSID();
 	executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
 	if (!curSsid.empty() && curSsid != connName) {
-		executeCommand("nmcli con down \'" + curSsid + "\' 2>/dev/null");
+		executeCommandArgv({"nmcli", "con", "down", curSsid}, false);
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
 
-	std::string result = executeCommand("nmcli con up \'" + connName + "\' 2>&1");
+	std::string result = executeCommandArgv({"nmcli", "con", "up", connName});
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 
 	mWindow->removeGui(busy);
@@ -975,7 +1036,7 @@ void GuiMenu::activateConnection(const std::string& connName)
 	std::string newSsid = getCurrentWifiSSID();
 	if (newSsid == connName) {
 		if (mWifiStatusText) mWifiStatusText->setText(newSsid);
-		executeCommand("nmcli con modify \'" + connName + "\' wifi-sec.psk-flags 0 2>/dev/null || true");
+		executeCommandArgv({"nmcli", "con", "modify", connName, "wifi-sec.psk-flags", "0"}, false);
 		executeCommand("systemctl enable --now wifi_monitor.service 2>/dev/null || true");
 		mWindow->pushGui(new GuiMsgBox(mWindow, _("CONNECTED TO") + "\n" + connName, _("OK")));
 	} else {
@@ -1016,12 +1077,12 @@ void GuiMenu::deleteConnections()
 					// if deleting the currently connected network, disconnect first
 					if (connName == curSsid) {
 						executeCommand("systemctl disable --now wifi_monitor.service 2>/dev/null || true");
-						executeCommand("nmcli con down \'" + connName + "\' >/dev/null 2>&1 || true");
+						executeCommandArgv({"nmcli", "con", "down", connName}, false);
 						toggleRemoteServices(false);
 					}
 
-					executeCommand("nmcli connection delete \'" + connName + "\' >/dev/null 2>&1 || true");
-					executeCommand("rm -f \"/etc/NetworkManager/system-connections/" + connName + ".nmconnection\"");
+					executeCommandArgv({"nmcli", "connection", "delete", connName}, false);
+					executeCommandArgv({"rm", "-f", "/etc/NetworkManager/system-connections/" + connName + ".nmconnection"}, false);
 
 					std::string newSsid = getCurrentWifiSSID();
 					if (mWifiStatusText) mWifiStatusText->setText(newSsid.empty() ? _("NOT CONNECTED") : newSsid);
@@ -1450,6 +1511,55 @@ void GuiMenu::openSaveSyncSettings()
 		if (s->getVariable("reopenSaveSync"))
 			openSaveSyncSettings();
 	});
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::openStorageSettings()
+{
+	auto s = new GuiSettings(mWindow, _("STORAGE SETTINGS"));
+
+	// --- Enable SD2 toggle ---
+	bool sd2Enabled = Utils::FileSystem::exists("/roms2");
+	auto sd2Switch = std::make_shared<SwitchComponent>(mWindow);
+	sd2Switch->setState(sd2Enabled);
+	sd2Switch->setOnChangedCallback([this, s, sd2Switch, sd2Enabled] {
+		bool nowOn = sd2Switch->getState();
+		std::string script = nowOn
+			? "\"/usr/local/bin/Switch to SD2 for Roms.sh\""
+			: "\"/usr/local/bin/Switch to Main SD for Roms.sh\"";
+		mWindow->renderLoadingScreen(_("PLEASE WAIT..."));
+		system(script.c_str());
+		if (nowOn != sd2Enabled)
+			s->setVariable("reopenStorage", true);
+	});
+	s->addWithLabel(_("ENABLE SD2"), sd2Switch);
+
+	// --- Reassign to SD1, only while SD2 is enabled ---
+	if (sd2Enabled)
+		s->addEntry(_("REASSIGN SYSTEMS TO SD1"), true, [this] { mWindow->pushGui(new Gui_dArkOSen(mWindow)); });
+
+	// --- Scan and Repair ---
+	s->addEntry(_("SCAN AND REPAIR"), true, [this] { openScanAndRepairSettings(); });
+
+	s->onFinalize([s, this] {
+		if (s->getVariable("reopenStorage"))
+			openStorageSettings();
+	});
+
+	mWindow->pushGui(s);
+}
+
+void GuiMenu::openScanAndRepairSettings()
+{
+	auto s = new GuiSettings(mWindow, _("SCAN AND REPAIR"));
+
+	s->addEntry(_("BOOT"), false, [this] { ScanRepairBoot(mWindow); });
+	s->addEntry(_("ROOTFS"), false, [this] { ScanRepairRootfs(mWindow); });
+	s->addEntry(_("SD1 GAMES"), false, [this] { ScanRepairSD1Games(mWindow); });
+
+	if (Utils::FileSystem::exists("/roms2"))
+		s->addEntry(_("SD2"), false, [this] { ScanRepairSD2(mWindow); });
 
 	mWindow->pushGui(s);
 }
@@ -4075,6 +4185,9 @@ void GuiMenu::openOtherSettings()
 
 		// SaveSync Settings
 	s->addEntry(_("SAVESYNC SETTINGS"), true, [this] { openSaveSyncSettings(); }, "iconSaveSync");
+
+		// Storage Settings
+	s->addEntry(_("STORAGE SETTINGS"), true, [this] { openStorageSettings(); }, "iconStorage");
 
 #ifndef _RPI_
 	// full exit
